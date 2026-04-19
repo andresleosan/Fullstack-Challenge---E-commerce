@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - E-commerce</title>
+    <link rel="stylesheet" href="src/styles/global.css">
+    <link rel="stylesheet" href="src/styles/components/Header.css">
+    <link rel="stylesheet" href="src/styles/components/Checkout.css">
+    <link rel="stylesheet" href="src/styles/components/Footer.css">
+</head>
+<body>
+    <!-- Header -->
+    <header role="banner" class="header">
+        <div class="container">
+            <div class="header__inner">
+                <a href="index.html" class="header__logo">
+                    <h1>🛍️ E-Store</h1>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main role="main" class="main-content">
+        <div class="container">
+            <div class="checkout-wrapper">
+                <!-- Checkout Form -->
+                <section class="checkout-form">
+                    <h1>Finalizar Compra</h1>
+
+                    <form id="checkoutForm" class="form">
+                        <!-- Shipping Address -->
+                        <fieldset class="form-section">
+                            <legend>Dirección de Envío</legend>
+
+                            <div class="form-group">
+                                <label for="firstName">Nombre:</label>
+                                <input type="text" id="firstName" class="form-input" required>
+                                <span class="form-error" id="firstNameError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lastName">Apellido:</label>
+                                <input type="text" id="lastName" class="form-input" required>
+                                <span class="form-error" id="lastNameError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" id="email" class="form-input" required>
+                                <span class="form-error" id="emailError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Teléfono:</label>
+                                <input type="tel" id="phone" class="form-input" required>
+                                <span class="form-error" id="phoneError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="street">Calle y número:</label>
+                                <input type="text" id="street" class="form-input" required>
+                                <span class="form-error" id="streetError"></span>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="city">Ciudad:</label>
+                                    <input type="text" id="city" class="form-input" required>
+                                    <span class="form-error" id="cityError"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="state">Estado/Provincia:</label>
+                                    <input type="text" id="state" class="form-input" required>
+                                    <span class="form-error" id="stateError"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="zipCode">Código Postal:</label>
+                                    <input type="text" id="zipCode" class="form-input" required>
+                                    <span class="form-error" id="zipCodeError"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="country">País:</label>
+                                    <input type="text" id="country" class="form-input" required>
+                                    <span class="form-error" id="countryError"></span>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- Shipping Method -->
+                        <fieldset class="form-section">
+                            <legend>Método de Envío</legend>
+
+                            <div class="form-group">
+                                <input type="radio" id="standard" name="shipping" value="standard" checked>
+                                <label for="standard">Envío Estándar (5-7 días) - $5.00</label>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="radio" id="express" name="shipping" value="express">
+                                <label for="express">Envío Express (2-3 días) - $15.00</label>
+                            </div>
+                        </fieldset>
+
+                        <!-- Payment Method -->
+                        <fieldset class="form-section">
+                            <legend>Método de Pago (Simulado)</legend>
+
+                            <div class="form-group">
+                                <input type="radio" id="creditCard" name="payment" value="creditcard" checked>
+                                <label for="creditCard">Tarjeta de Crédito</label>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="radio" id="paypal" name="payment" value="paypal">
+                                <label for="paypal">PayPal</label>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="checkbox" id="terms" required>
+                                <label for="terms">Acepto los términos y condiciones</label>
+                                <span class="form-error" id="termsError"></span>
+                            </div>
+                        </fieldset>
+
+                        <button type="submit" class="btn btn-primary btn-lg" id="confirmOrderBtn">
+                            Confirmar Pedido
+                        </button>
+                    </form>
+                </section>
+
+                <!-- Order Summary -->
+                <aside class="order-summary">
+                    <h2>Resumen del Pedido</h2>
+
+                    <div class="summary-items" id="summaryItems">
+                        <!-- Items will be populated here -->
+                    </div>
+
+                    <hr>
+
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="checkoutSubtotal">$0.00</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Envío:</span>
+                        <span id="checkoutShipping">$5.00</span>
+                    </div>
+
+                    <div class="summary-row summary-total">
+                        <span>Total:</span>
+                        <span id="checkoutTotal">$0.00</span>
+                    </div>
+
+                    <a href="cart.html" class="btn btn-secondary btn-lg">
+                        ← Volver al Carrito
+                    </a>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer role="contentinfo" class="footer">
+        <div class="container">
+            <div class="footer__bottom">
+                <p>&copy; 2026 E-Store. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="src/js/mockdata.js"></script>
+    <script src="src/js/cart.js"></script>
+    <script src="src/js/ui.js"></script>
+</body>
+</html>
