@@ -14,9 +14,9 @@
 
 | Métrica | Estado |
 |---------|--------|
-| **Fase** | � Fase 1 - Subfase 1.3 ✅ (Próxima: 1.2 CSS) |
-| **Progreso** | 15% (Documentación: 100% ✅, HTML: 100% ✅) |
-| **Commits** | 2/55+ |
+| **Fase** | 🟡 Fase 1 - Subfase 1.4 (Próxima: Vanilla JS) |
+| **Progreso** | 30% (Documentación: 100% ✅, HTML: 100% ✅, CSS: 100% ✅) |
+| **Commits** | 4/55+ |
 | **Documentación** | 100% (10 documentos) |
 | **Deploy** | ⏳ Pendiente Fase 3 |
 
