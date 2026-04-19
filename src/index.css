@@ -1,0 +1,28 @@
+/* Import existing design system from Phase 1 */
+@import '../src/styles/variables.css';
+@import '../src/styles/global.css';
+@import '../src/styles/components/Button.css';
+@import '../src/styles/components/Input.css';
+@import '../src/styles/components/Card.css';
+@import '../src/styles/components/Badge.css';
+@import '../src/styles/components/Header.css';
+@import '../src/styles/components/Footer.css';
+@import '../src/styles/components/Auth.css';
+@import '../src/styles/components/Profile.css';
+@import '../src/styles/components/Orders.css';
+@import '../src/styles/components/Admin.css';
+
+:root {
+  font-family: inter, system-ui, avenir, helvetica, arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
