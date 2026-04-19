@@ -1,0 +1,102 @@
+/* Card Component - Reutiliza estilos de Fase 1 con extensiones TypeScript */
+
+.card {
+  background-color: var(--color-secondary);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Variantes */
+.card--default {
+  border: 1px solid var(--color-border);
+}
+
+.card--elevated {
+  box-shadow: var(--shadow-md);
+  border: none;
+}
+
+.card--elevated:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.card--outlined {
+  border: 2px solid var(--color-primary);
+}
+
+.card--product {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Card Parts */
+.card-header {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.card-header h2,
+.card-header h3 {
+  margin: 0;
+  font-size: 1.125rem;
+  color: #fff;
+}
+
+.card-body {
+  padding: var(--spacing-md);
+  flex: 1;
+}
+
+.card-body p {
+  margin: 0;
+  color: #ccc;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.card-footer {
+  padding: var(--spacing-md);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.card-footer .btn {
+  flex: 1;
+}
+
+/* Product Card específico */
+.card--product .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card {
+    border-radius: 6px;
+  }
+
+  .card-header,
+  .card-body,
+  .card-footer {
+    padding: var(--spacing-sm);
+  }
+
+  .card-header h2,
+  .card-header h3 {
+    font-size: 1rem;
+  }
+
+  .card-footer {
+    flex-direction: column;
+  }
+
+  .card-footer .btn {
+    width: 100%;
+  }
+}
