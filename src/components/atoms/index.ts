@@ -1,9 +1,21 @@
-// Atomic Component Exports
-// Atoms: Smallest, most basic components (Button, Input, Icon, Badge, etc)
+// Atomic Components - Reusable UI primitives
+// Export individual atoms for composition
 
-// Individual component imports will be added here as components are created
-// Example structure for future components:
-// export { Button } from './Button'
-// export { Input } from './Input'
-// export { Card } from './Card'
-// export { Badge } from './Badge'
+export { Button } from './Button'
+export type { ButtonProps } from './Button'
+
+export { Input } from './Input'
+export type { InputProps } from './Input'
+
+export { Card, CardHeader, CardBody, CardFooter } from './Card'
+export type { CardProps, CardHeaderProps, CardBodyProps, CardFooterProps } from './Card'
+
+export { Badge } from './Badge'
+export type { BadgeProps } from './Badge'
+
+export { Icon } from './Icon'
+export type { IconProps } from './Icon'
+
+export { Loader } from './Loader'
+export type { LoaderProps } from './Loader'
+
