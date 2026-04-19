@@ -11,7 +11,7 @@
 | Métrica | Valor | Target |
 |---------|-------|--------|
 | **Progreso Total** | 30% | 100% |
-| **Commits** | 4 | 55+ |
+| **Commits** | 4 | 30+ |
 | **Documentación** | 100% ✅ | 100% |
 | **CSS Sistema** | 100% ✅ | 100% |
 | **Funcionalidades** | 0/25 | 25/25 |
@@ -71,11 +71,10 @@
 - **Commits**: 0
 
 - **Estado**: 🟡 En progreso (3/5 subfases completadas - 60%)
-- **Commits acumulados**: 4/15 
+- **Commits acumulados**: 4/30+ (Fase 1; Fase total 55+)
 - **Eta**: Semana 1 (5 días) - 3 días completados
 - **Bloqueadores**: Ninguno
-- **Próximo**: Subfase 1.4 - Interactividad Vanilla JS
-- **Próximo**: Subfase 1.2 - Sistema de Diseño CSS
+- **Próximo**: Subfase 1.4 - Interactividad Vanilla JS (pequeños commits por cada feature)
 
 ---
 

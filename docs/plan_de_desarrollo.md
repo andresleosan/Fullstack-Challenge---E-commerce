@@ -88,8 +88,14 @@ Roadmap completo desglosado por **tareas atómicas** con:
 ### ✅ Fase 1 - Totales
 
 - **Duración Total**: 26 horas (5 días)
-- **Commits Esperados**: 15+
+- **Commits Esperados**: 30+ (PDF: "mínimo 30 commits, uno por paso pequeño")
 - **Estado al final**: App 100% funcional sin React
+- **Estrategia de Commits**: 
+  - Cada pequeño paso = 1 commit
+  - `feat:` para funcionalidades
+  - `style:` para CSS
+  - `test:` para validaciones
+  - `docs:` para documentación
 
 ---
 
