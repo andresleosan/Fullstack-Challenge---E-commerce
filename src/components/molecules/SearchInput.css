@@ -1,0 +1,79 @@
+/* SearchInput Molecule */
+.search-input {
+  display: flex;
+  align-items: center;
+  background: var(--bg-surface);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  gap: var(--space-sm);
+  transition: all var(--transition-base);
+  width: 100%;
+}
+
+.search-input:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.1);
+}
+
+/* Search Icon */
+.search-icon {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+/* Input Field */
+.search-field {
+  flex-grow: 1;
+}
+
+.search-field input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  padding: 0;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.search-field input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.search-field input:focus {
+  outline: none;
+}
+
+/* Clear Button */
+.search-clear {
+  flex-shrink: 0;
+  padding: 0 8px;
+}
+
+/* Search Button */
+.search-btn {
+  flex-shrink: 0;
+  min-width: 100px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .search-input {
+    padding: 10px var(--space-md);
+  }
+
+  .search-btn {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-input {
+    border-radius: var(--radius-sm);
+    padding: 8px var(--space-sm);
+  }
+
+  .search-field input {
+    font-size: 16px; /* iOS zoom fix */
+  }
+}
