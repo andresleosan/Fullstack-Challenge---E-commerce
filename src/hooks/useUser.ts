@@ -1,111 +1,112 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback } from 'react'
 import { useUserStore } from '@store/userStore'
-import { authMiddleware, authGuards, permissions } from '@utils'
-import type { User } from '@types'
+import { authService } from '@services'
+import { authGuards, permissions } from '@utils'
 
 /**
  * useUser Hook
- * Acceso a autenticación y permisos del usuario
+ * Firebase-based authentication and authorization management
  * 
- * Usa userStore (Zustand) y authMiddleware para mantener estado sincronizado
+ * Features:
+ * - Firebase authentication (login/register/logout)
+ * - User permissions and role-based access
+ * - Token management
+ * - Profile updates
  */
 export const useUser = () => {
   const store = useUserStore()
-  const [localUser, setLocalUser] = useState<User | null>(null)
-
-  // Sincronizar con authMiddleware al montar
-  useEffect(() => {
-    const currentUser = authMiddleware.getCurrentUser()
-    setLocalUser(currentUser)
-
-    // Subscribirse a cambios de auth
-    const unsubscribe = authMiddleware.subscribe((user: User | null) => {
-      setLocalUser(user)
-    })
-
-    return unsubscribe
-  }, [])
 
   const login = useCallback(
     async (email: string, password: string) => {
       try {
-        await store.login(email, password)
-        const user = store.user
-        if (user) {
-          // Notificar al middleware
-          authMiddleware.onLogin(user, 'mock-token')
-        }
+        await authService.login(email, password)
+        // AppWrapper will handle syncing to store via authService listener
         return true
-      } catch (error) {
+      } catch (error: any) {
         console.error('Login failed:', error)
-        return false
+        throw error
       }
     },
-    [store]
+    []
   )
 
   const register = useCallback(
     async (email: string, password: string, name: string) => {
       try {
-        await store.register(email, password, name)
-        const user = store.user
-        if (user) {
-          // Notificar al middleware
-          authMiddleware.onLogin(user, 'mock-token')
-        }
+        await authService.register(email, password, name)
+        // AppWrapper will handle syncing to store via authService listener
         return true
-      } catch (error) {
+      } catch (error: any) {
         console.error('Registration failed:', error)
-        return false
+        throw error
       }
     },
-    [store]
+    []
   )
 
-  const logout = useCallback(() => {
-    store.logout()
-    authMiddleware.onLogout()
-  }, [store])
+  const logout = useCallback(async () => {
+    try {
+      await authService.logout()
+      // AppWrapper will handle clearing store via authService listener
+    } catch (error: any) {
+      console.error('Logout failed:', error)
+      throw error
+    }
+  }, [])
 
   const updateProfile = useCallback(
-    (profile: any) => {
-      store.updateProfile(profile)
-      const updated = store.user
-      if (updated) {
-        authMiddleware.onUpdateProfile(updated)
+    async (updates: { displayName?: string; photoURL?: string }) => {
+      try {
+        await authService.updateUserProfile(updates)
+        // If displayName changed, update store
+        if (updates.displayName && store.user) {
+          store.setUser({ ...store.user, name: updates.displayName })
+        }
+      } catch (error: any) {
+        console.error('Profile update failed:', error)
+        throw error
       }
     },
     [store]
   )
 
-  // Métodos de autenticación
-  const isAuthenticated = authGuards.requireAuth(localUser || store.user)
+  const refreshToken = useCallback(async () => {
+    try {
+      return await authService.refreshToken()
+    } catch (error: any) {
+      console.error('Token refresh failed:', error)
+      throw error
+    }
+  }, [])
+
+  // Permission checks
+  const isAuthenticated = authGuards.requireAuth(store.user)
   const isAdmin = store.user?.role === 'admin'
   const canCreateResource = permissions.canCreate(store.user || null)
   const canDeleteResource = permissions.canDelete(store.user || null)
 
   return {
-    // Estado
+    // State
     user: store.user,
-    localUser, // Usuario del authMiddleware para más sincronización
     isLoading: store.isLoading,
     error: store.error,
 
-    // Autenticación
+    // Authentication
     isAuthenticated,
     isAdmin,
 
-    // Permisos
+    // Permissions
     canCreateResource,
     canDeleteResource,
 
-    // Métodos
+    // Methods
     login,
     register,
     logout,
     updateProfile,
+    refreshToken,
 
-    // Guards adicionales
+    // Additional guards
     canRead: (resourceUserId?: string) => permissions.canRead(store.user || null, resourceUserId),
     canUpdate: (resourceUserId?: string) => permissions.canUpdate(store.user || null, resourceUserId),
   }

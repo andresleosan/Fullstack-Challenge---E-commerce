@@ -1,3 +1,184 @@
-/* Register Page Styles */
-/* Fase 1 - Placeholder for page styles */
+/* Register Page Styles - Minimalista */
 
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-tertiary, #0f0f0f);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Back Button Header */
+.register-header-back {
+  display: none;
+}
+
+.back-btn {
+  background: transparent;
+  border: 1px solid rgba(0, 217, 255, 0.3);
+  color: rgba(0, 217, 255, 0.8);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transitions: all 0.2s ease;
+  font-weight: 500;
+}
+
+.back-btn:hover {
+  background: rgba(0, 217, 255, 0.1);
+  border-color: rgba(0, 217, 255, 0.8);
+}
+
+/* Container */
+.register-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+/* Card */
+.register-card {
+  width: 100%;
+  max-width: 450px;
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 1px solid rgba(0, 217, 255, 0.15) !important;
+  border-radius: 12px;
+  padding: 2rem !important;
+}
+
+/* Header */
+.register-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.register-header h1 {
+  font-size: 1.8rem;
+  margin: 0 0 0.5rem 0;
+  color: #fff;
+}
+
+.register-header p {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+}
+
+/* Form */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Form Group */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Error Message */
+.error-message {
+  background: rgba(255, 0, 0, 0.1);
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  color: #ff6b6b;
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Form Check */
+.form-check {
+  display: flex;
+  margin-top: 0.5rem;
+}
+
+/* Custom Checkbox */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-input {
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 1.5px solid rgba(0, 217, 255, 0.4);
+  border-radius: 2px;
+  background: transparent;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.checkbox-input:hover {
+  border-color: rgba(0, 217, 255, 0.7);
+}
+
+.checkbox-input:checked {
+  background: var(--color-primary, #00d9ff);
+  border-color: var(--color-primary, #00d9ff);
+}
+
+.checkbox-text {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Register Footer */
+.register-footer {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 217, 255, 0.1);
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.register-footer p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.register-footer a {
+  color: rgba(0, 217, 255, 0.8);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.register-footer a:hover {
+  color: var(--color-primary, #00d9ff);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .register-header-back {
+    padding: 0.8rem 1rem;
+  }
+
+  .register-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .register-card {
+    padding: 1.5rem !important;
+    max-width: 100%;
+  }
+
+  .register-header h1 {
+    font-size: 1.5rem;
+  }
+}

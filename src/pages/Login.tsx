@@ -6,34 +6,37 @@ import './Login.css'
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate()
-  const { login, isLoading, error } = useUser()
+  const { login } = useUser()
   const [formData, setFormData] = useState({
-    email: 'demo@example.com',
-    password: 'demo123',
+    email: '',
+    password: '',
+    remember: false,
   })
+  const [isLoading, setIsLoading] = useState(false)
   const [localError, setLocalError] = useState<string | null>(null)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
+    const { name, value, type, checked } = e.target
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: type === 'checkbox' ? checked : value,
     }))
     setLocalError(null)
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setIsLoading(true)
+    setLocalError(null)
 
     try {
-      const success = await login(formData.email, formData.password)
-      if (success) {
-        navigate('/profile')
-      } else {
-        setLocalError('Email o contraseña incorrectos')
-      }
+      await login(formData.email, formData.password)
+      // AppWrapper handles auth state sync, just redirect
+      navigate('/', { replace: true })
     } catch (err: any) {
       setLocalError(err.message || 'Error al iniciar sesión')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -47,9 +50,9 @@ export const LoginPage: React.FC = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="login-form">
-            {(localError || error) && (
+            {localError && (
               <div className="error-message">
-                {localError || error}
+                {localError}
               </div>
             )}
 
@@ -76,11 +79,17 @@ export const LoginPage: React.FC = () => {
             </div>
 
             <div className="form-options">
-              <label>
-                <input type="checkbox" name="remember" />
-                Recuérdame
+              <label className="checkbox-label">
+                <input 
+                  type="checkbox" 
+                  name="remember"
+                  checked={formData.remember}
+                  onChange={handleInputChange}
+                  className="checkbox-input"
+                />
+                <span className="checkbox-text">Recuérdame</span>
               </label>
-              <a href="#forgot">¿Olvidaste tu contraseña?</a>
+              <a href="#forgot" className="forgot-link">¿Olvidaste tu contraseña?</a>
             </div>
 
             <Button

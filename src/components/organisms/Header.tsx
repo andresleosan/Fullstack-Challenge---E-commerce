@@ -1,6 +1,8 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Button, Icon, Badge } from '@components/atoms'
 import { SearchInput } from '@components/molecules'
+import { useUser } from '@hooks/useUser'
 import './Header.css'
 
 export interface HeaderProps {
@@ -10,7 +12,6 @@ export interface HeaderProps {
   cartItemCount?: number
   isUserLoggedIn?: boolean
   userName?: string
-  onLoginClick?: () => void
   onUserMenuClick?: () => void
 }
 
@@ -26,15 +27,21 @@ export const Header = React.forwardRef<HTMLDivElement, HeaderProps>(
       onMenuToggle,
       onCartClick,
       cartItemCount = 0,
-      isUserLoggedIn = false,
-      userName = 'Usuario',
-      onLoginClick,
+      isUserLoggedIn: externalIsLoggedIn,
+      userName: externalUserName,
       onUserMenuClick,
     },
     ref
   ) => {
+    const navigate = useNavigate()
+    const { user, isAuthenticated, logout } = useUser()
     const [searchValue, setSearchValue] = React.useState('')
     const [isMenuOpen, setIsMenuOpen] = React.useState(false)
+    const [isUserMenuOpen, setIsUserMenuOpen] = React.useState(false)
+
+    // Use Firebase auth if available, fallback to props
+    const isUserLoggedIn = isAuthenticated ?? externalIsLoggedIn
+    const userName = user?.name || externalUserName || 'Usuario'
 
     const handleSearch = (value: string) => {
       setSearchValue(value)
@@ -56,6 +63,37 @@ export const Header = React.forwardRef<HTMLDivElement, HeaderProps>(
       }
     }
 
+    const handleUserMenuToggle = () => {
+      setIsUserMenuOpen(!isUserMenuOpen)
+      if (onUserMenuClick) {
+        onUserMenuClick()
+      }
+    }
+
+    const handleLogout = async () => {
+      try {
+        await logout()
+        setIsUserMenuOpen(false)
+        navigate('/', { replace: true })
+      } catch (error: any) {
+        console.error('Logout error:', error)
+      }
+    }
+
+    const goToProfile = () => {
+      setIsUserMenuOpen(false)
+      navigate('/profile')
+    }
+
+    const goToOrders = () => {
+      setIsUserMenuOpen(false)
+      navigate('/orders')
+    }
+
+    const goToLogin = () => {
+      navigate('/login')
+    }
+
     return (
       <header ref={ref} className="header">
         <div className="header-container">
@@ -69,10 +107,19 @@ export const Header = React.forwardRef<HTMLDivElement, HeaderProps>(
             >
               <Icon name="menu" size="md" />
             </button>
-            <div className="header-logo">
-              <Icon name="shopping-bag" size="lg" />
-              <span className="logo-text">E-Store</span>
-            </div>
+            <button 
+              onClick={() => {
+                navigate('/')
+                window.scrollTo(0, 0)
+              }}
+              className="header-logo-btn"
+              aria-label="Ir al inicio"
+            >
+              <div className="header-logo">
+                <Icon name="shopping-bag" size="lg" />
+                <span className="logo-text">E-Store</span>
+              </div>
+            </button>
           </div>
 
           {/* Búsqueda Central */}
@@ -111,19 +158,40 @@ export const Header = React.forwardRef<HTMLDivElement, HeaderProps>(
               <div className="header-user-menu">
                 <button
                   className="header-user-btn"
-                  onClick={onUserMenuClick}
+                  onClick={handleUserMenuToggle}
                   aria-label="User menu"
+                  aria-expanded={isUserMenuOpen}
                 >
                   <span className="user-avatar">{userName.charAt(0).toUpperCase()}</span>
                   <span className="user-name">{userName}</span>
                   <Icon name="menu" size="sm" />
                 </button>
+
+                {/* Dropdown Menu */}
+                {isUserMenuOpen && (
+                  <div className="header-user-dropdown">
+                    <a href="/profile" className="dropdown-item" onClick={goToProfile}>
+                      Mi Perfil
+                    </a>
+                    <a href="/orders" className="dropdown-item" onClick={goToOrders}>
+                      Mis Órdenes
+                    </a>
+                    <hr className="dropdown-divider" />
+                    <button
+                      className="dropdown-item logout-btn"
+                      onClick={handleLogout}
+                      aria-label="Logout"
+                    >
+                      Cerrar Sesión
+                    </button>
+                  </div>
+                )}
               </div>
             ) : (
               <Button
                 variant="outline"
                 size="sm"
-                onClick={onLoginClick}
+                onClick={goToLogin}
                 className="header-login-btn"
                 aria-label="Login"
               >

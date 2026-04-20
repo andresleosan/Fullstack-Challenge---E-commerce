@@ -18,8 +18,8 @@ export const Footer = React.forwardRef<HTMLDivElement, FooterProps>(
   (
     {
       onNewsletterSubmit,
-      companyName = 'E-Store',
-      currentYear = new Date().getFullYear(),
+      companyName: _companyName,
+      currentYear: _currentYear,
       showNewsletter = true,
     },
     ref
@@ -177,7 +177,7 @@ export const Footer = React.forwardRef<HTMLDivElement, FooterProps>(
           {/* Copyright */}
           <div className="footer-bottom">
             <p className="footer-copyright">
-              © {currentYear} {companyName}. Todos los derechos reservados.
+              Andrés Santiago Desarrollador Full Stack en formación 🚀
             </p>
             <p className="footer-payment">
               Métodos de pago seguros:

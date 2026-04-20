@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ProductGallery } from '@components/organisms'
 import { FilterGroup, Pagination, SearchInput } from '@components/molecules'
 import { useProducts, useCart } from '@hooks/index'
-import { mockProducts } from '@utils/mockdata'
+import { fakeStoreService } from '@services'
 import './Home.css'
 
 export interface HomePageProps {
@@ -14,23 +14,41 @@ export const HomePage: React.FC<HomePageProps> = ({
   onAddToCart,
   onProductClick,
 }) => {
-  const { products, filters, search, filterByCategory, sort } =
+  const { products, filters, search, filterByCategory, sort, loadProducts } =
     useProducts()
   const { addToCart } = useCart()
   const [currentPage, setCurrentPage] = React.useState(1)
+  const [categories, setCategories] = useState<string[]>([])
+  const [isLoading, setIsLoading] = useState(false)
   const itemsPerPage = 12
 
-  // Load initial products
+  // Load products from FakeStore API
   useEffect(() => {
-    // In real app, this would be an API call
-    const loadedProducts = mockProducts
-    // Store products in state
-    console.log('Loaded products:', loadedProducts.length)
-  }, [])
+    const loadFakeStoreProducts = async () => {
+      setIsLoading(true)
+      try {
+        const fakeStoreProducts = await fakeStoreService.getAllProducts()
+        loadProducts(fakeStoreProducts)
+        console.log(`✅ Loaded ${fakeStoreProducts.length} products from FakeStore`)
+      } catch (error: any) {
+        console.error('Error loading products:', error.message)
+      } finally {
+        setIsLoading(false)
+      }
+    }
 
-  const categories = Array.from(
-    new Set(mockProducts.map((p) => p.category))
-  )
+    const loadCategories = async () => {
+      try {
+        const fetchedCategories = await fakeStoreService.getCategories()
+        setCategories(fetchedCategories)
+      } catch (error: any) {
+        console.error('Error loading categories:', error.message)
+      }
+    }
+
+    loadFakeStoreProducts()
+    loadCategories()
+  }, [loadProducts])
 
   const handleAddToCart = (product: any, quantity: number) => {
     addToCart(product, quantity)
@@ -69,16 +87,20 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
+      {/* Loading State */}
+      {isLoading && (
+        <div className="loading-container">
+          <p>Cargando productos...</p>
+        </div>
+      )}
+
       {/* Main Content */}
       <div className="home-container">
-        {/* Sidebar - Filters */}
-        <aside className="home-sidebar">
-          <div className="filters-section">
-            <h3 className="filters-title">Filtros</h3>
-
-            {/* Category Filter */}
-            <div className="filter-group">
-              <h4>Categorías</h4>
+        {/* Filters Bar - Horizontal & Minimal */}
+        <div className="home-filters-bar">
+          <div className="filters-content">
+            <div className="filter-section">
+              <span className="filter-label">Categorías:</span>
               <FilterGroup
                 categories={categories}
                 selectedCategories={filters.category ? [filters.category] : []}
@@ -88,9 +110,8 @@ export const HomePage: React.FC<HomePageProps> = ({
               />
             </div>
 
-            {/* Sort */}
-            <div className="filter-group">
-              <h4>Ordenar por</h4>
+            <div className="filter-section">
+              <span className="filter-label">Ordenar:</span>
               <select
                 className="sort-select"
                 value={filters.sortBy}
@@ -108,7 +129,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </select>
             </div>
           </div>
-        </aside>
+        </div>
 
         {/* Main Content */}
         <main className="home-main">

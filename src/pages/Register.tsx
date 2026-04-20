@@ -6,7 +6,7 @@ import './Register.css'
 
 export const RegisterPage: React.FC = () => {
   const navigate = useNavigate()
-  const { register, isLoading, error } = useUser()
+  const { register } = useUser()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -14,6 +14,7 @@ export const RegisterPage: React.FC = () => {
     confirmPassword: '',
     agreeTerms: false,
   })
+  const [isLoading, setIsLoading] = useState(false)
   const [localError, setLocalError] = useState<string | null>(null)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,39 +28,46 @@ export const RegisterPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setIsLoading(true)
+    setLocalError(null)
 
     // Validations
     if (!formData.name.trim()) {
       setLocalError('El nombre es requerido')
+      setIsLoading(false)
       return
     }
 
     if (formData.password !== formData.confirmPassword) {
       setLocalError('Las contraseñas no coinciden')
+      setIsLoading(false)
       return
     }
 
     if (formData.password.length < 6) {
       setLocalError('La contraseña debe tener al menos 6 caracteres')
+      setIsLoading(false)
       return
     }
 
     if (!formData.agreeTerms) {
       setLocalError('Debes aceptar los términos y condiciones')
+      setIsLoading(false)
       return
     }
 
     try {
-      const success = await register(
+      await register(
         formData.email,
         formData.password,
         formData.name
       )
-      if (success) {
-        navigate('/profile')
-      }
+      // AppWrapper handles auth state sync, just redirect
+      navigate('/', { replace: true })
     } catch (err: any) {
       setLocalError(err.message || 'Error al registrarse')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -73,9 +81,9 @@ export const RegisterPage: React.FC = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="register-form">
-            {(localError || error) && (
+            {localError && (
               <div className="error-message">
-                {localError || error}
+                {localError}
               </div>
             )}
 
@@ -124,14 +132,15 @@ export const RegisterPage: React.FC = () => {
             </div>
 
             <div className="form-check">
-              <label>
+              <label className="checkbox-label">
                 <input
                   type="checkbox"
                   name="agreeTerms"
                   checked={formData.agreeTerms}
                   onChange={handleInputChange}
+                  className="checkbox-input"
                 />
-                Acepto los términos y condiciones
+                <span className="checkbox-text">Acepto los términos y condiciones</span>
               </label>
             </div>
 

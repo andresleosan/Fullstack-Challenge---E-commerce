@@ -46,7 +46,6 @@ export const MainLayout = React.forwardRef<HTMLDivElement, MainLayoutProps>(
             cartItemCount={headerProps.cartItemCount}
             isUserLoggedIn={headerProps.isUserLoggedIn}
             userName={headerProps.userName}
-            onLoginClick={headerProps.onLoginClick}
             onUserMenuClick={headerProps.onUserMenuClick}
           />
         )}

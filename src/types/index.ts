@@ -4,7 +4,7 @@ export interface Product {
   name: string
   description: string
   price: number
-  originalPrice: number
+  originalPrice?: number
   discount?: number
   category: string
   rating: number
@@ -12,6 +12,10 @@ export interface Product {
   stock: number
   badge?: string
   image?: string
+  featured?: boolean
+  tags?: string[]
+  createdAt?: string
+  updatedAt?: string
 }
 
 /* Cart Types */
@@ -19,6 +23,12 @@ export interface CartItem {
   productId: string
   quantity: number
   product?: Product
+  // Propiedades de conveniencia para compatibilidad
+  id?: string
+  name?: string
+  price?: number
+  image?: string
+  stock?: number
 }
 
 export interface Cart {
@@ -29,6 +39,37 @@ export interface Cart {
   total: number
 }
 
+/* Order Types */
+export interface OrderItem {
+  productId: string
+  name: string
+  price: number
+  quantity: number
+  total: number
+}
+
+export interface Order {
+  id: string
+  userId: string
+  items: OrderItem[]
+  total: number
+  subtotal: number
+  tax: number
+  shipping: number
+  shippingAddress: {
+    street: string
+    city: string
+    postalCode: string
+    country: string
+  }
+  paymentMethod: 'card' | 'paypal' | 'transfer'
+  status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled'
+  paymentStatus: 'pending' | 'completed' | 'failed' | 'refunded'
+  notes?: string
+  createdAt: string
+  updatedAt: string
+}
+
 /* User Types */
 export interface User {
   id: string
@@ -36,7 +77,7 @@ export interface User {
   email: string
   avatar?: string
   role: 'customer' | 'admin'
-  createdAt: string | Date
+  createdAt: string
 }
 
 export interface AuthState {
@@ -44,17 +85,6 @@ export interface AuthState {
   user: User | null
   loading: boolean
   error: string | null
-}
-
-/* Order Types */
-export interface Order {
-  id: string
-  userId: string
-  items: CartItem[]
-  total: number
-  status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled'
-  createdAt: Date
-  updatedAt: Date
 }
 
 /* Filter Types */

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import { MainLayout } from '@components/organisms'
 import { ProtectedRoute } from '@components/common/ProtectedRoute'
 import {
@@ -11,6 +11,7 @@ import {
   ProfilePage,
   OrdersPage
 } from '@pages'
+import { useCart } from '@hooks/useCart'
 import './App.css'
 
 /**
@@ -22,68 +23,86 @@ import './App.css'
  * - Admin: (futuro)
  */
 
+function AppContent() {
+  const navigate = useNavigate()
+  const { itemCount } = useCart()
+
+  const handleCartClick = () => {
+    navigate('/carrito')
+  }
+
+  return (
+    <MainLayout
+      headerProps={{
+        cartItemCount: itemCount,
+        onCartClick: handleCartClick,
+      }}
+    >
+      <Routes>
+        {/* ==================== RUTAS PÚBLICAS ==================== */}
+        
+        {/* Home / Catálogo */}
+        <Route path="/" element={<HomePage />} />
+        
+        {/* Detalle de Producto */}
+        <Route path="/productos/:id" element={<ProductDetailPage />} />
+        
+        {/* Carrito (browseable sin auth, pero acceso limitado) */}
+        <Route path="/carrito" element={<CartPage />} />
+        
+        {/* ==================== AUTENTICACIÓN ==================== */}
+        
+        {/* Login */}
+        <Route path="/login" element={<LoginPage />} />
+        
+        {/* Registro */}
+        <Route path="/register" element={<RegisterPage />} />
+        
+        {/* ==================== RUTAS PROTEGIDAS ==================== */}
+        
+        {/* Checkout (requiere autenticación + carrito no vacío) */}
+        <Route
+          path="/checkout"
+          element={
+            <ProtectedRoute>
+              <CheckoutPage />
+            </ProtectedRoute>
+          }
+        />
+        
+        {/* Perfil de Usuario */}
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+        
+        {/* Órdenes de Usuario */}
+        <Route
+          path="/orders"
+          element={
+            <ProtectedRoute>
+              <OrdersPage />
+            </ProtectedRoute>
+          }
+        />
+        
+        {/* ==================== 404 ==================== */}
+        
+        {/* Redirigir rutas no encontradas a home */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </MainLayout>
+  )
+}
+
 function App() {
   return (
     <Router>
-      <MainLayout>
-        <Routes>
-          {/* ==================== RUTAS PÚBLICAS ==================== */}
-          
-          {/* Home / Catálogo */}
-          <Route path="/" element={<HomePage />} />
-          
-          {/* Detalle de Producto */}
-          <Route path="/productos/:id" element={<ProductDetailPage />} />
-          
-          {/* Carrito (browseable sin auth, pero acceso limitado) */}
-          <Route path="/carrito" element={<CartPage />} />
-          
-          {/* ==================== AUTENTICACIÓN ==================== */}
-          
-          {/* Login */}
-          <Route path="/login" element={<LoginPage />} />
-          
-          {/* Registro */}
-          <Route path="/register" element={<RegisterPage />} />
-          
-          {/* ==================== RUTAS PROTEGIDAS ==================== */}
-          
-          {/* Checkout (requiere autenticación + carrito no vacío) */}
-          <Route
-            path="/checkout"
-            element={
-              <ProtectedRoute>
-                <CheckoutPage />
-              </ProtectedRoute>
-            }
-          />
-          
-          {/* Perfil de Usuario */}
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <ProfilePage />
-              </ProtectedRoute>
-            }
-          />
-          
-          {/* Órdenes de Usuario */}
-          <Route
-            path="/orders"
-            element={
-              <ProtectedRoute>
-                <OrdersPage />
-              </ProtectedRoute>
-            }
-          />
-          
-          {/* ==================== 404 ==================== */}
-          
-          {/* Redirigir rutas no encontradas a home */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </MainLayout>
+      <AppContent />
     </Router>
   )
 }

@@ -1,0 +1,9 @@
+[env.production]
+
+[build]
+command = "npm run build"
+cwd = "./"
+root_dir = "dist"
+
+[build.upload]
+delete_files = true

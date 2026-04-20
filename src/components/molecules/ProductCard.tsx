@@ -55,7 +55,7 @@ export const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
 
           <div className="product-card-price">
             <span className="price-current">${product.price}</span>
-            {product.originalPrice > product.price && (
+            {product.originalPrice && product.originalPrice > product.price && (
               <span className="price-original">${product.originalPrice}</span>
             )}
           </div>

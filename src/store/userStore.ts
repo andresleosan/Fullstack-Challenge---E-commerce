@@ -9,6 +9,8 @@ export interface UserStore {
   login: (email: string, password: string) => Promise<void>
   register: (email: string, password: string, name: string) => Promise<void>
   logout: () => void
+  setUser: (user: User | null) => void
+  clearUser: () => void
   updateProfile: (profile: Partial<User>) => void
   checkAuth: () => void
   isAuthenticated: () => boolean
@@ -23,7 +25,7 @@ const mockUsers: Record<string, { password: string; user: User }> = {
       email: 'demo@example.com',
       name: 'Demo User',
       role: 'customer',
-      createdAt: new Date(),
+      createdAt: new Date().toISOString(),
     },
   },
 }
@@ -81,7 +83,7 @@ export const useUserStore = create<UserStore>()(
             email,
             name,
             role: 'customer',
-            createdAt: new Date(),
+            createdAt: new Date().toISOString(),
           }
 
           mockUsers[email.toLowerCase()] = {
@@ -103,6 +105,17 @@ export const useUserStore = create<UserStore>()(
       },
 
       logout: () => {
+        set({
+          user: null,
+          error: null,
+        })
+      },
+
+      setUser: (user: User | null) => {
+        set({ user })
+      },
+
+      clearUser: () => {
         set({
           user: null,
           error: null,
