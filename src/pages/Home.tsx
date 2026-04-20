@@ -94,11 +94,11 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* Loading State */}
-      {isLoading && (
+      {/* {isLoading && (
         <div className="loading-container">
           <p>Cargando productos...</p>
         </div>
-      )}
+      )} */}
 
       {/* Main Content */}
       <div className="home-container">
