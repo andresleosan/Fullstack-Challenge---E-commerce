@@ -26,13 +26,19 @@ export const HomePage: React.FC<HomePageProps> = ({
   useEffect(() => {
     const loadFakeStoreProducts = async () => {
       setIsLoading(true)
+      const timeout = setTimeout(() => {
+        setIsLoading(false)
+      }, 5000)
+
       try {
         const fakeStoreProducts = await fakeStoreService.getAllProducts()
+        clearTimeout(timeout)
         loadProducts(fakeStoreProducts)
         console.log(`✅ Loaded ${fakeStoreProducts.length} products from FakeStore`)
+        setIsLoading(false)
       } catch (error: any) {
+        clearTimeout(timeout)
         console.error('Error loading products:', error.message)
-      } finally {
         setIsLoading(false)
       }
     }
