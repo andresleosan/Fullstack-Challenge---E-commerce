@@ -125,8 +125,10 @@
   }
 
   .product-gallery {
-    gap: 0.5rem;
-    padding: 0 0.5rem;
+    gap: 0.2rem;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
   }
 
   .product-gallery-loader {
@@ -150,8 +152,8 @@
   }
 }
 
-/* Responsive: Small Mobile (480px) */
-@media (max-width: 480px) {
+/* Responsive: Small Mobile (600px) */
+@media (max-width: 600px) {
   .product-gallery--grid-4,
   .product-gallery--grid-3,
   .product-gallery--grid-2 {
@@ -159,7 +161,8 @@
   }
 
   .product-gallery {
-    gap: 0.5rem;
+    gap: 0.3rem;
+    padding: 0;
   }
 
   .product-gallery-loader {

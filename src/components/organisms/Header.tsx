@@ -97,16 +97,8 @@ export const Header = React.forwardRef<HTMLDivElement, HeaderProps>(
     return (
       <header ref={ref} className="header">
         <div className="header-container">
-          {/* Logo y Menú Mobile */}
+          {/* Logo */}
           <div className="header-left">
-            <button
-              className="header-menu-btn"
-              onClick={handleMenuToggle}
-              aria-label="Toggle menu"
-              aria-expanded={isMenuOpen}
-            >
-              <Icon name="menu" size="md" />
-            </button>
             <button 
               onClick={() => {
                 navigate('/')
@@ -122,18 +114,44 @@ export const Header = React.forwardRef<HTMLDivElement, HeaderProps>(
             </button>
           </div>
 
-          {/* Búsqueda Central */}
+          {/* Menú Desktop */}
+          <nav className="header-desktop-menu">
+            <a href="/" className="header-menu-link">
+              Inicio
+            </a>
+            <a href="#" className="header-menu-link">
+              Categorías
+            </a>
+            <a href="#" className="header-menu-link">
+              Ofertas
+            </a>
+            <a href="#" className="header-menu-link">
+              Contacto
+            </a>
+          </nav>
+
+          {/* Búsqueda */}
           <div className="header-search">
             <SearchInput
               value={searchValue}
               onChange={handleSearch}
-              placeholder="Buscar productos..."
+              placeholder="Buscar..."
               onClear={() => setSearchValue('')}
             />
           </div>
 
           {/* Carrito y Usuario */}
           <div className="header-right">
+            {/* Menú Mobile Button */}
+            <button
+              className="header-menu-btn"
+              onClick={handleMenuToggle}
+              aria-label="Toggle menu"
+              aria-expanded={isMenuOpen}
+            >
+              <Icon name="menu" size="md" />
+            </button>
+
             {/* Carrito */}
             <button
               className="header-cart-btn"
@@ -201,23 +219,24 @@ export const Header = React.forwardRef<HTMLDivElement, HeaderProps>(
           </div>
         </div>
 
-        {/* Menú Mobile - Navegación */}
-        {isMenuOpen && (
-          <nav className="header-mobile-menu">
-            <a href="/" className="header-menu-link">
-              Inicio
-            </a>
-            <a href="#" className="header-menu-link">
-              Categorías
-            </a>
-            <a href="#" className="header-menu-link">
-              Ofertas
-            </a>
-            <a href="#" className="header-menu-link">
-              Contacto
-            </a>
-          </nav>
-        )}
+        {/* Menú Mobile */}
+        <nav 
+          className={`header-mobile-menu ${isMenuOpen ? 'open' : ''}`}
+          aria-hidden={isMenuOpen ? false : undefined}
+        >
+          <a href="/" className="header-menu-link">
+            Inicio
+          </a>
+          <a href="#" className="header-menu-link">
+            Categorías
+          </a>
+          <a href="#" className="header-menu-link">
+            Ofertas
+          </a>
+          <a href="#" className="header-menu-link">
+            Contacto
+          </a>
+        </nav>
       </header>
     )
   }
