@@ -18,13 +18,20 @@ export interface CardFooterProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
 }
 
+// Tipo para el Card compuesto
+interface CardComponent extends React.ForwardRefExoticComponent<CardProps & React.RefAttributes<HTMLDivElement>> {
+  Header: React.ForwardRefExoticComponent<CardHeaderProps & React.RefAttributes<HTMLDivElement>>
+  Body: React.ForwardRefExoticComponent<CardBodyProps & React.RefAttributes<HTMLDivElement>>
+  Footer: React.ForwardRefExoticComponent<CardFooterProps & React.RefAttributes<HTMLDivElement>>
+}
+
 /**
  * Card Component - Composable
  * Variantes: default, elevated, outlined, product
  * Subcomponentes: Card.Header, Card.Body, Card.Footer
  * Reutiliza CSS de Fase 1
  */
-export const Card = React.forwardRef<HTMLDivElement, CardProps>(
+const CardComponent = React.forwardRef<HTMLDivElement, CardProps>(
   ({ variant = 'default', children, className = '', ...props }, ref) => {
     return (
       <div
@@ -36,9 +43,9 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
       </div>
     )
   }
-)
+) as CardComponent
 
-Card.displayName = 'Card'
+CardComponent.displayName = 'Card'
 
 export const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
   ({ children, className = '', ...props }, ref) => {
@@ -77,6 +84,8 @@ export const CardFooter = React.forwardRef<HTMLDivElement, CardFooterProps>(
 CardFooter.displayName = 'CardFooter'
 
 // Attach subcomponents
-Card.Header = CardHeader
-Card.Body = CardBody
-Card.Footer = CardFooter
+CardComponent.Header = CardHeader
+CardComponent.Body = CardBody
+CardComponent.Footer = CardFooter
+
+export const Card = CardComponent

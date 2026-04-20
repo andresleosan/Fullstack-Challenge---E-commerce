@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { CartItem, Product } from '@types/index'
+import type { CartItem, Product } from '@types'
 
 export interface CartStore {
   items: CartItem[]
@@ -26,13 +26,13 @@ export const useCartStore = create<CartStore>()(
 
       addItem: (product: Product, quantity: number) => {
         const { items } = get()
-        const existingItem = items.find((item) => item.id === product.id)
+        const existingItem = items.find((item) => item.productId === product.id)
 
         if (existingItem) {
           // Update quantity if item already in cart
           set({
             items: items.map((item) =>
-              item.id === product.id
+              item.productId === product.id
                 ? {
                     ...item,
                     quantity: Math.min(item.quantity + quantity, product.stock),
@@ -46,12 +46,9 @@ export const useCartStore = create<CartStore>()(
             items: [
               ...items,
               {
-                id: product.id,
-                name: product.name,
-                price: product.price,
+                productId: product.id,
                 quantity: Math.min(quantity, product.stock),
-                image: product.image,
-                stock: product.stock,
+                product,
               },
             ],
           })
@@ -60,21 +57,21 @@ export const useCartStore = create<CartStore>()(
 
       removeItem: (productId: string) => {
         set({
-          items: get().items.filter((item) => item.id !== productId),
+          items: get().items.filter((item) => item.productId !== productId),
         })
       },
 
       updateQuantity: (productId: string, quantity: number) => {
         const { items } = get()
-        const item = items.find((i) => i.id === productId)
+        const item = items.find((i) => i.productId === productId)
 
-        if (!item) return
+        if (!item || !item.product) return
 
-        const newQuantity = Math.max(1, Math.min(quantity, item.stock))
+        const newQuantity = Math.max(1, Math.min(quantity, item.product.stock))
 
         set({
           items: items.map((item) =>
-            item.id === productId ? { ...item, quantity: newQuantity } : item
+            item.productId === productId ? { ...item, quantity: newQuantity } : item
           ),
         })
       },
@@ -90,7 +87,7 @@ export const useCartStore = create<CartStore>()(
       getSubtotal: () => {
         return parseFloat(
           get()
-            .items.reduce((total, item) => total + item.price * item.quantity, 0)
+            .items.reduce((total, item) => total + (item.product?.price || 0) * item.quantity, 0)
             .toFixed(2)
         )
       },

@@ -14,7 +14,7 @@ export interface FooterProps {
  * Combina: Button, Icon
  * Pie de página con links, newsletter y copyright
  */
-export const Footer = React.forwardRef<HTMLFootElement, FooterProps>(
+export const Footer = React.forwardRef<HTMLDivElement, FooterProps>(
   (
     {
       onNewsletterSubmit,

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Button, Icon, Badge } from '@components/atoms'
 import { SearchInput } from '@components/molecules'
-import { useCart } from '@hooks/useCart'
 import './Header.css'
 
 export interface HeaderProps {
@@ -20,7 +19,7 @@ export interface HeaderProps {
  * Combina: SearchInput, Button, Icon, Badge
  * Barra superior con logo, búsqueda, carrito y menú usuario
  */
-export const Header = React.forwardRef<HTMLHeaderElement, HeaderProps>(
+export const Header = React.forwardRef<HTMLDivElement, HeaderProps>(
   (
     {
       onSearch,

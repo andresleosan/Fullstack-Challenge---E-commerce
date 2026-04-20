@@ -1,5 +1,5 @@
 import React from 'react'
-import { Input, Button, Badge } from '../atoms'
+import { Badge } from '../atoms'
 import './FilterGroup.css'
 
 export interface FilterOption {
@@ -9,10 +9,13 @@ export interface FilterOption {
 }
 
 export interface FilterGroupProps {
-  title: string
-  options: FilterOption[]
+  title?: string
+  categories?: string[]
+  options?: FilterOption[]
   selectedId?: string
+  selectedCategories?: string[]
   onSelectOption?: (id: string) => void
+  onChange?: (categories: string[]) => void
   type?: 'radio' | 'checkbox'
   showCount?: boolean
 }
@@ -26,15 +29,34 @@ export const FilterGroup = React.forwardRef<HTMLDivElement, FilterGroupProps>(
   (
     {
       title,
+      categories,
       options,
       selectedId,
+      selectedCategories,
       onSelectOption,
-      type = 'radio',
+      onChange,
+      type = 'checkbox',
       showCount = true,
     },
     ref
   ) => {
     const [expanded, setExpanded] = React.useState(true)
+    
+    // Support both categories and options approaches
+    const items: FilterOption[] = categories?.map(cat => ({ id: cat, label: cat })) || options || []
+    const selected = selectedCategories || (selectedId ? [selectedId] : [])
+    
+    const handleChange = (id: string) => {
+      if (type === 'checkbox') {
+        const newSelected = selected.includes(id)
+          ? selected.filter(s => s !== id)
+          : [...selected, id]
+        onChange?.(newSelected)
+      } else {
+        onSelectOption?.(id)
+        onChange?.([id])
+      }
+    }
 
     return (
       <div ref={ref} className="filter-group">
@@ -51,14 +73,14 @@ export const FilterGroup = React.forwardRef<HTMLDivElement, FilterGroupProps>(
 
         {expanded && (
           <div className="filter-group-options">
-            {options.map((option) => (
+            {items.map((option) => (
               <label key={option.id} className="filter-option">
                 <input
                   type={type}
                   name={title}
                   value={option.id}
-                  checked={type === 'radio' ? selectedId === option.id : false}
-                  onChange={() => onSelectOption?.(option.id)}
+                  checked={type === 'radio' ? selected.includes(option.id) : selected.includes(option.id)}
+                  onChange={() => handleChange(option.id)}
                   className="filter-option-input"
                 />
                 <span className="filter-option-label">{option.label}</span>

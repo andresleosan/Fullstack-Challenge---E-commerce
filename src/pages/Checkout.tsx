@@ -205,10 +205,10 @@ export const CheckoutPage: React.FC = () => {
               <h3>Resumen del Pedido</h3>
               <ul className="items-list">
                 {items.map((item) => (
-                  <li key={item.id} className="item">
-                    <span>{item.name}</span>
+                  <li key={item.productId} className="item">
+                    <span>{item.product?.name || 'Unknown'}</span>
                     <span>
-                      {item.quantity}x ${item.price.toFixed(2)}
+                      {item.quantity}x ${(item.product?.price || 0).toFixed(2)}
                     </span>
                   </li>
                 ))}

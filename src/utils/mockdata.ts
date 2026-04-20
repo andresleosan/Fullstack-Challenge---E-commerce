@@ -3,7 +3,7 @@
  * Será reemplazado por datos reales de Firebase en Phase 3
  */
 
-import { Product, Order } from '@types/index'
+import { Product, Order } from '@types'
 
 // Mock Products para catálogo
 export const mockProducts: Product[] = [

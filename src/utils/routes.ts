@@ -32,7 +32,7 @@ export type Route = typeof ROUTES[keyof typeof ROUTES]
  * Helper para navegar a rutas con parámetros
  */
 export const createPath = (route: Route, params?: Record<string, string | number>) => {
-  let path = route
+  let path: string = route
   
   if (params) {
     Object.entries(params).forEach(([key, value]) => {

@@ -7,6 +7,7 @@ export interface ProductCardProps {
   product: Product
   onAddToCart?: (product: Product, quantity: number) => void
   onViewDetail?: (productId: string) => void
+  variant?: 'default' | 'compact'
 }
 
 /**
@@ -15,7 +16,7 @@ export interface ProductCardProps {
  * Muestra producto con imagen, precio, rating, y botón add-to-cart
  */
 export const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
-  ({ product, onAddToCart, onViewDetail }, ref) => {
+  ({ product, onAddToCart, onViewDetail, variant = 'default' }, ref) => {
     const [quantity, setQuantity] = React.useState(1)
 
     const handleAddToCart = () => {
@@ -26,7 +27,7 @@ export const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
     }
 
     return (
-      <Card ref={ref} variant="product" className="product-card">
+      <Card ref={ref} variant="product" className={`product-card product-card--${variant}`}>
         <div className="product-card-image">
           <img
             src={product.image || 'https://via.placeholder.com/250x200?text=Product'}

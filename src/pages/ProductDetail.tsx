@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { Card, Button, Badge, Icon, Input } from '@components/atoms'
 import { useCart } from '@hooks/useCart'
 import { mockProducts } from '@utils/mockdata'
-import type { Product } from '@types/index'
+import type { Product } from '@types'
 import './ProductDetail.css'
 
 export const ProductDetailPage: React.FC = () => {
@@ -74,7 +74,7 @@ export const ProductDetailPage: React.FC = () => {
   const isOutOfStock = product.stock === 0
   const hasDiscount = product.discount && product.discount > 0
   const discountedPrice = hasDiscount
-    ? (product.price * (1 - product.discount / 100)).toFixed(2)
+    ? (product.price * (1 - (product.discount ?? 0) / 100)).toFixed(2)
     : product.price.toFixed(2)
 
   return (

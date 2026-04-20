@@ -105,12 +105,14 @@ export const CartSidebar = React.forwardRef<HTMLDivElement, CartSidebarProps>(
             ) : (
               items.map((item) => (
                 <CartItem
-                  key={item.id}
-                  {...item}
+                  key={item.productId}
+                  productId={item.productId}
+                  quantity={item.quantity}
+                  product={item.product}
                   onUpdateQuantity={(qty) =>
-                    onUpdateQuantity?.(item.id, qty)
+                    onUpdateQuantity?.(item.productId, qty)
                   }
-                  onRemove={() => onRemoveItem?.(item.id)}
+                  onRemove={() => onRemoveItem?.(item.productId)}
                 />
               ))
             )}

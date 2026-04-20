@@ -18,8 +18,8 @@ export const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
   ({ currentPage, totalPages, onPageChange, siblings = 1 }, ref) => {
     const getPageNumbers = () => {
       const delta = siblings
-      const range = []
-      const rangeWithDots = []
+      const range: number[] = []
+      const rangeWithDots: (number | string)[] = []
       let l: number | undefined
 
       for (let i = 1; i <= totalPages; i++) {

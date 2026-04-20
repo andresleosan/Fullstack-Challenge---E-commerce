@@ -1,14 +1,12 @@
 import React from 'react'
 import { Input, Button, Icon } from '../atoms'
+import type { Product } from '@types'
 import './CartItem.css'
 
 export interface CartItemProps {
-  id: string
-  name: string
-  price: number
+  productId: string
   quantity: number
-  stock: number
-  image?: string
+  product?: Product
   onUpdateQuantity?: (quantity: number) => void
   onRemove?: () => void
 }
@@ -21,17 +19,17 @@ export interface CartItemProps {
 export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
   (
     {
-      id,
-      name,
-      price,
+      productId,
       quantity,
-      stock,
-      image,
+      product,
       onUpdateQuantity,
       onRemove,
     },
     ref
   ) => {
+    // Extraer información del producto
+    const { name = 'Unknown Product', price = 0, stock = 0, image } = product || {}
+
     const handleQuantityChange = (newQ: number) => {
       const clamped = Math.max(1, Math.min(stock, newQ))
       if (onUpdateQuantity) {
@@ -40,7 +38,7 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
     }
 
     return (
-      <div ref={ref} className="cart-item">
+      <div ref={ref} className="cart-item" data-product-id={productId}>
         {image && (
           <img src={image} alt={name} className="cart-item-image" loading="lazy" />
         )}

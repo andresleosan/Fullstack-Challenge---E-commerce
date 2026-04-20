@@ -4,6 +4,7 @@ import './Button.css'
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost'
   size?: 'sm' | 'base' | 'lg' | 'xl'
+  fullWidth?: boolean
   isLoading?: boolean
   children: React.ReactNode
 }
@@ -20,6 +21,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     {
       variant = 'primary',
       size = 'base',
+      fullWidth = false,
       isLoading = false,
       disabled = false,
       children,
@@ -31,7 +33,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         ref={ref}
-        className={`btn btn--${variant} btn--${size} ${isLoading ? 'btn--loading' : ''} ${className}`}
+        className={`btn btn--${variant} btn--${size} ${fullWidth ? 'btn--full-width' : ''} ${isLoading ? 'btn--loading' : ''} ${className}`}
         disabled={disabled || isLoading}
         {...props}
       >

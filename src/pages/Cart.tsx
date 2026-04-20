@@ -7,7 +7,7 @@ import './Cart.css'
 
 export const CartPage: React.FC = () => {
   const navigate = useNavigate()
-  const { items, itemCount, subtotal, tax, shipping, total, removeFromCart, updateCartQuantity, emptyCart } = useCart()
+  const { items, itemCount, subtotal, tax, shipping, total, removeFromCart, updateCartQuantity } = useCart()
 
   const handleCheckout = () => {
     if (items.length > 0) {
@@ -39,10 +39,12 @@ export const CartPage: React.FC = () => {
           <Card variant="default" className="items-card">
             {items.map((item) => (
               <CartItem
-                key={item.id}
-                {...item}
-                onUpdateQuantity={(qty) => updateCartQuantity(item.id, qty)}
-                onRemove={() => removeFromCart(item.id)}
+                key={item.productId}
+                productId={item.productId}
+                quantity={item.quantity}
+                product={item.product}
+                onUpdateQuantity={(qty) => updateCartQuantity(item.productId, qty)}
+                onRemove={() => removeFromCart(item.productId)}
               />
             ))}
           </Card>

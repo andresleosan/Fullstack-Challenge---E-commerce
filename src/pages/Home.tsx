@@ -14,7 +14,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   onAddToCart,
   onProductClick,
 }) => {
-  const { products, filters, search, filterByCategory, filterByPrice, sort } =
+  const { products, filters, search, filterByCategory, sort } =
     useProducts()
   const { addToCart } = useCart()
   const [currentPage, setCurrentPage] = React.useState(1)
@@ -82,7 +82,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               <FilterGroup
                 categories={categories}
                 selectedCategories={filters.category ? [filters.category] : []}
-                onChange={(cats) =>
+                onChange={(cats: string[]) =>
                   handleFilterCategory(cats.length > 0 ? cats[0] : null)
                 }
               />

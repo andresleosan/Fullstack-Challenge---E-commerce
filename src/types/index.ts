@@ -5,6 +5,7 @@ export interface Product {
   description: string
   price: number
   originalPrice: number
+  discount?: number
   category: string
   rating: number
   reviews: number

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useUserStore } from '@store/userStore'
-import { authMiddleware, authGuards, permissions } from '@utils/auth'
+import { authMiddleware, authGuards, permissions } from '@utils'
 import type { User } from '@types'
 
 /**
@@ -19,7 +19,7 @@ export const useUser = () => {
     setLocalUser(currentUser)
 
     // Subscribirse a cambios de auth
-    const unsubscribe = authMiddleware.subscribe((user) => {
+    const unsubscribe = authMiddleware.subscribe((user: User | null) => {
       setLocalUser(user)
     })
 

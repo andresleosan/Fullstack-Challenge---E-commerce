@@ -6,7 +6,7 @@ import './Profile.css'
 
 export const ProfilePage: React.FC = () => {
   const navigate = useNavigate()
-  const { user, isAuthenticated, logout, updateProfile } = useUser()
+  const { user, isAuthenticated, logout } = useUser()
 
   if (!isAuthenticated || !user) {
     return (

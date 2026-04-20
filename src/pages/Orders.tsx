@@ -52,7 +52,7 @@ export const OrdersPage: React.FC = () => {
 
   const getStatusColor = (
     status: 'pending' | 'processing' | 'shipped' | 'delivered'
-  ): 'success' | 'warning' | 'info' | 'default' => {
+  ): 'success' | 'warning' | 'info' | 'secondary' => {
     switch (status) {
       case 'delivered':
         return 'success'
@@ -61,9 +61,9 @@ export const OrdersPage: React.FC = () => {
       case 'processing':
         return 'warning'
       case 'pending':
-        return 'default'
+        return 'secondary'
       default:
-        return 'default'
+        return 'secondary'
     }
   }
 
