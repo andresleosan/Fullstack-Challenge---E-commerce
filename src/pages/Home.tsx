@@ -139,15 +139,6 @@ export const HomePage: React.FC<HomePageProps> = ({
 
         {/* Main Content */}
         <main className="home-main">
-          {/* Search Bar */}
-          <div className="home-search">
-            <SearchInput
-              value={filters.searchQuery}
-              onChange={handleSearch}
-              placeholder="¿Qué buscas?"
-            />
-          </div>
-
           {/* Results Count */}
           <div className="results-info">
             <p>
