@@ -156,16 +156,23 @@
 - **Commits**: 10 (3 stores + 1 export + 5 hooks + 1 export)
 
 ### 📋 Subfase 2.6: Páginas y Routing
-- [ ] Home.tsx
-- [ ] ProductDetail.tsx
-- [ ] Cart.tsx
-- [ ] Checkout.tsx
-- [ ] Login.tsx + Register.tsx
-- [ ] Profile.tsx
-- [ ] Orders.tsx
-- [ ] Configurar React Router
-- **Status**: ⏳ Bloqueado
-- **Commits**: 0
+- [x] Home.tsx - Catálogo con filtros, búsqueda, paginación
+- [x] ProductDetail.tsx - Detalle de producto con breadcrumb
+- [x] Cart.tsx - Carrito de compra con totales
+- [x] Checkout.tsx - Formulario de pago simulado
+- [x] Login.tsx - Formulario de login con demo credentials
+- [x] Register.tsx - Formulario de registro con validación
+- [x] Profile.tsx - Perfil de usuario con órdenes
+- [x] Orders.tsx - Historial de órdenes
+- [x] Configurar React Router con BrowserRouter + Routes
+- [x] Implement ProtectedRoute component para auth
+- [x] Add public routes (/, /productos/:id, /carrito, /login, /register)
+- [x] Add protected routes (/checkout, /profile, /orders)
+- [x] Handle 404 redirects a home
+- [x] Crear routes configuration utility
+- [x] Add mockdata.ts con 12 productos
+- **Status**: ✅ Completada (8 pages + routing setup)
+- **Commits**: 1 (feat: Setup React Router + create pages)
 
 ### 📋 Subfase 2.7: Autenticación Simulada
 - [ ] Auth utils (simulada)
@@ -186,18 +193,19 @@
 - **Status**: ⏳ Bloqueado
 - **Commits**: 0
 
-### ✅ FASE 2 TOTAL (En construcción)
-- **Estado**: 🟡 En progreso (5/8 subfases completadas - 62.5%)
+### ✅ FASE 2 TOTAL (Casi Completada)
+- **Estado**: 🟡 En progreso (6/8 subfases completadas - 75%)
 - **Commits Subfase 2.1**: 2 (setup + build)
 - **Commits Subfase 2.2**: 7 (6 componentes + exports)
 - **Commits Subfase 2.3**: 6 (5 componentes + exports)
 - **Commits Subfase 2.4**: 6 (5 componentes + exports)
 - **Commits Subfase 2.5**: 10 (3 stores + 5 hooks + 2 exports)
-- **Commits acumulados Fase 2**: 31
-- **Commits totales**: 43/30+ ✅✅✅ (13 commits sobre meta)
-- **Eta**: Hoy (3 subfases restantes para completar Fase 2)
-- **Bloqueadores**: Ninguno
-- **Próximo**: Subfase 2.3 - Componentes Molecules
+- **Commits Subfase 2.6**: 1 (React Router + 8 pages + routing setup)
+- **Commits acumulados Fase 2**: 32
+- **Commits totales**: 47/30+ ✅✅✅ (17 commits sobre meta)
+- **Eta**: Completar Fase 2 hoy (2 subfases restantes: Auth Utilities + Validation & Testing)
+- **Bloqueadores**: Ninguno (minor TypeScript warnings sin impacto en funcionalidad)
+- **Próximo**: Subfase 2.7 - Auth Utilities
 
 ---
 
