@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Icon, Badge } from '@components/atoms'
 import { CartItem } from '@components/molecules'
-import type { CartItem as CartItemType } from '@types/index'
+import type { CartItem as CartItemType } from '@types'
 import './CartSidebar.css'
 
 export interface CartSidebarProps {

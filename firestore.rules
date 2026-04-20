@@ -1,0 +1,293 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ==================== FUNCIONES VALIDADORAS ====================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+    
+    function isAdmin() {
+      return request.auth != null && request.auth.token.admin == true;
+    }
+    
+    function isOwnerOrAdmin(userId) {
+      return isOwner(userId) || isAdmin();
+    }
+    
+    // Validar producto
+    function isValidProduct(data) {
+      return data.name is string
+        && data.name.size() > 0
+        && data.name.size() <= 200
+        && data.price is number
+        && data.price >= 0
+        && data.stock is number
+        && data.stock >= 0
+        && data.categoryId is string
+        && data.categoryId.size() > 0
+        && (data.description is string ? data.description.size() <= 5000 : true)
+        && (data.images is list ? data.images.size() <= 10 : true)
+        && (data.rating is number ? data.rating >= 0 && data.rating <= 5 : true);
+    }
+    
+    // Validar review
+    function isValidReview(data) {
+      return data.rating is number
+        && data.rating >= 1
+        && data.rating <= 5
+        && data.comment is string
+        && data.comment.size() > 0
+        && data.comment.size() <= 1000
+        && data.productId is string
+        && data.productId.size() > 0
+        && data.userId is string
+        && data.userId.size() > 0
+        && data.createdAt == request.time;
+    }
+    
+    // Validar orden
+    function isValidOrder(data) {
+      return data.userId is string
+        && data.userId.size() > 0
+        && data.status in ['pending', 'processing', 'shipped', 'delivered', 'canceled']
+        && data.total is number
+        && data.total > 0
+        && data.subtotal is number
+        && data.subtotal > 0
+        && data.tax is number
+        && data.tax >= 0
+        && data.shipping is number
+        && data.shipping >= 0
+        && data.items is list
+        && data.items.size() > 0
+        && data.createdAt == request.time
+        && data.shippingAddress is map
+        && isValidAddress(data.shippingAddress);
+    }
+    
+    // Validar dirección
+    function isValidAddress(addr) {
+      return addr.email is string
+        && addr.firstName is string
+        && addr.firstName.size() > 0
+        && addr.lastName is string
+        && addr.lastName.size() > 0
+        && addr.address is string
+        && addr.address.size() > 0
+        && addr.city is string
+        && addr.city.size() > 0
+        && addr.state is string
+        && addr.state.size() > 0
+        && addr.zipCode is string
+        && addr.zipCode.size() > 0;
+    }
+    
+    // Validar usuario
+    function isValidUser(data) {
+      return data.name is string
+        && data.name.size() > 0
+        && data.name.size() <= 100
+        && data.email is string
+        && data.email.size() > 0
+        && (data.phone is string ? data.phone.size() <= 20 : true)
+        && (data.profileImage is string ? data.profileImage.size() <= 500 : true)
+        && (data.address is string ? data.address.size() <= 200 : true);
+    }
+    
+    // ==================== USUARIOS ====================
+    
+    match /users/{userId} {
+      // GET: Solo el propietario puede leer su perfil
+      allow get: if isOwner(userId);
+      
+      // LIST: Admin puede listar usuarios
+      allow list: if isAdmin();
+      
+      // CREATE: Usuario autenticado crea su perfil
+      allow create: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid
+        && isValidUser(request.resource.data)
+        && request.resource.data.createdAt == request.time;
+      
+      // UPDATE: Solo el propietario puede actualizar
+      allow update: if isOwner(userId)
+        && isValidUser(request.resource.data)
+        && resource.data.userId == request.resource.data.userId;
+      
+      // DELETE: Solo admin
+      allow delete: if isAdmin();
+      
+      // Subcoleción: direcciones guardadas
+      match /addresses/{addressId} {
+        allow read: if isOwner(userId);
+        allow write: if isOwner(userId)
+          && isValidAddress(request.resource.data);
+      }
+      
+      // Subcoleción: métodos de pago (HASHED ONLY)
+      match /paymentMethods/{paymentId} {
+        allow read: if isOwner(userId);
+        allow write: if false; // Backend solo
+      }
+    }
+    
+    // ==================== PRODUCTOS ====================
+    
+    match /products/{productId} {
+      // READ: Cualquiera puede ver productos
+      allow read: if true;
+      
+      // CREATE: Solo admin
+      allow create: if isAdmin()
+        && isValidProduct(request.resource.data)
+        && request.resource.data.createdAt == request.time;
+      
+      // UPDATE: Solo admin
+      allow update: if isAdmin()
+        && isValidProduct(request.resource.data);
+      
+      // DELETE: Solo admin
+      allow delete: if isAdmin();
+      
+      // Subcoleción: reviews de producto
+      match /reviews/{reviewId} {
+        // Cualquiera puede ver reviews
+        allow read: if true;
+        
+        // Usuario autenticado puede crear review
+        allow create: if isAuthenticated()
+          && isValidReview(request.resource.data)
+          && request.resource.data.userId == request.auth.uid;
+        
+        // Solo el autor puede actualizar su review
+        allow update: if isAuthenticated()
+          && resource.data.userId == request.auth.uid
+          && isValidReview(request.resource.data);
+        
+        // Solo el autor o admin puede borrar
+        allow delete: if isAuthenticated()
+          && (resource.data.userId == request.auth.uid || isAdmin());
+      }
+    }
+    
+    // ==================== CATEGORÍAS ====================
+    
+    match /categories/{categoryId} {
+      // Cualquiera puede leer categorías
+      allow read: if true;
+      
+      // Solo admin puede escribir
+      allow write: if isAdmin();
+    }
+    
+    // ==================== CARRITOS ====================
+    
+    match /carts/{userId} {
+      // GET: Solo el propietario
+      allow get: if isOwner(userId);
+      
+      // CREATE/UPDATE: Solo el propietario
+      allow create, update: if isOwner(userId)
+        && request.resource.data.userId == userId;
+      
+      // DELETE: Solo el propietario
+      allow delete: if isOwner(userId);
+      
+      // Subcoleción: items del carrito
+      match /items/{itemId} {
+        allow read: if isOwner(userId);
+        allow create, update, delete: if isOwner(userId);
+      }
+    }
+    
+    // ==================== ÓRDENES ====================
+    
+    match /orders/{orderId} {
+      // GET: Propietario o admin pueden leer
+      allow get: if isAuthenticated()
+        && (resource.data.userId == request.auth.uid || isAdmin());
+      
+      // LIST: Propietario ve sus órdenes, admin ve todas
+      allow list: if isAuthenticated()
+        && (query.where('userId', '==', request.auth.uid) || isAdmin());
+      
+      // CREATE: Usuario autenticado crea su propia orden
+      allow create: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid
+        && isValidOrder(request.resource.data);
+      
+      // UPDATE: Solo admin (cambiar estado de orden)
+      allow update: if isAdmin()
+        && resource.data.userId == request.resource.data.userId
+        && request.resource.data.status in ['pending', 'processing', 'shipped', 'delivered', 'canceled'];
+      
+      // DELETE: Solo admin
+      allow delete: if isAdmin();
+      
+      // Subcoleción: items de la orden
+      match /items/{itemId} {
+        allow read: if isAuthenticated()
+          && (get(/databases/$(database)/documents/orders/$(orderId)).data.userId == request.auth.uid
+              || isAdmin());
+        
+        allow write: if false; // Backend solo (creados al crear orden)
+      }
+      
+      // Subcoleción: historial de cambios
+      match /history/{historyId} {
+        allow read: if isAuthenticated()
+          && (get(/databases/$(database)/documents/orders/$(orderId)).data.userId == request.auth.uid
+              || isAdmin());
+        
+        allow write: if false; // Backend solo
+      }
+    }
+    
+    // ==================== DESEOS (WISHLIST) ====================
+    
+    match /wishlist/{userId} {
+      allow get: if isOwner(userId);
+      allow write: if isOwner(userId);
+      
+      match /items/{itemId} {
+        allow read: if isOwner(userId);
+        allow create, update, delete: if isOwner(userId);
+      }
+    }
+    
+    // ==================== DATOS SENSIBLES - BLOQUEADOS ====================
+    
+    // Pagos: NUNCA expongas detalles de pago al cliente
+    match /payments/{paymentId} {
+      allow read, write: if false; // Backend solo via Cloud Functions
+    }
+    
+    // Datos internos: NUNCA accesibles desde cliente
+    match /internal/{document=**} {
+      allow read, write: if false;
+    }
+    
+    // Admin: Solo admins
+    match /admin/{document=**} {
+      allow read, write: if isAdmin();
+    }
+    
+    // Settings: Solo lectura pública, escritura admin
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    
+    // ==================== CATCH-ALL: BLOQUEAR TODO LO DEMÁS ====================
+    
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

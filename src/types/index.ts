@@ -35,6 +35,7 @@ export interface User {
   email: string
   avatar?: string
   role: 'customer' | 'admin'
+  createdAt: string | Date
 }
 
 export interface AuthState {

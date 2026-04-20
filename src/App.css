@@ -11,6 +11,27 @@
   width: 100%;
 }
 
+/* ==================== PROTECTED ROUTE LOADER ==================== */
+
+.protected-route-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 20px;
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 100%);
+  color: #00d9ff;
+  font-size: 16px;
+  text-align: center;
+}
+
+.protected-route-loader p {
+  margin: 0;
+  font-size: 16px;
+  color: #888888;
+}
+
 @media (max-width: 768px) {
   .container {
     padding: var(--spacing-sm);

@@ -1,7 +1,7 @@
 import React from 'react'
 import { ProductCard } from '@components/molecules'
 import { Loader } from '@components/atoms'
-import type { Product } from '@types/index'
+import type { Product } from '@types'
 import './ProductGallery.css'
 
 export interface ProductGalleryProps {

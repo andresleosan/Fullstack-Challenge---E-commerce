@@ -1,23 +1,89 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { MainLayout } from '@components/organisms'
+import { ProtectedRoute } from '@components/common/ProtectedRoute'
+import {
+  HomePage,
+  ProductDetailPage,
+  CartPage,
+  CheckoutPage,
+  LoginPage,
+  RegisterPage,
+  ProfilePage,
+  OrdersPage
+} from '@pages'
 import './App.css'
 
-// Placeholder pages - will be implemented in Subfase 2.6
-const Home = () => <div className="container"><h1>Home - Fase 2 Ready</h1></div>
-const ProductDetail = () => <div className="container"><h1>Product Detail</h1></div>
-const Cart = () => <div className="container"><h1>Cart</h1></div>
-const Checkout = () => <div className="container"><h1>Checkout</h1></div>
+/**
+ * App Component - Rutas principales de la aplicación
+ * 
+ * Estructura:
+ * - Públicas: /, /productos/:id, /carrito, /login, /register
+ * - Protegidas: /checkout, /profile, /orders
+ * - Admin: (futuro)
+ */
 
 function App() {
   return (
     <Router>
-      <main className="app-main">
+      <MainLayout>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/producto/:id" element={<ProductDetail />} />
-          <Route path="/carrito" element={<Cart />} />
-          <Route path="/checkout" element={<Checkout />} />
+          {/* ==================== RUTAS PÚBLICAS ==================== */}
+          
+          {/* Home / Catálogo */}
+          <Route path="/" element={<HomePage />} />
+          
+          {/* Detalle de Producto */}
+          <Route path="/productos/:id" element={<ProductDetailPage />} />
+          
+          {/* Carrito (browseable sin auth, pero acceso limitado) */}
+          <Route path="/carrito" element={<CartPage />} />
+          
+          {/* ==================== AUTENTICACIÓN ==================== */}
+          
+          {/* Login */}
+          <Route path="/login" element={<LoginPage />} />
+          
+          {/* Registro */}
+          <Route path="/register" element={<RegisterPage />} />
+          
+          {/* ==================== RUTAS PROTEGIDAS ==================== */}
+          
+          {/* Checkout (requiere autenticación + carrito no vacío) */}
+          <Route
+            path="/checkout"
+            element={
+              <ProtectedRoute>
+                <CheckoutPage />
+              </ProtectedRoute>
+            }
+          />
+          
+          {/* Perfil de Usuario */}
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          
+          {/* Órdenes de Usuario */}
+          <Route
+            path="/orders"
+            element={
+              <ProtectedRoute>
+                <OrdersPage />
+              </ProtectedRoute>
+            }
+          />
+          
+          {/* ==================== 404 ==================== */}
+          
+          {/* Redirigir rutas no encontradas a home */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </main>
+      </MainLayout>
     </Router>
   )
 }

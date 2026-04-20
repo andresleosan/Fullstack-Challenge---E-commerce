@@ -1,0 +1,142 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // ==================== FUNCIONES VALIDADORAS ====================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+    
+    function isAdmin() {
+      return request.auth != null && request.auth.token.admin == true;
+    }
+    
+    function isImage() {
+      return request.resource.contentType.matches('image/(jpeg|png|webp|gif)');
+    }
+    
+    function isPDF() {
+      return request.resource.contentType == 'application/pdf';
+    }
+    
+    function isDocument() {
+      return request.resource.contentType in [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      ];
+    }
+    
+    function isImageFile(fileName) {
+      return fileName.matches('.*\\.(jpg|jpeg|png|webp|gif)$');
+    }
+    
+    // ==================== IMÁGENES DE PRODUCTOS (PÚBLICAS) ====================
+    
+    match /products/{productId}/images/{fileName} {
+      // Cualquiera puede leer
+      allow read: if true;
+      
+      // Solo admin puede subir
+      allow write: if isAdmin()
+        && isImage()
+        && request.resource.size < 5 * 1024 * 1024 // 5 MB
+        && isImageFile(fileName);
+    }
+    
+    // ==================== FOTOS DE PERFIL (PÚBLICAS, PROPIEDAD PRIVADA) ====================
+    
+    match /users/{userId}/profile/{fileName} {
+      // Cualquiera puede ver (PÚBLICO)
+      allow read: if true;
+      
+      // Solo el usuario puede subir su foto
+      allow write: if isOwner(userId)
+        && isImage()
+        && request.resource.size < 3 * 1024 * 1024 // 3 MB
+        && isImageFile(fileName)
+        && fileName.matches('profile\\.(jpg|jpeg|png|webp)$'); // Nombre fijo
+      
+      // Referencias de usuario bloqueadas: no se puede borrar
+      allow delete: if false;
+    }
+    
+    // ==================== DOCUMENTOS PRIVADOS (INVOICES, RECEIPTS) ====================
+    
+    match /users/{userId}/documents/{fileName} {
+      // Solo el propietario puede leer
+      allow read: if isOwner(userId);
+      
+      // Solo el propietario puede escribir
+      allow write: if isOwner(userId)
+        && isDocument()
+        && request.resource.size < 10 * 1024 * 1024 // 10 MB
+        && (fileName.matches('invoice_.*') || fileName.matches('receipt_.*') || fileName.matches('.*\\.pdf$'));
+      
+      // Solo el propietario puede borrar
+      allow delete: if isOwner(userId);
+    }
+    
+    // ==================== DATOS DE ÓRDENES (TICKETS, RECIBOS) ====================
+    
+    match /orders/{orderId}/documents/{fileName} {
+      // Propietario de orden o admin pueden leer
+      allow read: if isAuthenticated()
+        && (isAdmin() || 
+            // Verificar que el usuario es propietario de la orden
+            request.auth.uid in resource.metadata.custom.allowedUsers);
+      
+      // Backend solo (Cloud Functions)
+      allow write: if false;
+      
+      // Backend solo
+      allow delete: if false;
+    }
+    
+    // ==================== DATOS ADMINISTRATIVOS ====================
+    
+    match /admin/uploads/{fileName} {
+      // Solo admin puede leer y escribir
+      allow read, write: if isAdmin();
+      allow delete: if isAdmin();
+    }
+    
+    match /admin/backups/{fileName} {
+      allow read, write: if isAdmin();
+      allow delete: if isAdmin();
+    }
+    
+    // ==================== CATEGORÍA IMAGES (ADMIN MANAGED) ====================
+    
+    match /categories/{categoryId}/images/{fileName} {
+      // Públicas para lectura
+      allow read: if true;
+      
+      // Solo admin puede escribir
+      allow write: if isAdmin()
+        && isImage()
+        && request.resource.size < 2 * 1024 * 1024; // 2 MB
+    }
+    
+    // ==================== TEMP UPLOADS (PARA VERIFICACIÓN) ====================
+    
+    match /temp/{userId}/uploads/{fileName} {
+      // Solo el usuario puede leer/escribir su temp
+      allow read, write: if isOwner(userId)
+        && request.resource.size < 15 * 1024 * 1024; // 15 MB max
+      
+      allow delete: if isOwner(userId);
+    }
+    
+    // ==================== BLOQUEAR TODO LO DEMÁS ====================
+    
+    match /{allPaths=**} {
+      allow read, write, delete: if false;
+    }
+  }
+}
