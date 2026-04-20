@@ -9,16 +9,19 @@ import { Loader } from '@components/atoms'
  * 
  * Uso:
  * <Route element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} path="/profile" />
+ * <Route element={<ProtectedRoute requiredRole="admin"><AdminPage /></ProtectedRoute>} path="/admin" />
  */
 
 interface ProtectedRouteProps {
   children: React.ReactNode
   requiredRole?: 'user' | 'admin'
+  fallback?: string // Ruta a la que redirigir si no tiene permisos
 }
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
-  requiredRole = 'user'
+  requiredRole = 'user',
+  fallback = '/login',
 }) => {
   const { isAuthenticated, user, isLoading } = useUser()
   const location = useLocation()
@@ -33,13 +36,14 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     )
   }
 
-  // No autenticado → redirigir a login
-  if (!isAuthenticated || !user) {
-    return <Navigate to="/login" state={{ from: location }} replace />
+  // No autenticado → redirigir a fallback (usualmente login)
+  if (!isAuthenticated) {
+    return <Navigate to={fallback} state={{ from: location }} replace />
   }
 
   // Verificar rol si es requerido
-  if (requiredRole === 'admin' && user.role !== 'admin') {
+  if (requiredRole === 'admin' && user?.role !== 'admin') {
+    // No es admin → redirigir a home
     return <Navigate to="/" replace />
   }
 

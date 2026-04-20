@@ -1,10 +1,15 @@
 // Utility Functions Exports
 // Utils: Helper functions (validation, formatting, API calls, localStorage, etc)
 
-// export { formatPrice } from './formatPrice'
-// export { isValidEmail } from './validators'
-// export { isValidPhone } from './validators'
-// export { debounce } from './debounce'
-// export { localStorage helpers } from './storage'
+// Auth utilities
+export { tokenUtils, userUtils, authGuards, permissions, logout, clearAllAuthData } from './auth'
+export { authMiddleware, useAuthStateChange, setupAuthEventListeners, cleanupAuthEventListeners } from './authMiddleware'
 
-// Individual exports will be added as utilities are created
+// Validators
+export { validators, validateLoginForm, validateRegisterForm, validateCheckoutForm } from './validators'
+
+// Routes configuration
+export { ROUTES, createPath, PROTECTED_ROUTES, PUBLIC_ROUTES, AUTH_ONLY_ROUTES } from './routes'
+
+// Mock data
+export { mockProducts, mockCategories, mockOrders, getProductById, filterProducts, sortProducts } from './mockdata'
