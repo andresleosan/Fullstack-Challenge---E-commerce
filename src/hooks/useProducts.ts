@@ -12,8 +12,8 @@ export const useProducts = () => {
   )
 
   const filterByCategory = useCallback(
-    (category: string | null) => {
-      store.setCategory(category)
+    (categories: string[]) => {
+      store.setCategories(categories)
     },
     [store]
   )

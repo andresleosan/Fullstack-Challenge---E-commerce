@@ -68,8 +68,8 @@ export const HomePage: React.FC<HomePageProps> = ({
     setCurrentPage(1)
   }
 
-  const handleFilterCategory = (category: string | null) => {
-    filterByCategory(category)
+  const handleFilterCategory = (categories: string[]) => {
+    filterByCategory(categories)
     setCurrentPage(1)
   }
 
@@ -109,9 +109,9 @@ export const HomePage: React.FC<HomePageProps> = ({
               <span className="filter-label">Categorías:</span>
               <FilterGroup
                 categories={categories}
-                selectedCategories={filters.category ? [filters.category] : []}
+                selectedCategories={filters.categories}
                 onChange={(cats: string[]) =>
-                  handleFilterCategory(cats.length > 0 ? cats[0] : null)
+                  handleFilterCategory(cats)
                 }
               />
             </div>

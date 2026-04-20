@@ -3,7 +3,7 @@ import type { Product } from '@types'
 
 export interface ProductFilters {
   searchQuery: string
-  category: string | null
+  categories: string[]
   priceRange: [number, number]
   minRating: number
   sortBy: 'price-asc' | 'price-desc' | 'rating' | 'newest' | 'name'
@@ -16,7 +16,7 @@ export interface ProductStore {
   isLoading: boolean
   setProducts: (products: Product[]) => void
   setSearchQuery: (query: string) => void
-  setCategory: (category: string | null) => void
+  setCategories: (categories: string[]) => void
   setPriceRange: (range: [number, number]) => void
   setMinRating: (rating: number) => void
   setSortBy: (sort: ProductFilters['sortBy']) => void
@@ -27,7 +27,7 @@ export interface ProductStore {
 
 const DEFAULT_FILTERS: ProductFilters = {
   searchQuery: '',
-  category: null,
+  categories: [],
   priceRange: [0, 1000],
   minRating: 0,
   sortBy: 'newest',
@@ -59,6 +59,16 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       filters: {
         ...get().filters,
         category,
+      },
+    })
+    get().applyFilters()
+  },
+
+  setCategories: (categories: string[]) => {
+    set({
+      filters: {
+        ...get().filters,
+        categories,
       },
     })
     get().applyFilters()
@@ -113,9 +123,9 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       )
     }
 
-    // Category filter
-    if (filters.category) {
-      result = result.filter((p) => p.category === filters.category)
+    // Category filter (multiple categories)
+    if (filters.categories.length > 0) {
+      result = result.filter((p) => filters.categories.includes(p.category))
     }
 
     // Price range filter
