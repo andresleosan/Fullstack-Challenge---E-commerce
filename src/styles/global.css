@@ -248,6 +248,87 @@ tbody tr:hover {
   scrollbar-width: thin;
 }
 
+/* ==================== MOBILE OPTIMIZATIONS ==================== */
+
+/* Ensure 44px minimum touch targets */
+button,
+a,
+input[type="checkbox"],
+input[type="radio"],
+.touch-target {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* Fix font size on all form inputs to prevent iOS zoom */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+input[type="number"],
+textarea,
+select {
+  font-size: 16px;
+}
+
+/* Improve mobile form interaction */
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="number"],
+  textarea,
+  select {
+    min-height: 44px;
+    padding: 0.75rem;
+  }
+
+  button {
+    min-height: 48px;
+    padding: 0.75rem 1rem;
+  }
+}
+
+/* Handle 320px screens better */
+@media (max-width: 480px) {
+  body {
+    font-size: var(--font-size-sm);
+  }
+
+  h1 {
+    font-size: var(--font-size-3xl);
+  }
+
+  h2 {
+    font-size: var(--font-size-2xl);
+  }
+
+  h3 {
+    font-size: var(--font-size-xl);
+  }
+
+  .container {
+    padding: 0 var(--space-sm);
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="number"],
+  textarea,
+  select {
+    min-height: 48px;
+  }
+}
+
 /* ==================== FOCO ACCESIBILIDAD ==================== */
 
 :focus-visible {
