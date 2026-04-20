@@ -1,0 +1,148 @@
+/* MainLayout Organism Styles */
+
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--color-tertiary, #0f0f0f);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Skip Link (Accessibility) */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--color-primary, #00d9ff);
+  color: #000;
+  padding: 0.5rem 1rem;
+  z-index: 100;
+  border-radius: 0 0 8px 0;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Main Content Area */
+.main-layout-content {
+  flex: 1;
+  padding: 2rem 1rem;
+}
+
+.main-layout-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 2rem;
+}
+
+/* Primary Content */
+.main-layout-primary {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Sidebar */
+.main-layout-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  height: fit-content;
+  position: sticky;
+  top: 80px;
+}
+
+/* Without Sidebar */
+.main-layout:not(.has-sidebar) .main-layout-container {
+  grid-template-columns: 1fr;
+}
+
+/* Responsive: Tablet (1024px) */
+@media (max-width: 1024px) {
+  .main-layout-content {
+    padding: 1.5rem 1rem;
+  }
+
+  .main-layout-container {
+    grid-template-columns: 1fr 250px;
+    gap: 1.5rem;
+  }
+
+  .main-layout-sidebar {
+    top: 70px;
+  }
+}
+
+/* Responsive: Small Tablet (768px) */
+@media (max-width: 768px) {
+  .main-layout-content {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .main-layout-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .main-layout-sidebar {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .main-layout-primary {
+    gap: 1.5rem;
+  }
+}
+
+/* Responsive: Mobile (480px) */
+@media (max-width: 480px) {
+  .main-layout {
+    min-height: calc(100vh - 60px);
+  }
+
+  .main-layout-content {
+    padding: 1rem 0.5rem;
+  }
+
+  .main-layout-container {
+    gap: 0.75rem;
+  }
+
+  .main-layout-sidebar {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .main-layout-primary {
+    gap: 1rem;
+  }
+
+  .skip-link {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.75rem;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .main-layout {
+    background: var(--color-tertiary, #0f0f0f);
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .main-layout * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
