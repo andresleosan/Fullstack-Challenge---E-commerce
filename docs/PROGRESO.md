@@ -1,8 +1,8 @@
 # 📊 PROGRESO - Fullstack Challenge E-commerce
 
-**Estado Actual**: 🟡 Fase 2 en progreso - Subfase 2.4 Completada  
+**Estado Actual**: 🟡 Fase 2 en progreso - Subfase 2.5 Completada  
 **Fecha Actualización**: Abril 19, 2026  
-**Fase**: Fase 1 - 100% ✅ | Fase 2 - 50% 🟡
+**Fase**: Fase 1 - 100% ✅ | Fase 2 - 62.5% 🟡
 
 ---
 
@@ -10,13 +10,14 @@
 
 | Métrica | Valor | Target |
 |---------|-------|--------|
-| **Progreso Total** | 73% | 100% |
-| **Commits** | 33 | 30+ ✅ |
+| **Progreso Total** | 80% | 100% |
+| **Commits** | 43 | 30+ ✅ |
 | **Fase 1** | 100% ✅ | 100% |
-| **Fase 2** | 50% 🟡 | 100% |
+| **Fase 2** | 62.5% 🟡 | 100% |
 | **React Atoms** | 100% ✅ | 100% |
 | **React Molecules** | 100% ✅ | 100% |
 | **React Organisms** | 100% ✅ | 100% |
+| **State Management** | 100% ✅ | 100% |
 | **React Organisms** | 0% ⏳ | 100% |
 
 ---
@@ -142,12 +143,17 @@
 - **Commits**: 6 (Header, Footer, ProductGallery, CartSidebar, MainLayout, chore: exports)
 
 ### 📋 Subfase 2.5: Context API + Hooks
-- [ ] CartContext.tsx
-- [ ] UserContext.tsx
-- [ ] ProductContext.tsx
-- [ ] Custom hooks (useCart, useUser, useProducts, useDebounce, useNotification)
-- **Status**: ⏳ Bloqueado
-- **Commits**: 0
+- [x] CartStore (Zustand) - add/remove/update items, totals
+- [x] UserStore (Zustand) - login/register/logout, profile
+- [x] ProductStore (Zustand) - search/filter/sort functionality
+- [x] useCart hook - wrapper around CartStore
+- [x] useUser hook - wrapper around UserStore
+- [x] useProducts hook - wrapper around ProductStore
+- [x] useDebounce hook - debounce values with delay
+- [x] useNotification hook - notification state management
+- [x] Barrel exports configurados
+- **Status**: ✅ Completada (3 Zustand stores + 5 custom hooks, ~1,100 líneas TypeScript)
+- **Commits**: 10 (3 stores + 1 export + 5 hooks + 1 export)
 
 ### 📋 Subfase 2.6: Páginas y Routing
 - [ ] Home.tsx
@@ -181,14 +187,15 @@
 - **Commits**: 0
 
 ### ✅ FASE 2 TOTAL (En construcción)
-- **Estado**: 🟡 En progreso (4/8 subfases completadas - 50%)
+- **Estado**: 🟡 En progreso (5/8 subfases completadas - 62.5%)
 - **Commits Subfase 2.1**: 2 (setup + build)
 - **Commits Subfase 2.2**: 7 (6 componentes + exports)
 - **Commits Subfase 2.3**: 6 (5 componentes + exports)
 - **Commits Subfase 2.4**: 6 (5 componentes + exports)
-- **Commits acumulados Fase 2**: 21
-- **Commits totales**: 33/30+ ✅✅✅ (Meta alcanzada!)
-- **Eta**: Hoy (4 subfases restantes para completar Fase 2)
+- **Commits Subfase 2.5**: 10 (3 stores + 5 hooks + 2 exports)
+- **Commits acumulados Fase 2**: 31
+- **Commits totales**: 43/30+ ✅✅✅ (13 commits sobre meta)
+- **Eta**: Hoy (3 subfases restantes para completar Fase 2)
 - **Bloqueadores**: Ninguno
 - **Próximo**: Subfase 2.3 - Componentes Molecules
 
