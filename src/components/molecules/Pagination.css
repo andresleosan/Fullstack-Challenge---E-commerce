@@ -1,0 +1,133 @@
+/* Pagination Molecule */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  flex-wrap: wrap;
+}
+
+/* Navigation Buttons */
+.pagination-prev,
+.pagination-next {
+  min-width: 120px;
+  font-weight: 600;
+}
+
+.pagination-prev:disabled,
+.pagination-next:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Numbers Container */
+.pagination-numbers {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Page Number Button */
+.pagination-number {
+  min-width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  transition: all var(--transition-base);
+}
+
+.pagination-number.active {
+  background: var(--primary);
+  color: var(--text-primary);
+  border-color: var(--primary);
+}
+
+/* Dots */
+.pagination-dots {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  user-select: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .pagination {
+    gap: 4px;
+    padding: var(--space-sm);
+  }
+
+  .pagination-prev,
+  .pagination-next {
+    min-width: 100px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  .pagination-number {
+    min-width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+  }
+
+  .pagination-dots {
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pagination {
+    gap: 2px;
+    padding: 8px;
+    flex-direction: column;
+  }
+
+  .pagination-numbers {
+    order: 2;
+    width: 100%;
+    gap: 2px;
+  }
+
+  .pagination-prev {
+    order: 1;
+    width: 100%;
+  }
+
+  .pagination-next {
+    order: 3;
+    width: 100%;
+  }
+
+  .pagination-prev,
+  .pagination-next {
+    min-width: auto;
+    font-size: 0.85rem;
+  }
+
+  .pagination-number {
+    min-width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+
+  .pagination-dots {
+    width: 32px;
+    height: 32px;
+    font-size: 0.8rem;
+  }
+}
