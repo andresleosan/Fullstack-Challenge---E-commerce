@@ -1,8 +1,8 @@
 # 📊 PROGRESO - Fullstack Challenge E-commerce
 
-**Estado Actual**: 🟡 Fase 2 en progreso - Subfase 2.2 Completada  
+**Estado Actual**: 🟡 Fase 2 en progreso - Subfase 2.3 Completada  
 **Fecha Actualización**: Abril 19, 2026  
-**Fase**: Fase 1 - 100% ✅ | Fase 2 - 25% 🟡
+**Fase**: Fase 1 - 100% ✅ | Fase 2 - 37.5% 🟡
 
 ---
 
@@ -10,12 +10,12 @@
 
 | Métrica | Valor | Target |
 |---------|-------|--------|
-| **Progreso Total** | 60% | 100% |
-| **Commits** | 21 | 30+ |
+| **Progreso Total** | 67% | 100% |
+| **Commits** | 27 | 30+ |
 | **Fase 1** | 100% ✅ | 100% |
-| **Fase 2** | 25% 🟡 | 100% |
+| **Fase 2** | 37.5% 🟡 | 100% |
 | **React Atoms** | 100% ✅ | 100% |
-| **React Molecules** | 0% ⏳ | 100% |
+| **React Molecules** | 100% ✅ | 100% |
 | **React Organisms** | 0% ⏳ | 100% |
 
 ---
@@ -119,13 +119,15 @@
 - **Commits**: 7 (Button, Input, Card, Badge, Icon, Loader, chore: exports)
 
 ### 📋 Subfase 2.3: Componentes Molecules
-- [ ] ProductCard.tsx
-- [ ] CartItem.tsx
-- [ ] SearchInput.tsx
-- [ ] FilterGroup.tsx
-- [ ] Pagination.tsx
-- **Status**: ⏳ Bloqueado
-- **Commits**: 0
+- [x] ProductCard.tsx + ProductCard.css (combina Card, Badge, Button)
+- [x] CartItem.tsx + CartItem.css (detalles y cantidad del carrito)
+- [x] SearchInput.tsx + SearchInput.css (búsqueda + clear button)
+- [x] FilterGroup.tsx + FilterGroup.css (filtros multi-select)
+- [x] Pagination.tsx + Pagination.css (navegación de páginas)
+- [x] TypeScript types para todas las props
+- [x] Barrel exports en index.ts
+- **Status**: ✅ Completada (5 componentes, ~1,000 líneas TypeScript + ~800 líneas CSS)
+- **Commits**: 6 (ProductCard, CartItem, SearchInput, FilterGroup, Pagination, chore: exports)
 
 ### 📋 Subfase 2.4: Componentes Grandes (Organisms)
 - [ ] Header.tsx
@@ -176,12 +178,13 @@
 - **Commits**: 0
 
 ### ✅ FASE 2 TOTAL (En construcción)
-- **Estado**: 🟡 En progreso (2/8 subfases completadas - 25%)
+- **Estado**: 🟡 En progreso (3/8 subfases completadas - 37.5%)
 - **Commits Subfase 2.1**: 2 (setup + build)
 - **Commits Subfase 2.2**: 7 (6 componentes + exports)
-- **Commits acumulados Fase 2**: 9
-- **Commits totales**: 21/30+ ✅ (9 más para Meta)
-- **Eta**: Semana 2-3 (13 días - ~6 días restantes)
+- **Commits Subfase 2.3**: 6 (5 componentes + exports)
+- **Commits acumulados Fase 2**: 15
+- **Commits totales**: 27/30+ ✅ (3 más para Meta)
+- **Eta**: Hoy (5 subfases restantes - optimizado)
 - **Bloqueadores**: Ninguno
 - **Próximo**: Subfase 2.3 - Componentes Molecules
 
