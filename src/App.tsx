@@ -12,6 +12,7 @@ import {
   OrdersPage
 } from '@pages'
 import { useCart } from '@hooks/useCart'
+import { useProducts } from '@hooks/useProducts'
 import './App.css'
 
 /**
@@ -26,9 +27,14 @@ import './App.css'
 function AppContent() {
   const navigate = useNavigate()
   const { itemCount } = useCart()
+  const { search } = useProducts()
 
   const handleCartClick = () => {
     navigate('/carrito')
+  }
+
+  const handleSearch = (query: string) => {
+    search(query)
   }
 
   return (
@@ -36,6 +42,7 @@ function AppContent() {
       headerProps={{
         cartItemCount: itemCount,
         onCartClick: handleCartClick,
+        onSearch: handleSearch,
       }}
     >
       <Routes>

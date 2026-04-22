@@ -45,6 +45,7 @@ export const Header = React.forwardRef<HTMLDivElement, HeaderProps>(
 
     const handleSearch = (value: string) => {
       setSearchValue(value)
+      // ✅ Buscar en tiempo real mientras escribes
       if (onSearch) {
         onSearch(value)
       }
