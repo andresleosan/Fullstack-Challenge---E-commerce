@@ -54,16 +54,6 @@ export const useProductStore = create<ProductStore>((set, get) => ({
     get().applyFilters()
   },
 
-  setCategory: (category: string | null) => {
-    set({
-      filters: {
-        ...get().filters,
-        category,
-      },
-    })
-    get().applyFilters()
-  },
-
   setCategories: (categories: string[]) => {
     set({
       filters: {

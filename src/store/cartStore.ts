@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { CartItem, Product } from '@types'
+import { CART_CONSTANTS } from '@config/constants/app.constants'
 
 export interface CartStore {
   items: CartItem[]
@@ -15,9 +16,9 @@ export interface CartStore {
   getItemCount: () => number
 }
 
-const TAX_RATE = 0.08 // 8% tax
-const SHIPPING_THRESHOLD = 50 // Free shipping over $50
-const SHIPPING_COST = 5
+const TAX_RATE = CART_CONSTANTS.TAX_RATE
+const SHIPPING_THRESHOLD = CART_CONSTANTS.SHIPPING_THRESHOLD
+const SHIPPING_COST = CART_CONSTANTS.SHIPPING_COST
 
 export const useCartStore = create<CartStore>()(
   persist(
@@ -25,6 +26,17 @@ export const useCartStore = create<CartStore>()(
       items: [],
 
       addItem: (product: Product, quantity: number) => {
+        // ✅ VALIDATION: Ensure product is valid
+        if (!product?.id) {
+          console.error('❌ Invalid product: missing id', product)
+          return
+        }
+
+        if (quantity <= 0) {
+          console.error('❌ Invalid quantity:', quantity)
+          return
+        }
+
         const { items } = get()
         const existingItem = items.find((item) => item.productId === product.id)
 
@@ -65,7 +77,16 @@ export const useCartStore = create<CartStore>()(
         const { items } = get()
         const item = items.find((i) => i.productId === productId)
 
-        if (!item || !item.product) return
+        // ✅ SAFETY: Check if item exists and has product
+        if (!item) {
+          console.warn(`⚠️ Cart item not found: ${productId}`)
+          return
+        }
+
+        if (!item.product) {
+          console.warn(`⚠️ Product data missing for cart item: ${productId}`)
+          return
+        }
 
         const newQuantity = Math.max(1, Math.min(quantity, item.product.stock))
 
@@ -85,11 +106,16 @@ export const useCartStore = create<CartStore>()(
       },
 
       getSubtotal: () => {
-        return parseFloat(
-          get()
-            .items.reduce((total, item) => total + (item.product?.price || 0) * item.quantity, 0)
-            .toFixed(2)
-        )
+        // ✅ SAFETY: Handle items with missing product data
+        const subtotal = get().items.reduce((total, item) => {
+          if (!item.product) {
+            console.warn(`⚠️ Product data missing for cart item: ${item.productId}`)
+            return total
+          }
+          return total + item.product.price * item.quantity
+        }, 0)
+
+        return parseFloat(subtotal.toFixed(2))
       },
 
       getTax: () => {
@@ -109,7 +135,7 @@ export const useCartStore = create<CartStore>()(
       },
     }),
     {
-      name: 'estore-cart',
+      name: CART_CONSTANTS.STORAGE_KEY,
     }
   )
 )

@@ -27,8 +27,31 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
     },
     ref
   ) => {
+    // ✅ SAFETY: Handle missing product data
+    if (!product) {
+      return (
+        <div ref={ref} className="cart-item cart-item--error" data-product-id={productId}>
+          <div className="cart-item-details">
+            <h4 className="cart-item-name">Producto no disponible</h4>
+            <p className="cart-item-price">El producto ha sido eliminado</p>
+          </div>
+          {onRemove && (
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={onRemove}
+              className="cart-item-remove"
+              aria-label="Eliminar del carrito"
+            >
+              <Icon name="close" size="md" color="#ef4444" />
+            </Button>
+          )}
+        </div>
+      )
+    }
+
     // Extraer información del producto
-    const { name = 'Unknown Product', price = 0, stock = 0, image } = product || {}
+    const { name = 'Unknown Product', price = 0, stock = 0, image } = product
 
     const handleQuantityChange = (newQ: number) => {
       const clamped = Math.max(1, Math.min(stock, newQ))

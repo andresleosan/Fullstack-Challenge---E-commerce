@@ -20,41 +20,56 @@ export const HomePage: React.FC<HomePageProps> = ({
   const [currentPage, setCurrentPage] = React.useState(1)
   const [categories, setCategories] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const itemsPerPage = 12
 
   // Load products from FakeStore API
   useEffect(() => {
+    let isMounted = true
+
     const loadFakeStoreProducts = async () => {
       setIsLoading(true)
-      const timeout = setTimeout(() => {
-        setIsLoading(false)
-      }, 5000)
+      setError(null)
 
       try {
         const fakeStoreProducts = await fakeStoreService.getAllProducts()
-        clearTimeout(timeout)
-        loadProducts(fakeStoreProducts)
-        console.log(`✅ Loaded ${fakeStoreProducts.length} products from FakeStore`)
-        setIsLoading(false)
-      } catch (error: any) {
-        clearTimeout(timeout)
-        console.error('Error loading products:', error.message)
-        setIsLoading(false)
+        if (isMounted) {
+          loadProducts(fakeStoreProducts)
+          console.log(`✅ Loaded ${fakeStoreProducts.length} products from FakeStore`)
+        }
+      } catch (err: any) {
+        if (isMounted) {
+          const errorMessage = err?.message || 'Error al cargar productos'
+          setError(errorMessage)
+          console.error('Error loading products:', err)
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false)
+        }
       }
     }
 
     const loadCategories = async () => {
       try {
         const fetchedCategories = await fakeStoreService.getCategories()
-        setCategories(fetchedCategories)
+        if (isMounted) {
+          setCategories(fetchedCategories)
+        }
       } catch (error: any) {
         console.error('Error loading categories:', error.message)
+        // Don't block the page if categories fail to load
       }
     }
 
     loadFakeStoreProducts()
     loadCategories()
-  }, [loadProducts])
+
+    // Cleanup function to prevent memory leaks
+    return () => {
+      isMounted = false
+    }
+  }, [])
 
   const handleAddToCart = (product: any, quantity: number) => {
     addToCart(product, quantity)
@@ -94,13 +109,30 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* Loading State */}
-      {/* {isLoading && (
+      {isLoading && (
         <div className="loading-container">
           <p>Cargando productos...</p>
         </div>
-      )} */}
+      )}
+
+      {/* Error State */}
+      {error && (
+        <div className="error-container" style={{ backgroundColor: '#fee2e2', padding: '1rem', margin: '1rem', borderRadius: '0.5rem', color: '#dc2626' }}>
+          <p>❌ {error}</p>
+          <button onClick={() => window.location.reload()} style={{ marginTop: '0.5rem', padding: '0.5rem 1rem', backgroundColor: '#ef4444', color: 'white', border: 'none', borderRadius: '0.25rem', cursor: 'pointer' }}>
+            Reintentar
+          </button>
+        </div>
+      )}
 
       {/* Main Content */}
+      {!isLoading && !error && products.length === 0 && (
+        <div className="empty-state" style={{ textAlign: 'center', padding: '2rem' }}>
+          <p>No hay productos disponibles en este momento</p>
+        </div>
+      )}
+
+      {!isLoading && !error && products.length > 0 && (
       <div className="home-container">
         {/* Filters Bar - Horizontal & Minimal */}
         <div className="home-filters-bar">
@@ -169,6 +201,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           )}
         </main>
       </div>
+      )}
     </div>
   )
 }

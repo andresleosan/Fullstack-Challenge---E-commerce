@@ -55,9 +55,9 @@ export function getConfig<K extends keyof typeof API_CONFIG>(
 
 // Log config in development
 if (ENV.isDevelopment) {
-  console.debug('API Config:', {
-    baseURL: API_CONFIG.baseURL,
+  console.debug('✅ Environment Configuration Loaded:', {
+    mode: import.meta.env.MODE,
+    apiBaseURL: API_CONFIG.baseURL,
     useEmulator: API_CONFIG.firebase.useEmulator,
-    sessionTimeout: `${API_CONFIG.security.sessionTimeout / 1000}s`,
   })
 }

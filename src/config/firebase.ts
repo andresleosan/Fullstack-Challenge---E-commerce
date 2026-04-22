@@ -20,14 +20,41 @@ import {
   FirebaseStorage,
 } from 'firebase/storage'
 
-// Firebase config from environment variables
+// ============================================
+// 🔒 SECURITY: Firebase config from environment variables
+// ============================================
+// ❌ CRITICAL: Never hardcode Firebase credentials
+// ✅ REQUIRED: Set all environment variables in .env
+// See: .env.example for required variables
+// ============================================
+
 const firebaseConfig = {
-  apiKey: (import.meta as any).env.VITE_FIREBASE_API_KEY || "AIzaSyAEsiJaTHkmo8H1xaDRJLYbxpu6E3fxEFQ",
-  authDomain: (import.meta as any).env.VITE_FIREBASE_AUTH_DOMAIN || "fullstack-challenge-e-commerce.firebaseapp.com",
-  projectId: (import.meta as any).env.VITE_FIREBASE_PROJECT_ID || "fullstack-challenge-e-commerce",
-  storageBucket: (import.meta as any).env.VITE_FIREBASE_STORAGE_BUCKET || "fullstack-challenge-e-commerce.firebasestorage.app",
-  messagingSenderId: (import.meta as any).env.VITE_FIREBASE_MESSAGING_SENDER_ID || "67750929783",
-  appId: (import.meta as any).env.VITE_FIREBASE_APP_ID || "1:67750929783:web:bca65aa1bfdc5e4e22ed72",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+}
+
+// ✅ Validate that all required variables are set
+const requiredEnvVars = [
+  'VITE_FIREBASE_API_KEY',
+  'VITE_FIREBASE_AUTH_DOMAIN',
+  'VITE_FIREBASE_PROJECT_ID',
+  'VITE_FIREBASE_STORAGE_BUCKET',
+  'VITE_FIREBASE_MESSAGING_SENDER_ID',
+  'VITE_FIREBASE_APP_ID',
+]
+
+for (const envVar of requiredEnvVars) {
+  if (!import.meta.env[envVar]) {
+    console.error(`❌ CRITICAL: Missing environment variable: ${envVar}`)
+    console.error('Please configure your .env file. See .env.example for reference.')
+    throw new Error(
+      `Missing required Firebase environment variable: ${envVar}. Check your .env file.`
+    )
+  }
 }
 
 // Initialize Firebase

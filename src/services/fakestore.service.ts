@@ -95,10 +95,25 @@ class FakeStoreService {
 
   /**
    * Map FakeStore product to our Product type
+   * ✅ Stock is generated consistently (not randomly each call)
    */
   private mapToProduct(fakeProduct: any): Product {
     const categoryEn = fakeProduct.category || 'general'
     const categoryEs = this.categoryMap[categoryEn] || categoryEn
+    
+    // ✅ CONSISTENCY: Generate stock based on product ID hash
+    // This ensures the same product always has the same stock
+    const id = fakeProduct.id
+    const baseStock = 25
+    
+    // Simple hash function to generate consistent stock
+    const hash = id
+      .toString()
+      .split('')
+      .reduce((acc, char) => ((acc << 5) - acc) + char.charCodeAt(0), 0)
+    
+    // Generate stock between 15-75 based on hash
+    const stock = (Math.abs(hash) % 60) + baseStock
     
     return {
       id: fakeProduct.id?.toString() || '',
@@ -109,7 +124,7 @@ class FakeStoreService {
       category: categoryEs,
       rating: fakeProduct.rating?.rate || 0,
       reviews: fakeProduct.rating?.count || 0,
-      stock: Math.floor(Math.random() * 100) + 1,
+      stock,
       originalPrice: undefined,
       discount: 0,
       featured: false,
