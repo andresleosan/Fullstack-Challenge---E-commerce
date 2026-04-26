@@ -21,6 +21,8 @@ export const HomePage: React.FC<HomePageProps> = ({
   const [categories, setCategories] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const titleRef = React.useRef<HTMLHeadingElement>(null)
   const itemsPerPage = 12
 
   // Load products from FakeStore API
@@ -71,6 +73,16 @@ export const HomePage: React.FC<HomePageProps> = ({
     }
   }, [])
 
+  // Mouse tracking para efecto de letras
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY })
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [])
+
   const handleAddToCart = (product: any, quantity: number) => {
     addToCart(product, quantity)
     if (onAddToCart) {
@@ -92,6 +104,63 @@ export const HomePage: React.FC<HomePageProps> = ({
     sort(sortBy)
   }
 
+  // Función para calcular distancia real entre cursor y letra
+  const calculateLetterDistance = (index: number) => {
+    if (!titleRef.current) return 999
+    
+    const letterSpans = titleRef.current.querySelectorAll('.hero-letter')
+    const letterSpan = letterSpans[index] as HTMLElement
+    
+    if (!letterSpan) return 999
+    
+    const rect = letterSpan.getBoundingClientRect()
+    const letterCenterX = rect.left + rect.width / 2
+    const letterCenterY = rect.top + rect.height / 2
+    
+    const dx = mousePos.x - letterCenterX
+    const dy = mousePos.y - letterCenterY
+    
+    return Math.sqrt(dx * dx + dy * dy)
+  }
+
+  // Función para renderizar título con letras interactivas
+  const renderInteractiveTitle = () => {
+    const title = 'Bienvenido a E-Store'
+    
+    return (
+      <h1 ref={titleRef} className="hero-title">
+        {title.split('').map((char, index) => {
+          // Calcular distancia real desde el cursor a esta letra
+          const distance = calculateLetterDistance(index)
+          const isNear = distance < 80 // Activa efecto si está a menos de 80px
+          
+          // Escala aumenta cuando está cerca
+          const scale = isNear ? Math.max(1, 1.2 - distance / 200) : 1
+          
+          // Color: blanco en reposo, cyan brillante cuando está cerca
+          let hue = 180 // Cyan
+          let saturation = isNear ? 100 : 0 // Saturación solo cuando está cerca
+          let lightness = isNear ? Math.max(45, 65 - distance / 50) : 100 // Blanco en reposo
+          
+          return (
+            <span
+              key={index}
+              className="hero-letter"
+              style={{
+                display: 'inline-block',
+                transform: `scale(${scale})`,
+                transition: 'all 0.1s ease',
+                color: `hsl(${hue}, ${saturation}%, ${lightness}%)`,
+              }}
+            >
+              {char}
+            </span>
+          )
+        })}
+      </h1>
+    )
+  }
+
   // Pagination logic
   const totalPages = Math.ceil(products.length / itemsPerPage)
   const startIdx = (currentPage - 1) * itemsPerPage
@@ -103,7 +172,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       {/* Hero Section */}
       <section className="home-hero">
         <div className="hero-content">
-          <h1 className="hero-title">Bienvenido a E-Store</h1>
+          {renderInteractiveTitle()}
           <p className="hero-subtitle">Descubre los mejores productos al mejor precio</p>
         </div>
       </section>
