@@ -37,7 +37,6 @@ export const HomePage: React.FC<HomePageProps> = ({
         const fakeStoreProducts = await fakeStoreService.getAllProducts()
         if (isMounted) {
           loadProducts(fakeStoreProducts)
-          console.log(`✅ Loaded ${fakeStoreProducts.length} products from FakeStore`)
         }
       } catch (err: unknown) {
         if (isMounted) {

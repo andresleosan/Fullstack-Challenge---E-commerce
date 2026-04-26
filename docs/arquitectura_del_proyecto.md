@@ -34,112 +34,26 @@
 
 ---
 
-## 2️⃣ Estructura de Carpetas Detallada
+## 2️⃣ Estructura de Carpetas Detallada (actualizada)
 
 ```
 src/
-├── components/                      # Componentes React (Atomic Design)
-│   ├── atoms/
-│   │   ├── Button.tsx              # Botón básico
-│   │   ├── Input.tsx               # Input básico
-│   │   ├── Badge.tsx               # Badge estilizado
-│   │   ├── Card.tsx                # Card contenedor
-│   │   ├── Icon.tsx                # Wrapper de iconos
-│   │   └── Loader.tsx              # Spinner de carga
-│   │
-│   ├── molecules/
-│   │   ├── ProductCard.tsx         # Card de producto (átomo + datos)
-│   │   ├── CartItem.tsx            # Fila de carrito
-│   │   ├── SearchInput.tsx         # Input + botón de búsqueda
-│   │   ├── FilterGroup.tsx         # Grupo de filtros
-│   │   ├── Pagination.tsx          # Controles de paginación
-│   │   ├── ToastNotification.tsx   # Notificación individual
-│   │   └── Modal.tsx               # Modal base
-│   │
-│   ├── organisms/
-│   │   ├── Header.tsx              # Navbar global
-│   │   ├── Footer.tsx              # Footer
-│   │   ├── ProductGallery.tsx      # Grid de productos
-│   │   ├── CartSidebar.tsx         # Carrito lateral (o modal)
-│   │   ├── CheckoutForm.tsx        # Formulario de checkout
-│   │   └── AdminPanel.tsx          # Panel admin (Fase 3)
-│   │
-│   └── templates/
-│       ├── MainLayout.tsx          # Layout principal (Header + Footer)
-│       ├── AdminLayout.tsx         # Layout admin (Sidebar + Content)
-│       └── CheckoutLayout.tsx      # Layout customizado checkout
-│
-├── pages/                           # Vistas/Rutas principales
-│   ├── Home.tsx                    # Página principal (listado)
-│   ├── ProductDetail.tsx           # Detalle de producto
-│   ├── Cart.tsx                    # Página de carrito
-│   ├── Checkout.tsx                # Página de checkout
-│   ├── Login.tsx                   # Página de login
-│   ├── Register.tsx                # Página de registro
-│   ├── Profile.tsx                 # Perfil de usuario
-│   ├── Orders.tsx                  # Historial de órdenes
-│   ├── Admin.tsx                   # Panel admin (Fase 3)
-│   └── NotFound.tsx                # 404
-│
-├── store/                           # State management
-│   ├── CartContext.tsx             # Context para carrito
-│   ├── UserContext.tsx             # Context para usuario
-│   ├── ProductContext.tsx          # Context para productos
-│   └── useContextsHook.ts          # Hook unificado
-│
-├── hooks/                           # Custom hooks reutilizables
-│   ├── useCart.ts                  # Lógica del carrito
-│   ├── useUser.ts                  # Lógica de usuario
-│   ├── useProducts.ts              # Lógica de productos
-│   ├── useFetch.ts                 # Fetch genérico
-│   ├── useLocalStorage.ts          # Persistencia
-│   ├── useDebounce.ts              # Debounce para búsqueda
-│   └── useNotification.ts          # Toast notifications
-│
-├── types/                           # Interfaces TypeScript
-│   ├── product.types.ts            # Type Product, Category
-│   ├── user.types.ts               # Type User, Auth
-│   ├── order.types.ts              # Type Order
-│   ├── cart.types.ts               # Type CartItem
-│   ├── api.types.ts                # Type API responses
-│   └── index.ts                    # Barrel exports
-│
-├── utils/                           # Funciones utilitarias
-│   ├── api.ts                      # Llamadas HTTP (axios)
-│   ├── validators.ts               # Validaciones (email, etc)
-│   ├── formatters.ts               # Formateo (moneda, fechas)
-│   ├── localStorage.ts             # Helpers de storage
-│   ├── constants.ts                # Constantes globales
-│   └── helpers.ts                  # Helpers varias
-│
-├── styles/                          # CSS global
-│   ├── variables.css               # Variables CSS (colores, spacing)
-│   ├── global.css                  # Reset + global styles
-│   ├── components/
-│   │   ├── Button.css
-│   │   ├── Form.css
-│   │   ├── ProductCard.css
-│   │   └── ... (1 CSS por componente)
-│   └── layouts/
-│       ├── MainLayout.css
-│       └── AdminLayout.css
-│
-├── firebase/                        # Configuración Firebase (Fase 3)
-│   ├── config.ts                   # Inicialización Firebase
-│   ├── auth.ts                     # Funciones de autenticación
-│   ├── firestore.ts                # Servicios Firestore
-│   └── storage.ts                  # Firebase Storage (imágenes)
-│
-├── mockdata/                        # Datos ficticios (Fase 2)
-│   ├── products.ts                 # Array de productos
-│   ├── users.ts                    # Array de usuarios
-│   ├── categories.ts               # Categorías
-│   ├── orders.ts                   # Órdenes de ejemplo
-│   └── index.ts                    # Exports
-│
-├── App.tsx                          # Componente raíz + Router
-├── main.tsx                         # Entry point
-└── index.css                        # Importaciones de estilos
+├── components/
+│   ├── atoms/                       # Button, Input, Card, Badge, Icon, Loader
+│   ├── molecules/                   # ProductCard, CartItem, SearchInput, FilterGroup, Pagination
+│   ├── organisms/                   # Header, Footer, ProductGallery, CartSidebar, MainLayout
+│   └── common/                      # ProtectedRoute
+├── pages/                           # Home, ProductDetail, Cart, Checkout, Login, Register, Profile, Orders, OrderDetail, Admin
+├── hooks/                           # useCart, useUser, useProducts, useDebounce, useNotification
+├── store/                           # Zustand stores: cartStore, userStore, productStore
+├── services/                        # api, auth.service, products.service, orders.service, fakestore.service
+├── config/                          # firebase y environment
+├── utils/                           # auth, validators, form helpers, routes, etc.
+├── styles/                          # variables.css, global.css y CSS por componente
+├── types/                           # index.ts (tipos centrales)
+├── App.tsx                          # Rutas reales + Toaster
+├── main.tsx
+└── index.css
 ```
 
 ---
@@ -594,7 +508,7 @@ export const useDebounce = <T,>(value: T, delay: number): T => {
 
 ---
 
-## 8️⃣ Routing Architecture
+## 8️⃣ Routing Architecture (actualizado)
 
 ```typescript
 // App.tsx
@@ -609,8 +523,8 @@ export const App: React.FC = () => {
             <Routes>
               {/* Public Routes */}
               <Route path="/" element={<MainLayout><Home /></MainLayout>} />
-              <Route path="/product/:id" element={<MainLayout><ProductDetail /></MainLayout>} />
-              <Route path="/cart" element={<MainLayout><Cart /></MainLayout>} />
+              <Route path="/productos/:id" element={<MainLayout><ProductDetail /></MainLayout>} />
+              <Route path="/carrito" element={<MainLayout><Cart /></MainLayout>} />
               <Route path="/checkout" element={<MainLayout><Checkout /></MainLayout>} />
 
               {/* Auth Routes */}
@@ -620,12 +534,13 @@ export const App: React.FC = () => {
               {/* Protected Routes */}
               <Route path="/profile" element={<ProtectedRoute><MainLayout><Profile /></MainLayout></ProtectedRoute>} />
               <Route path="/orders" element={<ProtectedRoute><MainLayout><Orders /></MainLayout></ProtectedRoute>} />
+              <Route path="/orders/:id" element={<ProtectedRoute><MainLayout><OrderDetail /></MainLayout></ProtectedRoute>} />
 
               {/* Admin Routes (Fase 3) */}
               <Route path="/admin" element={<ProtectedRoute admin><AdminLayout><Admin /></AdminLayout></ProtectedRoute>} />
 
               {/* 404 */}
-              <Route path="*" element={<NotFound />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Router>
         </ProductProvider>

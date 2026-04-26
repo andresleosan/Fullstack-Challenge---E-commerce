@@ -14,13 +14,13 @@
 │ CSS: CSS Puro + Variables CSS                   │
 │ Routing: react-router-dom 6.x                   │
 │ HTTP Client: axios                              │
-│ State: Context API (Fase 2) + Browser Storage  │
+│ State: Zustand + Browser Storage                │
 ├─────────────────────────────────────────────────┤
 │          BACKEND STACK (Fase 3)                 │
 ├─────────────────────────────────────────────────┤
-│ Database: Firebase Firestore                    │
+│ Services: Firebase SDK + FakeStore API          │
 │ Authentication: Firebase Auth                   │
-│ Hosting: Firebase Hosting / GitHub Pages        │
+│ Hosting: Cloudflare Pages                       │
 ├─────────────────────────────────────────────────┤
 │          DEVELOPMENT TOOLS                      │
 ├─────────────────────────────────────────────────┤
@@ -79,9 +79,8 @@
 - ✅ Free tier generoso (50K reads/writes/deletes al día)
 - ✅ API REST + SDKs en múltiples lenguajes
 
-### **¿Por qué Context API (Fase 2) sobre Redux/Zustand?**
-**Fase 2**: Simplificar aprendizaje. Context API + localStorage es suficiente.  
-**Fase 3**: Migrar estado al servidor (Firestore) cuando sea necesario.
+### **¿Por qué Zustand?**
+Zustand simplifica el manejo global de carrito, usuario y productos con menos boilerplate y buena legibilidad para SPA.
 
 ---
 
@@ -93,11 +92,11 @@
 |---------|---------|----------|--------|
 | `react` | `^18.2.0` | Librería core | 42KB |
 | `react-dom` | `^18.2.0` | Renderizado en DOM | 130KB |
-| `react-router-dom` | `^6.16.0` | SPA routing | 50KB |
-| `axios` | `^1.6.0` | HTTP client | 20KB |
-| `firebase` | `^10.0.0` | Backend services | 120KB |
-| `react-hot-toast` | `^2.4.0` | Notificaciones | 15KB |
-| `react-icons` | `^4.12.0` | Icon library | 80KB |
+| `react-router-dom` | `^6.20.0` | SPA routing | 50KB |
+| `axios` | `^1.15.1` | HTTP client | 20KB |
+| `firebase` | `^12.12.0` | Auth y servicios | 120KB |
+| `react-hot-toast` | `^2.6.0` | Notificaciones | 15KB |
+| `zustand` | `^4.4.0` | State management | 2KB |
 
 **Total estimado (gzipped)**: ~200-250KB
 
@@ -107,14 +106,11 @@
 {
   "devDependencies": {
     "typescript": "^5.2.0",
-    "vite": "^5.0.0",
+    "vite": "^8.0.9",
     "@vitejs/plugin-react": "^4.0.0",
     "eslint": "^8.50.0",
     "eslint-config-airbnb": "^19.0.0",
-    "prettier": "^3.0.0",
-    "vitest": "^0.34.0",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/jest-dom": "^6.1.0"
+    "terser": "^5.46.1"
   }
 }
 ```
@@ -128,11 +124,10 @@
 - No hay dependencias NPM (puedo usar CDN para testing)
 - Objetivo: Maquetación perfecta
 
-### **Fase 2: React + TypeScript**
-- Inicializar Vite + React + TypeScript
-- Dependencias core: React, React Router
-- State management: Context API + localStorage
-- Mockdata: JSON estático en `src/mockdata/`
+### **Fase actual: React + TypeScript (implementada)**
+- Vite + React + TypeScript
+- Estado global con Zustand
+- Datos de catálogo desde FakeStore API
 
 ```bash
 npm create vite@latest . -- --template react-ts
@@ -140,10 +135,9 @@ npm install react-router-dom axios react-hot-toast react-icons
 npm install -D typescript eslint prettier
 ```
 
-### **Fase 3: Firebase + Producción**
-- Agregar Firebase SDK
-- Configurar Firestore rules
-- Configurar GitHub Pages o Firebase Hosting
+### **Deploy actual**
+- Cloudflare Pages como hosting
+- `wrangler` como CLI de despliegue/operación (uso por comando)
 
 ```bash
 npm install firebase
@@ -198,7 +192,6 @@ VITE_FIREBASE_APP_ID=xxx
 
 # API Sources
 VITE_API_PRODUCTS_URL=https://fakestoreapi.com
-VITE_MOCK_DATA=false  # true en Fase 2, false en Fase 3
 ```
 
 ### **Tipado de ENV en TypeScript**
@@ -246,7 +239,7 @@ npm install
 
 ---
 
-## 8️⃣ Comandos NPM Esenciales
+## 8️⃣ Comandos NPM reales
 
 ```json
 {
@@ -255,12 +248,8 @@ npm install
     "build": "vite build",                      // Build producción
     "preview": "vite preview",                  // Previsualizar build
     "type-check": "tsc --noEmit",              // Validar TS
-    "lint": "eslint src --ext .ts,.tsx",       // Linting
-    "lint:fix": "eslint src --fix --ext .ts,.tsx",
-    "format": "prettier --write src",           // Formateo automático
-    "test": "vitest",                           // Tests
-    "test:coverage": "vitest --coverage",       // Coverage
-    "serve:prod": "npm run build && npm run preview"
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "type-check": "tsc --noEmit"
   }
 }
 ```
