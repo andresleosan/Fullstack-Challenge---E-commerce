@@ -9,7 +9,9 @@ import {
   LoginPage,
   RegisterPage,
   ProfilePage,
-  OrdersPage
+  OrdersPage,
+  OrderDetailPage,
+  AdminPage
 } from '@pages'
 import { useCart } from '@hooks/useCart'
 import { useProducts } from '@hooks/useProducts'
@@ -20,8 +22,8 @@ import './App.css'
  * 
  * Estructura:
  * - Públicas: /, /productos/:id, /carrito, /login, /register
- * - Protegidas: /checkout, /profile, /orders
- * - Admin: (futuro)
+ * - Protegidas: /checkout, /profile, /orders, /admin
+ * - Admin: /admin
  */
 
 function AppContent() {
@@ -93,6 +95,28 @@ function AppContent() {
           element={
             <ProtectedRoute>
               <OrdersPage />
+            </ProtectedRoute>
+          }
+        />
+        
+        {/* Detalle de Orden */}
+        <Route
+          path="/orders/:id"
+          element={
+            <ProtectedRoute>
+              <OrderDetailPage />
+            </ProtectedRoute>
+          }
+        />
+        
+        {/* ==================== ADMIN ==================== */}
+        
+        {/* Panel Administrativo */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminPage />
             </ProtectedRoute>
           }
         />

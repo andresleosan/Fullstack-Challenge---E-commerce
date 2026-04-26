@@ -33,8 +33,9 @@ export const LoginPage: React.FC = () => {
       await login(formData.email, formData.password)
       // AppWrapper handles auth state sync, just redirect
       navigate('/', { replace: true })
-    } catch (err: any) {
-      setLocalError(err.message || 'Error al iniciar sesión')
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Error al iniciar sesión'
+      setLocalError(errorMessage)
     } finally {
       setIsLoading(false)
     }

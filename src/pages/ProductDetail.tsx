@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Card, Button, Badge, Icon, Input } from '@components/atoms'
 import { useCart } from '@hooks/useCart'
-import { mockProducts } from '@utils/mockdata'
+import { fakeStoreService } from '@services'
 import type { Product } from '@types'
 import './ProductDetail.css'
 
@@ -16,12 +16,11 @@ export const ProductDetailPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    // Simulate product fetch
     const loadProduct = async () => {
       try {
         setIsLoading(true)
-        // Find product in mock data
-        const found = mockProducts.find((p) => p.id === productId)
+        // Fetch product from FakeStore API
+        const found = await fakeStoreService.getProductById(productId || '')
 
         if (!found) {
           setError('Producto no encontrado')
@@ -29,14 +28,19 @@ export const ProductDetailPage: React.FC = () => {
         }
 
         setProduct(found)
-      } catch (err) {
-        setError('Error al cargar el producto')
+        setError(null)
+      } catch (err: unknown) {
+        const errorMessage = err instanceof Error ? err.message : 'Error al cargar el producto'
+        setError(errorMessage)
+        console.error('Error loading product:', err)
       } finally {
         setIsLoading(false)
       }
     }
 
-    loadProduct()
+    if (productId) {
+      loadProduct()
+    }
   }, [productId])
 
   const handleAddToCart = () => {

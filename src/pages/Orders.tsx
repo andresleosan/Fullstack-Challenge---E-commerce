@@ -16,7 +16,10 @@ export const OrdersPage: React.FC = () => {
   const navigate = useNavigate()
   const { isAuthenticated, user } = useUser()
 
-  // Mock orders - in Phase 3, this will be fetched from Firebase
+  // TODO-FUTURE: Replace with real data from Firestore
+  // Currently using mock data for demonstration. When Firebase Firestore is fully integrated,
+  // this should be replaced with: const mockOrders = await ordersService.getUserOrders(user.id)
+  // This will enable real-time synchronization of user orders from the database.
   const mockOrders: Order[] = [
     {
       id: 'ORD-001',
@@ -138,8 +141,8 @@ export const OrdersPage: React.FC = () => {
                     size="sm"
                     variant="outline"
                     onClick={() => {
-                      // TODO: Implement order detail view
-                      console.log('View order details:', order.id)
+                      // Navigate to order detail view with order data
+                      navigate(`/orders/${order.id}`, { state: { order } })
                     }}
                   >
                     Ver Detalles

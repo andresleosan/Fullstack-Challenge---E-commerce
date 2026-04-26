@@ -64,8 +64,9 @@ export const RegisterPage: React.FC = () => {
       )
       // AppWrapper handles auth state sync, just redirect
       navigate('/', { replace: true })
-    } catch (err: any) {
-      setLocalError(err.message || 'Error al registrarse')
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Error al registrarse'
+      setLocalError(errorMessage)
     } finally {
       setIsLoading(false)
     }

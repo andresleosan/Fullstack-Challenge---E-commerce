@@ -59,11 +59,14 @@ class AuthService {
       authMiddleware.onLogin(appUser, token)
 
       return appUser
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const firebaseError = error instanceof Error && 'code' in error 
+        ? { code: (error as any).code, message: (error as any).message }
+        : { code: 'UNKNOWN_ERROR', message: 'Error desconocido' }
       console.error('Registration error:', error)
       throw {
-        code: error.code,
-        message: this.getErrorMessage(error.code),
+        code: firebaseError.code,
+        message: this.getErrorMessage(firebaseError.code),
       }
     }
   }
@@ -96,7 +99,10 @@ class AuthService {
       authMiddleware.onLogin(appUser, token)
 
       return appUser
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const firebaseError = error instanceof Error && 'code' in error 
+        ? { code: (error as any).code }
+        : { code: 'UNKNOWN_ERROR' }
       console.error('Login error:', error)
       throw {
         code: error.code,
@@ -113,7 +119,7 @@ class AuthService {
       await signOut(this.auth)
       tokenUtils.removeToken()
       authMiddleware.onLogout()
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Logout error:', error)
       throw {
         code: 'LOGOUT_ERROR',
@@ -151,7 +157,7 @@ class AuthService {
       const token = await this.auth.currentUser.getIdToken(true)
       tokenUtils.saveToken(token)
       return token
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Token refresh error:', error)
       throw {
         code: 'TOKEN_REFRESH_ERROR',
@@ -184,7 +190,7 @@ class AuthService {
           name: updates.displayName,
         })
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Profile update error:', error)
       throw {
         code: 'PROFILE_UPDATE_ERROR',
