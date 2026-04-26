@@ -105,8 +105,8 @@ export const CheckoutPage: React.FC = () => {
         <h1>Finalizar Compra</h1>
         <div className="checkout-content">
           {formErrors.submit && (
-            <Card style={{ backgroundColor: '#fee2e2', borderColor: '#ef4444' }}>
-              <p style={{ color: '#dc2626' }}>{formErrors.submit}</p>
+            <Card className="checkout-error-card">
+              <p className="checkout-error-message">{formErrors.submit}</p>
             </Card>
           )}
 
@@ -230,19 +230,19 @@ export const CheckoutPage: React.FC = () => {
             {/* Resumen */}
             <Card className="form-summary">
               <h3>Resumen del Pedido</h3>
-              <ul style={{ listStyle: 'none', padding: 0, marginBottom: '1rem' }}>
+              <ul className="checkout-summary-list">
                 {items.map((item) => (
-                  <li key={item.productId} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <li key={item.productId} className="checkout-summary-item">
                     <span>{item.product?.name || 'Producto'}</span>
                     <span>{item.quantity}x ${(item.product?.price || 0).toFixed(2)}</span>
                   </li>
                 ))}
               </ul>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
+              <div className="checkout-summary-total">
                 <strong>Total:</strong>
                 <strong>${total.toFixed(2)}</strong>
               </div>
-              <p style={{ fontSize: '0.875rem', color: '#666', marginBottom: '1rem' }}>
+              <p className="checkout-summary-note">
                 Los datos de tu tarjeta se procesarán de forma segura
               </p>
               <Button type="submit" variant="primary" fullWidth isLoading={isProcessing} disabled={isProcessing}>
@@ -254,7 +254,7 @@ export const CheckoutPage: React.FC = () => {
                 fullWidth
                 onClick={() => navigate('/carrito')}
                 disabled={isProcessing}
-                style={{ marginTop: '0.5rem' }}
+                className="checkout-back-button"
               >
                 Volver al Carrito
               </Button>

@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Card, Button, Badge, Icon } from '@components/atoms'
 import { useUser } from '@hooks/useUser'
-import type { Order, OrderItem } from '@types'
+import type { OrderSummary } from './Orders'
 import './OrderDetail.css'
 
 export const OrderDetailPage: React.FC = () => {
@@ -11,7 +11,7 @@ export const OrderDetailPage: React.FC = () => {
   const { isAuthenticated, user } = useUser()
 
   // Get order from location state passed from Orders.tsx
-  const order = location.state?.order as Order | undefined
+  const order = location.state?.order as OrderSummary | undefined
 
   // Check authorization
   if (!isAuthenticated || !user) {
@@ -46,7 +46,7 @@ export const OrderDetailPage: React.FC = () => {
   }
 
   const getStatusColor = (
-    status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled'
+    status: 'pending' | 'processing' | 'shipped' | 'delivered'
   ): 'success' | 'warning' | 'info' | 'secondary' => {
     switch (status) {
       case 'delivered':
@@ -57,15 +57,13 @@ export const OrderDetailPage: React.FC = () => {
         return 'warning'
       case 'pending':
         return 'secondary'
-      case 'cancelled':
-        return 'secondary'
       default:
         return 'secondary'
     }
   }
 
   const getStatusLabel = (
-    status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled'
+    status: 'pending' | 'processing' | 'shipped' | 'delivered'
   ): string => {
     switch (status) {
       case 'pending':
@@ -76,8 +74,6 @@ export const OrderDetailPage: React.FC = () => {
         return 'Enviado'
       case 'delivered':
         return 'Entregado'
-      case 'cancelled':
-        return 'Cancelado'
       default:
         return 'Desconocido'
     }
@@ -105,7 +101,7 @@ export const OrderDetailPage: React.FC = () => {
             <div className="summary-item">
               <span className="summary-label">Fecha de Orden:</span>
               <span className="summary-value">
-                {new Date(order.createdAt).toLocaleDateString('es-ES', {
+                {new Date(order.date).toLocaleDateString('es-ES', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',
@@ -113,22 +109,18 @@ export const OrderDetailPage: React.FC = () => {
               </span>
             </div>
             <div className="summary-item">
-              <span className="summary-label">Estado de Pago:</span>
+              <span className="summary-label">ID:</span>
               <span className="summary-value">
-                {order.paymentStatus === 'completed' ? '✅ Completado' : '⏳ Pendiente'}
+                {order.id}
               </span>
             </div>
             <div className="summary-item">
-              <span className="summary-label">Método de Pago:</span>
-              <span className="summary-value">
-                {order.paymentMethod === 'card' ? 'Tarjeta de Crédito' : order.paymentMethod}
-              </span>
+              <span className="summary-label">Productos:</span>
+              <span className="summary-value">{order.itemCount}</span>
             </div>
             <div className="summary-item">
-              <span className="summary-label">Última Actualización:</span>
-              <span className="summary-value">
-                {new Date(order.updatedAt).toLocaleDateString('es-ES')}
-              </span>
+              <span className="summary-label">Estado:</span>
+              <span className="summary-value">{getStatusLabel(order.status)}</span>
             </div>
           </div>
         </Card>
@@ -137,9 +129,14 @@ export const OrderDetailPage: React.FC = () => {
         <section className="order-items-section">
           <h3>Productos</h3>
           <div className="order-items-list">
-            {order.items.map((item: OrderItem, index: number) => (
-              <Card key={index} className="order-item-card">
+            {order.items.map((item) => (
+              <Card key={item.productId} className="order-item-card">
                 <div className="order-item-content">
+                  <img
+                    className="order-item-image"
+                    src={item.image}
+                    alt={item.name}
+                  />
                   <div className="item-name">
                     <h4>{item.name}</h4>
                   </div>
@@ -162,20 +159,6 @@ export const OrderDetailPage: React.FC = () => {
             ))}
           </div>
         </section>
-
-        {/* Shipping Address */}
-        {order.shippingAddress && (
-          <Card className="order-shipping-card">
-            <h3>Dirección de Envío</h3>
-            <div className="shipping-address">
-              <p>{order.shippingAddress.street}</p>
-              <p>
-                {order.shippingAddress.city}, {order.shippingAddress.postalCode}
-              </p>
-              <p>{order.shippingAddress.country}</p>
-            </div>
-          </Card>
-        )}
 
         {/* Totals */}
         <Card className="order-totals-card">
@@ -203,7 +186,7 @@ export const OrderDetailPage: React.FC = () => {
         <div className="order-detail-actions">
           <Button
             variant="outline"
-            onClick={() => navigate('/orders')}
+            onClick={() => navigate(-1)}
           >
             ← Volver a mis órdenes
           </Button>

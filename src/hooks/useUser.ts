@@ -22,7 +22,7 @@ export const useUser = () => {
         await authService.login(email, password)
         // AppWrapper will handle syncing to store via authService listener
         return true
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Login failed:', error)
         throw error
       }
@@ -36,7 +36,7 @@ export const useUser = () => {
         await authService.register(email, password, name)
         // AppWrapper will handle syncing to store via authService listener
         return true
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Registration failed:', error)
         throw error
       }
@@ -48,7 +48,7 @@ export const useUser = () => {
     try {
       await authService.logout()
       // AppWrapper will handle clearing store via authService listener
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Logout failed:', error)
       throw error
     }
@@ -62,7 +62,7 @@ export const useUser = () => {
         if (updates.displayName && store.user) {
           store.setUser({ ...store.user, name: updates.displayName })
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Profile update failed:', error)
         throw error
       }
@@ -73,7 +73,7 @@ export const useUser = () => {
   const refreshToken = useCallback(async () => {
     try {
       return await authService.refreshToken()
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Token refresh failed:', error)
       throw error
     }

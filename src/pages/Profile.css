@@ -1,3 +1,49 @@
-/* Profile Page Styles */
-/* Fase 1 - Placeholder for page styles */
+.profile-page {
+  padding: var(--spacing-md);
+}
+
+.profile-container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.profile-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-md);
+}
+
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  text-align: center;
+}
+
+.profile-avatar {
+  width: var(--space-4xl);
+  height: var(--space-4xl);
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  color: var(--color-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.account-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+@media (min-width: 1024px) {
+  .profile-content {
+    grid-template-columns: 2fr 1fr;
+    align-items: start;
+  }
+}
 

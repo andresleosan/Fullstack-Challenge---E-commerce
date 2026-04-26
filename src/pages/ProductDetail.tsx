@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Card, Button, Badge, Icon, Input } from '@components/atoms'
 import { useCart } from '@hooks/useCart'
-import { fakeStoreService } from '@services'
 import type { Product } from '@types'
 import './ProductDetail.css'
 
 export const ProductDetailPage: React.FC = () => {
-  const { productId } = useParams<{ productId: string }>()
+  const params = useParams<{ productId: string; id: string }>()
+  const productId = params.productId ?? params.id
   const navigate = useNavigate()
   const { addToCart } = useCart()
   const [product, setProduct] = useState<Product | null>(null)
@@ -19,8 +19,22 @@ export const ProductDetailPage: React.FC = () => {
     const loadProduct = async () => {
       try {
         setIsLoading(true)
-        // Fetch product from FakeStore API
-        const found = await fakeStoreService.getProductById(productId || '')
+        const response = await fetch(`https://fakestoreapi.com/products/${productId}`)
+        if (!response.ok) {
+          throw new Error('Error al cargar el producto')
+        }
+        const data = await response.json()
+        const found: Product = {
+          id: data.id?.toString() || '',
+          name: data.title || '',
+          description: data.description || '',
+          price: data.price || 0,
+          category: data.category || '',
+          rating: data.rating?.rate || 0,
+          reviews: data.rating?.count || 0,
+          stock: data.rating?.count || 1,
+          image: data.image || '',
+        }
 
         if (!found) {
           setError('Producto no encontrado')
@@ -29,10 +43,8 @@ export const ProductDetailPage: React.FC = () => {
 
         setProduct(found)
         setError(null)
-      } catch (err: unknown) {
-        const errorMessage = err instanceof Error ? err.message : 'Error al cargar el producto'
-        setError(errorMessage)
-        console.error('Error loading product:', err)
+      } catch (e: unknown) {
+        setError(e instanceof Error ? e.message : 'Error')
       } finally {
         setIsLoading(false)
       }

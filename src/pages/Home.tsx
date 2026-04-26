@@ -39,9 +39,9 @@ export const HomePage: React.FC<HomePageProps> = ({
           loadProducts(fakeStoreProducts)
           console.log(`✅ Loaded ${fakeStoreProducts.length} products from FakeStore`)
         }
-      } catch (err: any) {
+      } catch (err: unknown) {
         if (isMounted) {
-          const errorMessage = err?.message || 'Error al cargar productos'
+          const errorMessage = err instanceof Error ? err.message : 'Error al cargar productos'
           setError(errorMessage)
           console.error('Error loading products:', err)
         }
@@ -58,8 +58,9 @@ export const HomePage: React.FC<HomePageProps> = ({
         if (isMounted) {
           setCategories(fetchedCategories)
         }
-      } catch (error: any) {
-        console.error('Error loading categories:', error.message)
+      } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : 'Error loading categories'
+        console.error('Error loading categories:', message)
         // Don't block the page if categories fail to load
       }
     }
@@ -83,7 +84,7 @@ export const HomePage: React.FC<HomePageProps> = ({
     return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
-  const handleAddToCart = (product: any, quantity: number) => {
+  const handleAddToCart = (product: { id: string }, quantity: number) => {
     addToCart(product, quantity)
     if (onAddToCart) {
       onAddToCart(product.id, quantity)
@@ -100,7 +101,9 @@ export const HomePage: React.FC<HomePageProps> = ({
     setCurrentPage(1)
   }
 
-  const handleSort = (sortBy: any) => {
+  const handleSort = (
+    sortBy: 'price-asc' | 'price-desc' | 'rating' | 'newest' | 'name'
+  ) => {
     sort(sortBy)
   }
 
@@ -186,9 +189,9 @@ export const HomePage: React.FC<HomePageProps> = ({
 
       {/* Error State */}
       {error && (
-        <div className="error-container" style={{ backgroundColor: '#fee2e2', padding: '1rem', margin: '1rem', borderRadius: '0.5rem', color: '#dc2626' }}>
+        <div className="error-container">
           <p>❌ {error}</p>
-          <button onClick={() => window.location.reload()} style={{ marginTop: '0.5rem', padding: '0.5rem 1rem', backgroundColor: '#ef4444', color: 'white', border: 'none', borderRadius: '0.25rem', cursor: 'pointer' }}>
+          <button onClick={() => window.location.reload()} className="error-retry-button">
             Reintentar
           </button>
         </div>
@@ -196,7 +199,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
       {/* Main Content */}
       {!isLoading && !error && products.length === 0 && (
-        <div className="empty-state" style={{ textAlign: 'center', padding: '2rem' }}>
+        <div className="empty-state">
           <p>No hay productos disponibles en este momento</p>
         </div>
       )}
@@ -224,7 +227,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 value={filters.sortBy}
                 onChange={(e) =>
                   handleSort(
-                    e.target.value as any
+                    e.target.value as 'price-asc' | 'price-desc' | 'rating' | 'newest' | 'name'
                   )
                 }
               >

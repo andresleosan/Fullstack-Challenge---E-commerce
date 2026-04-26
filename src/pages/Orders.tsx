@@ -4,29 +4,68 @@ import { Card, Button, Badge } from '@components/atoms'
 import { useUser } from '@hooks/useUser'
 import './Orders.css'
 
-interface Order {
+export interface OrderItemSummary {
+  productId: string
+  name: string
+  image: string
+  quantity: number
+  price: number
+  total: number
+}
+
+export interface OrderSummary {
   id: string
   date: string
   total: number
   status: 'pending' | 'processing' | 'shipped' | 'delivered'
   itemCount: number
+  items: OrderItemSummary[]
+  subtotal: number
+  tax: number
+  shipping: number
 }
 
 export const OrdersPage: React.FC = () => {
   const navigate = useNavigate()
   const { isAuthenticated, user } = useUser()
 
-  // TODO-FUTURE: Replace with real data from Firestore
-  // Currently using mock data for demonstration. When Firebase Firestore is fully integrated,
-  // this should be replaced with: const mockOrders = await ordersService.getUserOrders(user.id)
-  // This will enable real-time synchronization of user orders from the database.
-  const mockOrders: Order[] = [
+  // TODO-FUTURE: conectar con Firestore real-time
+  const mockOrders: OrderSummary[] = [
     {
       id: 'ORD-001',
       date: new Date().toISOString(),
       total: 199.99,
       status: 'delivered',
       itemCount: 3,
+      subtotal: 179.99,
+      tax: 14.4,
+      shipping: 5.6,
+      items: [
+        {
+          productId: '101',
+          name: 'Auriculares Inalámbricos',
+          image: 'https://fakestoreapi.com/img/61U7T1koQqL._AC_SX679_.jpg',
+          quantity: 1,
+          price: 89.99,
+          total: 89.99,
+        },
+        {
+          productId: '102',
+          name: 'Smart Watch',
+          image: 'https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg',
+          quantity: 1,
+          price: 59.99,
+          total: 59.99,
+        },
+        {
+          productId: '103',
+          name: 'Cargador USB-C',
+          image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
+          quantity: 1,
+          price: 30.01,
+          total: 30.01,
+        },
+      ],
     },
     {
       id: 'ORD-002',
@@ -34,6 +73,19 @@ export const OrdersPage: React.FC = () => {
       total: 79.99,
       status: 'delivered',
       itemCount: 1,
+      subtotal: 69.99,
+      tax: 5.6,
+      shipping: 4.4,
+      items: [
+        {
+          productId: '104',
+          name: 'Camiseta Casual',
+          image: 'https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg',
+          quantity: 1,
+          price: 69.99,
+          total: 69.99,
+        },
+      ],
     },
   ]
 

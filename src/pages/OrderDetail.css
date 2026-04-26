@@ -102,9 +102,16 @@
 
 .order-item-content {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--space-md);
+}
+
+.order-item-image {
+  width: var(--space-4xl);
+  height: var(--space-4xl);
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
 }
 
 .item-name h4 {
@@ -241,6 +248,15 @@
   .order-summary-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-md);
+  }
+
+  .order-item-content {
+    flex-direction: column;
+  }
+
+  .order-item-image {
+    width: var(--space-3xl);
+    height: var(--space-3xl);
   }
 
   .item-details {

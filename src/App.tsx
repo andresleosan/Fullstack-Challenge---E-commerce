@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
 import { MainLayout } from '@components/organisms'
 import { ProtectedRoute } from '@components/common/ProtectedRoute'
 import {
@@ -133,6 +134,7 @@ function AppContent() {
 function App() {
   return (
     <Router>
+      <Toaster position="top-right" />
       <AppContent />
     </Router>
   )

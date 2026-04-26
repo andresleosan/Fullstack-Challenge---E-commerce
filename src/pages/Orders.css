@@ -1,3 +1,60 @@
-/* Orders Page Styles */
-/* Fase 1 - Placeholder for page styles */
+.orders-page {
+  padding: var(--spacing-md);
+}
+
+.orders-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.order-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.order-details {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-sm);
+}
+
+.order-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.orders-footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+@media (min-width: 768px) {
+  .order-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .order-details {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .order-actions,
+  .orders-footer {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
 

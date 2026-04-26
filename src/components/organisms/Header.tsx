@@ -75,7 +75,7 @@ export const Header = React.forwardRef<HTMLDivElement, HeaderProps>(
         await logout()
         setIsUserMenuOpen(false)
         navigate('/', { replace: true })
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Logout error:', error)
       }
     }
