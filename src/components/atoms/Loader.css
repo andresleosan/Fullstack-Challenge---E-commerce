@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-sm);
+  gap: var(--space-sm);
 }
 
 /* SPINNER variant */
@@ -30,13 +30,13 @@
 .loader-spinner {
   border: 3px solid rgba(0, 217, 255, 0.2);
   border-top-color: var(--color-primary);
-  border-radius: 50%;
+  border-radius: var(--border-radius-full);
   animation: spin 0.8s linear infinite;
 }
 
 /* DOTS variant */
 .loader--dots {
-  gap: var(--spacing-xs);
+  gap: var(--space-xs);
 }
 
 .loader--sm .loader-dot {
@@ -56,7 +56,7 @@
 
 .loader-dot {
   background-color: var(--color-primary);
-  border-radius: 50%;
+  border-radius: var(--border-radius-full);
   animation: bounce 1.4s infinite ease-in-out both;
 }
 
@@ -73,7 +73,7 @@
   width: 100%;
   height: 4px;
   background-color: rgba(0, 217, 255, 0.1);
-  border-radius: 2px;
+  border-radius: var(--border-radius-sm);
   overflow: hidden;
 }
 

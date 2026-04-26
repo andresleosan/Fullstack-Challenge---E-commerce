@@ -3,7 +3,7 @@
 .product-gallery {
   width: 100%;
   display: grid;
-  gap: 1rem;
+  gap: var(--space-md);
 }
 
 /* Grid Variants */
@@ -41,17 +41,17 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 3rem 1rem;
-  gap: 1rem;
-  border-radius: 12px;
+  padding: var(--space-3xl) var(--space-md);
+  gap: var(--space-md);
+  border-radius: var(--border-radius-lg);
   background: rgba(0, 217, 255, 0.05);
   border: 2px dashed rgba(0, 217, 255, 0.2);
   min-height: 300px;
 }
 
 .loader-text {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 1rem;
+  color: var(--text-secondary);
+  font-size: var(--font-size-base);
   margin: 0;
 }
 
@@ -61,16 +61,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4rem 1rem;
-  border-radius: 12px;
+  padding: var(--space-4xl) var(--space-md);
+  border-radius: var(--border-radius-lg);
   background: rgba(0, 217, 255, 0.05);
   border: 2px dashed rgba(0, 217, 255, 0.2);
   min-height: 300px;
 }
 
 .empty-message {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 1.1rem;
+  color: var(--text-secondary);
+  font-size: var(--font-size-lg);
   margin: 0;
   text-align: center;
 }
@@ -86,7 +86,7 @@
   }
 
   .product-gallery {
-    gap: 1.25rem;
+    gap: var(--space-lg);
   }
 }
 

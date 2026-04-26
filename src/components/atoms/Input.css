@@ -3,16 +3,16 @@
 .input-wrapper {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xs);
+  gap: var(--space-xs);
   width: 100%;
 }
 
 .input-label {
   display: block;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #fff;
-  margin-bottom: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
 }
 
 .input-required {
@@ -21,26 +21,27 @@
 }
 
 .input {
-  padding: var(--spacing-sm) var(--spacing-md);
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
+  padding: var(--space-sm) var(--space-md);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius-md);
   background-color: var(--color-secondary);
-  color: #fff;
-  font-size: 1rem;
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
   font-family: inherit;
-  transition: all 0.2s ease-in-out;
+  transition: all var(--transition-fast);
   outline: none;
 }
 
 /* Placeholder */
 .input::placeholder {
-  color: #999;
+  color: var(--text-secondary);
 }
 
 /* Focus */
 .input:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+  box-shadow: var(--shadow-glow);
+  transition: all var(--transition-fast);
 }
 
 /* Error state */
@@ -52,12 +53,13 @@
 .input--error:focus {
   box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
   border-color: var(--color-error);
+  transition: all var(--transition-fast);
 }
 
 /* Disabled state */
 .input:disabled {
   background-color: var(--color-tertiary);
-  color: #666;
+  color: var(--text-disabled);
   cursor: not-allowed;
   opacity: 0.6;
 }
@@ -70,16 +72,16 @@
 
 .input-error {
   display: block;
-  font-size: 0.75rem;
+  font-size: var(--font-size-xs);
   color: var(--color-error);
-  margin-top: var(--spacing-xs);
+  margin-top: var(--space-xs);
 }
 
 .input-helper {
   display: block;
-  font-size: 0.75rem;
-  color: #999;
-  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  margin-top: var(--space-xs);
 }
 
 /* Tipo text, email, password, tel, url */

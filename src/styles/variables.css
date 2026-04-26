@@ -13,7 +13,9 @@
   --color-primary-dark: #00a8cc;   /* Cyan oscuro (hover) */
   --color-primary-light: #33e9ff;  /* Cyan claro */
   
-  /* Neutrales */
+  /* Secundarios */
+  --color-secondary: var(--color-dark);  /* Alias para compatibilidad */
+  --color-tertiary: var(--color-darker); /* Alias para compatibilidad */
   --color-black: #0f0f0f;          /* Fondo principal */
   --color-dark: #1a1a1a;           /* Fondo secundario */
   --color-darker: #0a0a0a;         /* Fondo terciario */
@@ -134,6 +136,50 @@
   /* ==================== BREAKPOINTS ==================== */
   /* Usados en media queries */
   /* 320px, 768px, 1024px, 1280px, 1536px */
+  
+  /* ==================== ALIASES PARA COMPATIBILIDAD ==================== */
+  /* Spacing (aliases para archivos que usan --spacing-*) */
+  --spacing-xs: var(--space-xs);
+  --spacing-sm: var(--space-sm);
+  --spacing-md: var(--space-md);
+  --spacing-lg: var(--space-lg);
+  --spacing-xl: var(--space-xl);
+  --spacing-2xl: var(--space-2xl);
+  --spacing-3xl: var(--space-3xl);
+  --spacing-4xl: var(--space-4xl);
+  
+  /* Border radius aliases */
+  --radius-none: var(--border-radius-none);
+  --radius-sm: var(--border-radius-sm);
+  --radius-md: var(--border-radius-md);
+  --radius-lg: var(--border-radius-lg);
+  --radius-xl: var(--border-radius-xl);
+  --radius-full: var(--border-radius-full);
+  
+  /* ==================== VARIABLES SEMÁNTICAS ==================== */
+  /* Texto */
+  --text-primary: var(--color-white);
+  --text-secondary: var(--color-gray-400);
+  --text-tertiary: var(--color-gray-500);
+  --text-disabled: var(--color-gray-600);
+  --text-inverse: var(--color-black);
+  
+  /* Fondos */
+  --bg-primary: var(--color-black);
+  --bg-secondary: var(--color-dark);
+  --bg-tertiary: var(--color-darker);
+  --bg-surface: var(--color-dark);
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+  
+  /* Estado de fondo */
+  --bg-input: var(--color-dark);
+  --bg-button-hover: var(--color-bg-hover);
+  --bg-button-active: var(--color-bg-active);
+  --bg-button-disabled: var(--color-bg-disabled);
+  
+  /* Estrellas y rating */
+  --color-star: #fbbf24;
+  --color-star-empty: var(--color-gray-600);
 }
 
 /* ============================================

@@ -59,9 +59,8 @@ export const Header = React.forwardRef<HTMLDivElement, HeaderProps>(
     }
 
     const handleCartClick = () => {
-      if (onCartClick) {
-        onCartClick()
-      }
+      navigate('/carrito')
+      window.scrollTo(0, 0)
     }
 
     const handleUserMenuToggle = () => {
@@ -95,6 +94,14 @@ export const Header = React.forwardRef<HTMLDivElement, HeaderProps>(
       navigate('/login')
     }
 
+    const handleContactClick = () => {
+      const contactSection = document.getElementById('contact')
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        setIsMenuOpen(false) // Cerrar menú móvil si está abierto
+      }
+    }
+
     return (
       <header ref={ref} className="header">
         <div className="header-container">
@@ -117,18 +124,27 @@ export const Header = React.forwardRef<HTMLDivElement, HeaderProps>(
 
           {/* Menú Desktop */}
           <nav className="header-desktop-menu">
-            <a href="/" className="header-menu-link">
+            <button 
+              onClick={() => {
+                navigate('/')
+                window.scrollTo(0, 0)
+              }}
+              className="header-menu-link"
+            >
               Inicio
-            </a>
-            <a href="#" className="header-menu-link">
+            </button>
+            <button className="header-menu-link">
               Categorías
-            </a>
-            <a href="#" className="header-menu-link">
+            </button>
+            <button className="header-menu-link">
               Ofertas
-            </a>
-            <a href="#" className="header-menu-link">
+            </button>
+            <button 
+              onClick={handleContactClick}
+              className="header-menu-link"
+            >
               Contacto
-            </a>
+            </button>
           </nav>
 
           {/* Búsqueda */}
@@ -189,12 +205,12 @@ export const Header = React.forwardRef<HTMLDivElement, HeaderProps>(
                 {/* Dropdown Menu */}
                 {isUserMenuOpen && (
                   <div className="header-user-dropdown">
-                    <a href="/profile" className="dropdown-item" onClick={goToProfile}>
+                    <button className="dropdown-item" onClick={goToProfile}>
                       Mi Perfil
-                    </a>
-                    <a href="/orders" className="dropdown-item" onClick={goToOrders}>
+                    </button>
+                    <button className="dropdown-item" onClick={goToOrders}>
                       Mis Órdenes
-                    </a>
+                    </button>
                     <hr className="dropdown-divider" />
                     <button
                       className="dropdown-item logout-btn"
@@ -225,18 +241,31 @@ export const Header = React.forwardRef<HTMLDivElement, HeaderProps>(
           className={`header-mobile-menu ${isMenuOpen ? 'open' : ''}`}
           aria-hidden={isMenuOpen ? false : undefined}
         >
-          <a href="/" className="header-menu-link">
+          <button 
+            onClick={() => {
+              navigate('/')
+              setIsMenuOpen(false)
+              window.scrollTo(0, 0)
+            }}
+            className="header-menu-link"
+          >
             Inicio
-          </a>
-          <a href="#" className="header-menu-link">
+          </button>
+          <button className="header-menu-link">
             Categorías
-          </a>
-          <a href="#" className="header-menu-link">
+          </button>
+          <button className="header-menu-link">
             Ofertas
-          </a>
-          <a href="#" className="header-menu-link">
+          </button>
+          <button 
+            onClick={() => {
+              handleContactClick()
+              setIsMenuOpen(false)
+            }}
+            className="header-menu-link"
+          >
             Contacto
-          </a>
+          </button>
         </nav>
       </header>
     )

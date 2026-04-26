@@ -12,13 +12,13 @@
 
 ## 🎯 Estado Actual
 
-| Métrica | Estado |
-|---------|--------|
-| **Fase** | 🟡 Fase 1 - Subfase 1.4 (Próxima: Vanilla JS) |
-| **Progreso** | 30% (Documentación: 100% ✅, HTML: 100% ✅, CSS: 100% ✅) |
-| **Commits** | 4/55+ |
-| **Documentación** | 100% (10 documentos) |
-| **Deploy** | ⏳ Pendiente Fase 3 |
+| Métrica           | Estado                                                    |
+| ----------------- | --------------------------------------------------------- |
+| **Fase**          | 🟡 Fase 1 - Subfase 1.4 (Próxima: Vanilla JS)             |
+| **Progreso**      | 30% (Documentación: 100% ✅, HTML: 100% ✅, CSS: 100% ✅) |
+| **Commits**       | 4/55+                                                     |
+| **Documentación** | 100% (10 documentos)                                      |
+| **Deploy**        | ⏳ Pendiente Fase 3                                       |
 
 📊 **[Ver progreso detallado](docs/PROGRESO.md)** &nbsp;|&nbsp; 📈 **[Ver plan de desarrollo](docs/plan_de_desarrollo.md)**
 
@@ -27,6 +27,7 @@
 ## 🚀 Características Principales
 
 ### ✅ Funcionalidades Core (del PDF)
+
 - 🔐 Autenticación de usuarios (simulada Fase 2 → Firebase Fase 3)
 - 🏪 Galería de productos desde API
 - 🔍 Búsqueda en tiempo real
@@ -38,6 +39,7 @@
 - 💾 Persistencia de sesión entre visitas
 
 ### 🎁 Funcionalidades Bonus
+
 - 👤 Perfil de usuario con historial de compras
 - 🔔 Notificaciones visuales (toasts)
 - 🌙 Dark mode moderno
@@ -51,17 +53,17 @@
 
 La documentación es el **epicentro** del proyecto. Todo está en [docs/](docs/):
 
-| Documento | Propósito | Lecturas |
-|-----------|----------|---------|
-| **[alcance_del_proyecto.md](docs/alcance_del_proyecto.md)** | Qué incluye, qué no, criterios de éxito | 5 min |
-| **[tech_stack.md](docs/tech_stack.md)** | Tecnologías usadas, justificaciones, config | 10 min |
-| **[sistema_de_diseño.md](docs/sistema_de_diseño.md)** | Paleta de colores, tipografía, componentes CSS | 15 min |
-| **[arquitectura_del_proyecto.md](docs/arquitectura_del_proyecto.md)** | Estructura React, flujos, hooks, state management | 15 min |
-| **[fases_del_proyecto.md](docs/fases_del_proyecto.md)** | 3 fases con subfases detalladas | 10 min |
-| **[plan_de_desarrollo.md](docs/plan_de_desarrollo.md)** | Roadmap con tareas atómicas, timeline, commits | 15 min |
-| **[estructura_firestore.md](docs/estructura_firestore.md)** | Schema de colecciones, rules, operaciones | 10 min |
-| **[decisiones_de_arquitectura.md](docs/decisiones_de_arquitectura.md)** | ADR - Por qué cada decisión técnica | 10 min |
-| **[PROGRESO.md](docs/PROGRESO.md)** | Estado actual + checklists por fase | 5 min |
+| Documento                                                               | Propósito                                         | Lecturas |
+| ----------------------------------------------------------------------- | ------------------------------------------------- | -------- |
+| **[alcance_del_proyecto.md](docs/alcance_del_proyecto.md)**             | Qué incluye, qué no, criterios de éxito           | 5 min    |
+| **[tech_stack.md](docs/tech_stack.md)**                                 | Tecnologías usadas, justificaciones, config       | 10 min   |
+| **[sistema_de_diseño.md](docs/sistema_de_diseño.md)**                   | Paleta de colores, tipografía, componentes CSS    | 15 min   |
+| **[arquitectura_del_proyecto.md](docs/arquitectura_del_proyecto.md)**   | Estructura React, flujos, hooks, state management | 15 min   |
+| **[fases_del_proyecto.md](docs/fases_del_proyecto.md)**                 | 3 fases con subfases detalladas                   | 10 min   |
+| **[plan_de_desarrollo.md](docs/plan_de_desarrollo.md)**                 | Roadmap con tareas atómicas, timeline, commits    | 15 min   |
+| **[estructura_firestore.md](docs/estructura_firestore.md)**             | Schema de colecciones, rules, operaciones         | 10 min   |
+| **[decisiones_de_arquitectura.md](docs/decisiones_de_arquitectura.md)** | ADR - Por qué cada decisión técnica               | 10 min   |
+| **[PROGRESO.md](docs/PROGRESO.md)**                                     | Estado actual + checklists por fase               | 5 min    |
 
 **Total**: ~85 min de documentación = **Conocimiento completo del proyecto** ✅
 
@@ -70,6 +72,7 @@ La documentación es el **epicentro** del proyecto. Todo está en [docs/](docs/)
 ## 🛠️ Stack Tecnológico
 
 ### Frontend
+
 - **React 18.x** - Librería UI
 - **TypeScript 5.x** - Type safety
 - **Vite** - Build tool ultra-rápido
@@ -80,24 +83,29 @@ La documentación es el **epicentro** del proyecto. Todo está en [docs/](docs/)
   - Dark mode moderno (colores cuidados)
 
 ### State Management (por fase)
+
 - **Fase 2**: Context API + useReducer
 - **Fase 3**: Firebase Firestore (real-time sync)
 
 ### HTTP & Async
+
 - **Axios** - Cliente HTTP
 - **FakeStore API** - Datos de productos (Fase 3)
 
 ### Backend (Fase 3)
+
 - **Firebase Firestore** - Base de datos NoSQL
 - **Firebase Auth** - Autenticación
 - **Firebase Hosting** - Deploy
 
 ### Utilities & Librerías
+
 - **react-hot-toast** - Notificaciones visuales
 - **react-icons** - Iconografía consistente
 - **Vitest** - Testing (Fase 3)
 
 ### Development
+
 - **ESLint** - Linting
 - **Prettier** - Formateo automático
 - **TypeScript Compiler** - Type checking
@@ -107,6 +115,7 @@ La documentación es el **epicentro** del proyecto. Todo está en [docs/](docs/)
 ## 📋 Requisitos del Sistema
 
 ### Instalación Requerida
+
 ```bash
 # Node.js 18+ y npm 9+
 node -v          # Debe ser >= 18.0.0
@@ -117,9 +126,11 @@ git --version    # Debe estar instalado
 ```
 
 ### Crear Cuenta (Fase 3)
+
 - Firebase Account: https://console.firebase.google.com
 
 ### Archivos de Configuración Necesarios
+
 - `.env.local` (variables Firebase - Fase 3)
 - `.gitignore` (para no versionear secretos)
 
@@ -128,18 +139,21 @@ git --version    # Debe estar instalado
 ## 🚀 Inicio Rápido
 
 ### 1️⃣ Clonar Repositorio
+
 ```bash
 git clone https://github.com/andresleosan/Fullstack-Challenge---E-commerce
 cd Fullstack-Challenge---E-commerce
 ```
 
 ### 2️⃣ Fase 1: HTML + CSS + Vanilla JS (Próximamente)
+
 ```bash
 # Solo necesitas un navegador moderno
 # Abre index.html en navegador para ver progreso
 ```
 
 ### 3️⃣ Fase 2: Instalar Dependencias React
+
 ```bash
 npm install
 npm run dev          # Dev server en http://localhost:5173
@@ -148,6 +162,7 @@ npm run lint         # Linting
 ```
 
 ### 4️⃣ Fase 3: Setup Firebase (Cuando llegues a Fase 3)
+
 ```bash
 # Crear archivo .env.local con credenciales Firebase
 VITE_FIREBASE_API_KEY=xxx
@@ -232,19 +247,25 @@ Fullstack-Challenge---E-commerce/
 ## 🎓 Cómo Aprender con Este Proyecto
 
 ### Fase 1: Fundamentals Web (5 días)
+
 Focus: **HTML Semántico + CSS Puro + JavaScript**
+
 - Empezar sin React para dominar web basics
 - Implementar búsqueda, filtros, carrito en vanilla JS
 - Ganar confianza en el proyecto
 
 ### Fase 2: React Mastery (8 días)
+
 Focus: **Componentes + Hooks + State Management**
+
 - Convertir HTML a React manteniendo funcionalidad
 - Aprender Context API, custom hooks
 - Consolidar conocimiento de React
 
 ### Fase 3: Backend Real (5 días)
+
 Focus: **Firebase + Autenticación + Deploy**
+
 - Sincronizar estado con backend
 - Entender real-time databases
 - Llevar a producción
@@ -255,16 +276,16 @@ Focus: **Firebase + Autenticación + Deploy**
 
 ## 👨‍💻 Decisiones de Arquitectura
 
-| Decisión | Razón |
-|----------|-------|
-| **CSS Puro (no Tailwind)** | Dominar fundamentals, bundle pequeño |
-| **TypeScript** | Type safety, mejor IDE support, industry standard |
-| **Vite** | HMR instantáneo, build ultra-rápido |
-| **Context API (Fase 2)** | Nativa React, suficiente para esta app |
-| **Firebase (Fase 3)** | Setup rápido, real-time sync, no DevOps |
-| **3 Fases Progresivas** | Aprendizaje profundo, no superficial |
-| **Atomic Design** | Modularidad, escalabilidad, reutilización |
-| **30+ Commits** | Tracking de progreso real |
+| Decisión                   | Razón                                             |
+| -------------------------- | ------------------------------------------------- |
+| **CSS Puro (no Tailwind)** | Dominar fundamentals, bundle pequeño              |
+| **TypeScript**             | Type safety, mejor IDE support, industry standard |
+| **Vite**                   | HMR instantáneo, build ultra-rápido               |
+| **Context API (Fase 2)**   | Nativa React, suficiente para esta app            |
+| **Firebase (Fase 3)**      | Setup rápido, real-time sync, no DevOps           |
+| **3 Fases Progresivas**    | Aprendizaje profundo, no superficial              |
+| **Atomic Design**          | Modularidad, escalabilidad, reutilización         |
+| **30+ Commits**            | Tracking de progreso real                         |
 
 **[Justificación completa (ADR) →](docs/decisiones_de_arquitectura.md)**
 
@@ -273,12 +294,14 @@ Focus: **Firebase + Autenticación + Deploy**
 ## 🧪 Testing & Validación
 
 ### Fase 1
+
 - [ ] Responsive en 3 breakpoints (mobile/tablet/desktop)
 - [ ] Cross-browser (Chrome, Firefox, Safari)
 - [ ] Búsqueda, filtros, carrito funcionales
 - [ ] localStorage persistiendo
 
 ### Fase 2
+
 - [ ] TypeScript: `tsc --noEmit` sin errores
 - [ ] Todos los componentes renderizando
 - [ ] Context API sincronizando estado
@@ -286,6 +309,7 @@ Focus: **Firebase + Autenticación + Deploy**
 - [ ] Manual testing completo
 
 ### Fase 3
+
 - [ ] Firebase Auth funcionando
 - [ ] Órdenes guardándose en Firestore
 - [ ] Panel de admin CRUD operacional
@@ -300,21 +324,22 @@ Focus: **Firebase + Autenticación + Deploy**
 
 Después del deploy en Fase 3:
 
-| Métrica | Target | Verificar |
-|---------|--------|----------|
-| **Commits** | 55+ | `git log --oneline \| wc -l` |
-| **Documentación** | 100% | Todos los docs actualizados ✅ |
-| **Funcionalidades** | 25/25 | Checklist en PROGRESO.md |
-| **TypeScript** | 0 errores | `npm run type-check` limpio |
-| **Cobertura moral** | ~100% | Probado manual en vivo |
-| **Performance** | Lighthouse > 85 | Ver reporte en docs/ |
-| **Bundle Size** | < 300KB | `npm run build` output |
+| Métrica             | Target          | Verificar                      |
+| ------------------- | --------------- | ------------------------------ |
+| **Commits**         | 55+             | `git log --oneline \| wc -l`   |
+| **Documentación**   | 100%            | Todos los docs actualizados ✅ |
+| **Funcionalidades** | 25/25           | Checklist en PROGRESO.md       |
+| **TypeScript**      | 0 errores       | `npm run type-check` limpio    |
+| **Cobertura moral** | ~100%           | Probado manual en vivo         |
+| **Performance**     | Lighthouse > 85 | Ver reporte en docs/           |
+| **Bundle Size**     | < 300KB         | `npm run build` output         |
 
 ---
 
 ## 🔗 Enlaces Importantes
 
 ### Documentación del Proyecto
+
 - 📖 [Alcance completo](docs/alcance_del_proyecto.md)
 - 🛠️ [Tech Stack](docs/tech_stack.md)
 - 🎨 [Sistema de Diseño](docs/sistema_de_diseño.md)
@@ -326,6 +351,7 @@ Después del deploy en Fase 3:
 - 📊 [Progreso Actual](docs/PROGRESO.md)
 
 ### Tecnologías
+
 - React: https://react.dev/
 - TypeScript: https://www.typescriptlang.org/
 - Vite: https://vitejs.dev/
@@ -333,6 +359,7 @@ Después del deploy en Fase 3:
 - React Router: https://reactrouter.com/
 
 ### APIs
+
 - FakeStore API: https://fakestoreapi.com/
 
 ---
@@ -353,21 +380,27 @@ Después del deploy en Fase 3:
 ## 📞 Guía de Solución de Problemas
 
 ### ¿Por dónde empiezo?
+
 ✅ Leer [docs/alcance_del_proyecto.md](docs/alcance_del_proyecto.md) (5 min)
 
 ### ¿Cuál es el plan?
+
 ✅ Ver [docs/fases_del_proyecto.md](docs/fases_del_proyecto.md) (10 min)
 
 ### ¿Qué debo hacer hoy?
+
 ✅ Revisar [docs/plan_de_desarrollo.md](docs/plan_de_desarrollo.md) y [docs/PROGRESO.md](docs/PROGRESO.md)
 
 ### ¿Entiendo la arquitectura?
+
 ✅ Leer [docs/arquitectura_del_proyecto.md](docs/arquitectura_del_proyecto.md) (20 min)
 
 ### ¿Por qué esta decisión?
+
 ✅ Ver [docs/decisiones_de_arquitectura.md](docs/decisiones_de_arquitectura.md)
 
 ### ¿Cuál es el esquema de Firestore?
+
 ✅ Revisar [docs/estructura_firestore.md](docs/estructura_firestore.md)
 
 ---
@@ -401,6 +434,7 @@ Desarrollador Full Stack en formación 🚀
 ## 📝 Changelog
 
 ### v1.0 - Abril 19, 2026
+
 - ✅ Documentación completa (DDD)
 - ✅ Estructura base creada
 - ✅ Plan de 4 semanas definido

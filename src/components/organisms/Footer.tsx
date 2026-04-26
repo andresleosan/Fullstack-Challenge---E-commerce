@@ -79,6 +79,40 @@ export const Footer = React.forwardRef<HTMLDivElement, FooterProps>(
             </section>
           )}
 
+          {/* Contact Section */}
+          <section id="contact" className="footer-contact-section">
+            <h3 className="contact-title">Contacto</h3>
+            <div className="contact-info">
+              <div className="contact-item">
+                <Icon name="shopping-bag" size="md" />
+                <div className="contact-details">
+                  <p className="contact-label">Email</p>
+                  <a href="mailto:info@estore.com" className="contact-link">
+                    info@estore.com
+                  </a>
+                </div>
+              </div>
+              <div className="contact-item">
+                <Icon name="check" size="md" />
+                <div className="contact-details">
+                  <p className="contact-label">Teléfono</p>
+                  <a href="tel:+573001234567" className="contact-link">
+                    +57 (300) 123-4567
+                  </a>
+                </div>
+              </div>
+              <div className="contact-item">
+                <Icon name="menu" size="md" />
+                <div className="contact-details">
+                  <p className="contact-label">Dirección</p>
+                  <p className="contact-value">
+                    Calle 45 #10-50, Bogotá, Colombia
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* Main Footer Content */}
           <div className="footer-content">
             {/* Company Info */}
@@ -105,9 +139,6 @@ export const Footer = React.forwardRef<HTMLDivElement, FooterProps>(
               <h4 className="footer-title">Atención al Cliente</h4>
               <ul className="footer-links">
                 <li>
-                  <a href="#contact">Contacto</a>
-                </li>
-                <li>
                   <a href="#faq">Preguntas Frecuentes</a>
                 </li>
                 <li>
@@ -115,6 +146,9 @@ export const Footer = React.forwardRef<HTMLDivElement, FooterProps>(
                 </li>
                 <li>
                   <a href="#returns">Devoluciones</a>
+                </li>
+                <li>
+                  <a href="#support">Soporte</a>
                 </li>
               </ul>
             </div>

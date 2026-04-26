@@ -69,32 +69,35 @@ export const db: Firestore = getFirestore(app)
 // Initialize Storage
 export const storage: FirebaseStorage = getStorage(app)
 
-// Setup emulators in development (optional)
-if ((import.meta as any).env.DEV && typeof window !== 'undefined') {
-  try {
-    // Auth Emulator
-    if (!auth.emulatorConfig) {
-      connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true })
-    }
+// ⚠️ Firebase emulators disabled - using production Firebase
+// To enable emulators, uncomment below and run: firebase emulators:start
+// if ((import.meta as any).env.DEV && typeof window !== 'undefined') {
+//   try {
+//     // Auth Emulator
+//     if (!auth.emulatorConfig) {
+//       connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true })
+//     }
+//
+//     // Firestore Emulator
+//     try {
+//       connectFirestoreEmulator(db, 'localhost', 8080)
+//     } catch (error) {
+//       // Already initialized or not running
+//     }
+//
+//     // Storage Emulator
+//     try {
+//       connectStorageEmulator(storage, 'localhost', 9199)
+//     } catch (error) {
+//       // Already initialized or not running
+//     }
+//
+//     console.log('🔥 Firebase emulators enabled')
+//   } catch (error) {
+//     console.log('Firebase running in production mode')
+//   }
+// }
 
-    // Firestore Emulator - Check if not already initialized
-    try {
-      connectFirestoreEmulator(db, 'localhost', 8080)
-    } catch (error) {
-      // Already initialized or not running
-    }
-
-    // Storage Emulator
-    try {
-      connectStorageEmulator(storage, 'localhost', 9199)
-    } catch (error) {
-      // Already initialized or not running
-    }
-
-    console.log('🔥 Firebase emulators enabled (development mode)')
-  } catch (error) {
-    console.log('Firebase running in production mode')
-  }
-}
+console.log('✅ Firebase initialized - using production database')
 
 export default app

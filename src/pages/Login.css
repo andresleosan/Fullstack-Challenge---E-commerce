@@ -4,8 +4,8 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: var(--color-tertiary, #0f0f0f);
-  color: rgba(255, 255, 255, 0.9);
+  background: var(--color-tertiary);
+  color: var(--text-primary);
 }
 
 /* Back Button Header */
@@ -15,19 +15,20 @@
 
 .back-btn {
   background: transparent;
-  border: 1px solid rgba(0, 217, 255, 0.3);
+  border: var(--border-width) solid rgba(0, 217, 255, 0.3);
   color: rgba(0, 217, 255, 0.8);
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--border-radius-full);
   cursor: pointer;
-  font-size: 0.9rem;
-  transitions: all 0.2s ease;
-  font-weight: 500;
+  font-size: var(--font-size-sm);
+  transition: all var(--transition-fast);
+  font-weight: var(--font-weight-medium);
 }
 
 .back-btn:hover {
   background: rgba(0, 217, 255, 0.1);
   border-color: rgba(0, 217, 255, 0.8);
+  transition: all var(--transition-fast);
 }
 
 /* Container */
@@ -36,7 +37,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem 1rem;
+  padding: var(--space-2xl) var(--space-md);
 }
 
 /* Card */
@@ -44,26 +45,26 @@
   width: 100%;
   max-width: 400px;
   background: rgba(255, 255, 255, 0.02) !important;
-  border: 1px solid rgba(0, 217, 255, 0.15) !important;
-  border-radius: 12px;
-  padding: 2rem !important;
+  border: var(--border-width) solid rgba(0, 217, 255, 0.15) !important;
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-2xl) !important;
 }
 
 /* Header */
 .login-header {
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-2xl);
   text-align: center;
 }
 
 .login-header h1 {
-  font-size: 1.8rem;
-  margin: 0 0 0.5rem 0;
-  color: #fff;
+  font-size: var(--font-size-3xl);
+  margin: 0 0 var(--space-sm) 0;
+  color: var(--text-primary);
 }
 
 .login-header p {
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.6);
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
   margin: 0;
 }
 
@@ -84,11 +85,11 @@
 /* Error Message */
 .error-message {
   background: rgba(255, 0, 0, 0.1);
-  border: 1px solid rgba(255, 0, 0, 0.3);
-  color: #ff6b6b;
-  padding: 0.8rem;
-  border-radius: 8px;
-  font-size: 0.9rem;
+  border: var(--border-width) solid rgba(255, 0, 0, 0.3);
+  color: var(--color-error);
+  padding: var(--space-md);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
   text-align: center;
 }
 
@@ -97,7 +98,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.9rem;
+  font-size: var(--font-size-sm);
   margin-top: 0.5rem;
 }
 

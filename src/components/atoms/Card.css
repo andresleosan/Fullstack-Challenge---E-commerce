@@ -2,14 +2,14 @@
 
 .card {
   background-color: var(--color-secondary);
-  border-radius: 8px;
+  border-radius: var(--border-radius-lg);
   overflow: hidden;
-  transition: all 0.2s ease-in-out;
+  transition: all var(--transition-base);
 }
 
 /* Variantes */
 .card--default {
-  border: 1px solid var(--color-border);
+  border: var(--border-width) solid var(--color-border);
 }
 
 .card--elevated {
@@ -23,7 +23,7 @@
 }
 
 .card--outlined {
-  border: 2px solid var(--color-primary);
+  border: var(--border-width-2) solid var(--color-primary);
 }
 
 .card--product {
@@ -34,34 +34,34 @@
 
 /* Card Parts */
 .card-header {
-  padding: var(--spacing-md);
-  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-md);
+  border-bottom: var(--border-width) solid var(--color-border);
 }
 
 .card-header h2,
 .card-header h3 {
   margin: 0;
-  font-size: 1.125rem;
-  color: #fff;
+  font-size: var(--font-size-lg);
+  color: var(--text-primary);
 }
 
 .card-body {
-  padding: var(--spacing-md);
+  padding: var(--space-md);
   flex: 1;
 }
 
 .card-body p {
   margin: 0;
-  color: #ccc;
+  color: var(--text-secondary);
   font-size: 0.95rem;
-  line-height: 1.5;
+  line-height: var(--line-height-normal);
 }
 
 .card-footer {
-  padding: var(--spacing-md);
-  border-top: 1px solid var(--color-border);
+  padding: var(--space-md);
+  border-top: var(--border-width) solid var(--color-border);
   display: flex;
-  gap: var(--spacing-sm);
+  gap: var(--space-sm);
 }
 
 .card-footer .btn {
@@ -78,18 +78,18 @@
 /* Responsive */
 @media (max-width: 768px) {
   .card {
-    border-radius: 6px;
+    border-radius: var(--border-radius-md);
   }
 
   .card-header,
   .card-body,
   .card-footer {
-    padding: var(--spacing-sm);
+    padding: var(--space-sm);
   }
 
   .card-header h2,
   .card-header h3 {
-    font-size: 1rem;
+    font-size: var(--font-size-base);
   }
 
   .card-footer {

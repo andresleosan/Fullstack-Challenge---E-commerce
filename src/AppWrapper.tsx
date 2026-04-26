@@ -8,6 +8,7 @@ import { User as FirebaseUser } from 'firebase/auth'
 import { authService } from '@services'
 import { useUserStore } from '@store/userStore'
 import { authMiddleware, tokenUtils } from '@utils'
+import { initializeTestUser } from '@utils/initializeTestUser'
 
 interface AppWrapperProps {
   children: React.ReactNode
@@ -18,12 +19,16 @@ interface AppWrapperProps {
  * - Initialize Firebase auth listener on mount
  * - Sync auth state to Zustand store
  * - Handle token refresh
+ * - Create test user for development
  */
 function AppWrapper({ children }: AppWrapperProps) {
   const { setUser, clearUser } = useUserStore()
   const [isInitialized, setIsInitialized] = useState(false)
 
   useEffect(() => {
+    // Initialize test user in development
+    initializeTestUser().catch(console.error)
+
     // Setup auth state listener
     const unsubscribe = authService.onAuthStateChanged(async (firebaseUser: FirebaseUser | null) => {
       try {
