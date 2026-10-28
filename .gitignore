@@ -33,3 +33,6 @@ build/
 # Dependencies
 package-lock.json
 yarn.lock
+
+# Versionar el lock npm para instalaciones reproducibles.
+!package-lock.json
