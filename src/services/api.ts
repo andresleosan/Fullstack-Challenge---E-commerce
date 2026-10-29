@@ -5,6 +5,7 @@
 
 import axios, {
   AxiosInstance,
+  AxiosRequestConfig,
   AxiosError,
   AxiosResponse,
   InternalAxiosRequestConfig,
@@ -15,7 +16,7 @@ import { tokenUtils } from '@utils'
 /**
  * API Response Types
  */
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   success: boolean
   data?: T
   error?: string
@@ -25,7 +26,7 @@ export interface ApiResponse<T = any> {
 export interface ApiErrorResponse {
   code: string
   message: string
-  details?: any
+  details?: unknown
 }
 
 /**
@@ -119,9 +120,9 @@ class ApiClient {
   /**
    * Generic GET request
    */
-  async get<T = any>(
+  async get<T = unknown>(
     url: string,
-    config?: any
+    config?: AxiosRequestConfig
   ): Promise<AxiosResponse<ApiResponse<T>>> {
     return this.client.get<ApiResponse<T>>(url, config)
   }
@@ -129,10 +130,10 @@ class ApiClient {
   /**
    * Generic POST request
    */
-  async post<T = any>(
+  async post<T = unknown>(
     url: string,
-    data?: any,
-    config?: any
+    data?: unknown,
+    config?: AxiosRequestConfig
   ): Promise<AxiosResponse<ApiResponse<T>>> {
     return this.client.post<ApiResponse<T>>(url, data, config)
   }
@@ -140,10 +141,10 @@ class ApiClient {
   /**
    * Generic PUT request
    */
-  async put<T = any>(
+  async put<T = unknown>(
     url: string,
-    data?: any,
-    config?: any
+    data?: unknown,
+    config?: AxiosRequestConfig
   ): Promise<AxiosResponse<ApiResponse<T>>> {
     return this.client.put<ApiResponse<T>>(url, data, config)
   }
@@ -151,10 +152,10 @@ class ApiClient {
   /**
    * Generic PATCH request
    */
-  async patch<T = any>(
+  async patch<T = unknown>(
     url: string,
-    data?: any,
-    config?: any
+    data?: unknown,
+    config?: AxiosRequestConfig
   ): Promise<AxiosResponse<ApiResponse<T>>> {
     return this.client.patch<ApiResponse<T>>(url, data, config)
   }
@@ -162,9 +163,9 @@ class ApiClient {
   /**
    * Generic DELETE request
    */
-  async delete<T = any>(
+  async delete<T = unknown>(
     url: string,
-    config?: any
+    config?: AxiosRequestConfig
   ): Promise<AxiosResponse<ApiResponse<T>>> {
     return this.client.delete<ApiResponse<T>>(url, config)
   }

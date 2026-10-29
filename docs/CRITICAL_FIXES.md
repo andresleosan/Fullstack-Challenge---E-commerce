@@ -8,7 +8,7 @@
 
 ```typescript
 const firebaseConfig = {
-  apiKey: "AIzaSyAEsiJaTHkmo8H1xaDRJLYbxpu6E3fxEFQ", // ❌ EXPUESTO
+  apiKey: "example-api-key", // ❌ EXPUESTO
   projectId: "fullstack-challenge-e-commerce", // ❌ PÚBLICO
 };
 ```

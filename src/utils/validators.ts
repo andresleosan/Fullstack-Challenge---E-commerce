@@ -224,7 +224,7 @@ export const validateRegisterForm = (
   confirmPassword?: string
   terms?: string
 } => {
-  const errors: any = {}
+  const errors: Record<string, string> = {}
 
   const nameValid = validators.name(name)
   if (nameValid !== true) errors.name = nameValid

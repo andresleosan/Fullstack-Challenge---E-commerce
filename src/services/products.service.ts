@@ -1,3 +1,4 @@
+import type { DocumentSnapshot } from 'firebase/firestore'
 /**
  * Products Service
  * Firestore products management
@@ -34,7 +35,7 @@ class ProductsService {
       return querySnapshot.docs
         .map((doc) => this.docToProduct(doc))
         .filter((product): product is Product => product !== null)
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error getting products:', error)
       throw {
         code: 'GET_PRODUCTS_ERROR',
@@ -56,7 +57,7 @@ class ProductsService {
       }
 
       return null
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error getting product:', error)
       throw {
         code: 'GET_PRODUCT_ERROR',
@@ -81,7 +82,7 @@ class ProductsService {
       return querySnapshot.docs
         .map((doc) => this.docToProduct(doc))
         .filter((product): product is Product => product !== null)
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error getting products by category:', error)
       throw {
         code: 'GET_CATEGORY_PRODUCTS_ERROR',
@@ -107,7 +108,7 @@ class ProductsService {
       return querySnapshot.docs
         .map((doc) => this.docToProduct(doc))
         .filter((product): product is Product => product !== null)
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error searching products:', error)
       // Fallback to client-side search if server-side fails
       const allProducts = await this.getAllProducts()
@@ -135,7 +136,7 @@ class ProductsService {
       return querySnapshot.docs
         .map((doc) => this.docToProduct(doc))
         .filter((product): product is Product => product !== null)
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error getting sale products:', error)
       throw {
         code: 'GET_SALE_PRODUCTS_ERROR',
@@ -161,7 +162,7 @@ class ProductsService {
       return querySnapshot.docs
         .map((doc) => this.docToProduct(doc))
         .filter((product): product is Product => product !== null)
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error getting featured products:', error)
       throw {
         code: 'GET_FEATURED_PRODUCTS_ERROR',
@@ -174,7 +175,7 @@ class ProductsService {
    * Convert Firestore document to Product
    */
   private docToProduct(
-    doc: any
+    doc: DocumentSnapshot
   ): Product | null {
     if (!doc.exists()) return null
 

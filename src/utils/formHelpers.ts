@@ -6,7 +6,7 @@
  * FormState - Estado de un formulario con valores y errores
  */
 export interface FormState {
-  values: Record<string, any>
+  values: Record<string, unknown>
   errors: Record<string, string>
   touched: Record<string, boolean>
   isSubmitting: boolean
@@ -17,14 +17,14 @@ export interface FormState {
  * Form Helper Class - Gestión simplificada de formularios
  */
 export class FormHelper {
-  values: Record<string, any> = {}
+  values: Record<string, unknown> = {}
   errors: Record<string, string> = {}
   touched: Record<string, boolean> = {}
-  validators: Record<string, (value: any) => string | true> = {}
+  validators: Record<string, (value: unknown) => string | true> = {}
 
   constructor(
-    initialValues: Record<string, any> = {},
-    formValidators: Record<string, (value: any) => string | true> = {}
+    initialValues: Record<string, unknown> = {},
+    formValidators: Record<string, (value: unknown) => string | true> = {}
   ) {
     this.values = initialValues
     this.validators = formValidators
@@ -33,7 +33,7 @@ export class FormHelper {
   /**
    * Set field value
    */
-  setFieldValue(field: string, value: any) {
+  setFieldValue(field: string, value: unknown) {
     this.values[field] = value
   }
 
@@ -79,7 +79,7 @@ export class FormHelper {
   /**
    * Reset form
    */
-  reset(initialValues?: Record<string, any>) {
+  reset(initialValues?: Record<string, unknown>) {
     this.values = initialValues || {}
     this.errors = {}
     this.touched = {}
@@ -159,7 +159,7 @@ export const onlyNumbers = (e: React.KeyboardEvent<HTMLInputElement>) => {
 /**
  * Convertir objeto a FormData (para uploads)
  */
-export const objectToFormData = (obj: Record<string, any>): FormData => {
+export const objectToFormData = (obj: Record<string, unknown>): FormData => {
   const formData = new FormData()
 
   for (const key in obj) {
@@ -167,7 +167,7 @@ export const objectToFormData = (obj: Record<string, any>): FormData => {
       formData.append(key, obj[key])
     } else if (Array.isArray(obj[key])) {
       obj[key].forEach((item, index) => {
-        formData.append(`${key}[${index}]`, item)
+        formData.append(`${key}[${index}]`, item instanceof Blob ? item : String(item))
       })
     } else if (obj[key] !== null && obj[key] !== undefined) {
       formData.append(key, String(obj[key]))

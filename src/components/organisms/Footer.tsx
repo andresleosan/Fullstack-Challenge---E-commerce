@@ -18,8 +18,6 @@ export const Footer = React.forwardRef<HTMLDivElement, FooterProps>(
   (
     {
       onNewsletterSubmit,
-      companyName: _companyName,
-      currentYear: _currentYear,
       showNewsletter = true,
     },
     ref

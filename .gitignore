@@ -33,3 +33,15 @@ build/
 # Dependencies
 package-lock.json
 yarn.lock
+
+# Versionar el lock npm para instalaciones reproducibles.
+!package-lock.json
+
+# Local configuration and generated build state
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*serviceAccount*.json
+*.tsbuildinfo

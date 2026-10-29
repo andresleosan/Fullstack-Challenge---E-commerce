@@ -125,10 +125,10 @@ export const useAuthStateChange = (callback: (user: User | null) => void) => {
  * (Para mostrar notificación o redirigir a login)
  */
 export const setupAuthEventListeners = () => {
-  window.addEventListener('auth:token-expired', (event: any) => {
-    console.warn('Auth event:', event.detail.message)
+  window.addEventListener('auth:token-expired', (event: Event) => {
+    console.warn('Auth event:', (event instanceof CustomEvent && typeof event.detail?.message === 'string' ? event.detail.message : 'Session expired'))
     // Aquí podrías mostrar un toast o notificación
-    // Ejemplo: toast.error(event.detail.message)
+    // Ejemplo: toast.error((event instanceof CustomEvent && typeof event.detail?.message === 'string' ? event.detail.message : 'Session expired'))
   })
 }
 

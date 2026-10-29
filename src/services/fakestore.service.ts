@@ -6,6 +6,16 @@
 
 import type { Product } from '@types'
 
+interface FakeStoreProduct {
+  id: number | string
+  category?: string
+  title?: string
+  description?: string
+  price?: number
+  image?: string
+  rating?: { rate?: number; count?: number }
+}
+
 class FakeStoreService {
   private baseURL = 'https://fakestoreapi.com'
 
@@ -25,7 +35,7 @@ class FakeStoreService {
       const response = await fetch(`${this.baseURL}/products`)
       const data = await response.json()
       return this.mapToProducts(data)
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error fetching products:', error)
       throw {
         code: 'FETCH_PRODUCTS_ERROR',
@@ -47,7 +57,7 @@ class FakeStoreService {
 
       const data = await response.json()
       return this.mapToProduct(data)
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error fetching product:', error)
       throw {
         code: 'FETCH_PRODUCT_ERROR',
@@ -65,7 +75,7 @@ class FakeStoreService {
       const categories = await response.json()
       // Map English categories to Spanish
       return categories.map((cat: string) => this.categoryMap[cat] || cat)
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error fetching categories:', error)
       throw {
         code: 'FETCH_CATEGORIES_ERROR',
@@ -84,7 +94,7 @@ class FakeStoreService {
       )
       const data = await response.json()
       return this.mapToProducts(data)
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error fetching category products:', error)
       throw {
         code: 'FETCH_CATEGORY_PRODUCTS_ERROR',
@@ -97,7 +107,7 @@ class FakeStoreService {
    * Map FakeStore product to our Product type
    * ✅ Stock is generated consistently (not randomly each call)
    */
-  private mapToProduct(fakeProduct: any): Product {
+  private mapToProduct(fakeProduct: FakeStoreProduct): Product {
     const categoryEn = fakeProduct.category || 'general'
     const categoryEs = this.categoryMap[categoryEn] || categoryEn
     
@@ -136,7 +146,7 @@ class FakeStoreService {
   /**
    * Map array of FakeStore products
    */
-  private mapToProducts(fakeProducts: any[]): Product[] {
+  private mapToProducts(fakeProducts: FakeStoreProduct[]): Product[] {
     return fakeProducts.map((p) => this.mapToProduct(p))
   }
 }

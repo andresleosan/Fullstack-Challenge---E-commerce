@@ -1,8 +1,10 @@
+import type { Product } from '@types'
 import { useCallback } from 'react'
 import { useProductStore } from '@store/productStore'
 
 export const useProducts = () => {
   const store = useProductStore()
+  const setProducts = useProductStore((state) => state.setProducts)
 
   const search = useCallback(
     (query: string) => {
@@ -75,15 +77,15 @@ export const useProducts = () => {
   }, [store])
 
   const loadProducts = useCallback(
-    (products: any[]) => {
+    (products: Product[]) => {
       // ✅ VALIDATION: Ensure products is array
       if (!Array.isArray(products)) {
         console.error('❌ loadProducts expects array')
         return
       }
-      store.setProducts(products)
+      setProducts(products)
     },
-    [store]
+    [setProducts]
   )
 
   return {

@@ -5,7 +5,7 @@
 
 export const API_CONFIG = {
   // API Base URL
-  baseURL: (import.meta as any).env.VITE_API_BASE_URL || 'http://localhost:3000/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api',
 
   // Timeouts
   timeout: 10000,
@@ -21,7 +21,7 @@ export const API_CONFIG = {
 
   // Firebase
   firebase: {
-    useEmulator: (import.meta as any).env.VITE_USE_EMULATOR === 'true',
+    useEmulator: import.meta.env.VITE_USE_EMULATOR === 'true',
     emulatorUrl: 'http://localhost:9099',
   },
 
@@ -41,9 +41,9 @@ export const API_CONFIG = {
 
 // Environment detection
 export const ENV = {
-  isDevelopment: (import.meta as any).env.MODE === 'development',
-  isProduction: (import.meta as any).env.MODE === 'production',
-  isTest: (import.meta as any).env.MODE === 'test',
+  isDevelopment: import.meta.env.MODE === 'development',
+  isProduction: import.meta.env.MODE === 'production',
+  isTest: import.meta.env.MODE === 'test',
 } as const
 
 // Get config value with type safety

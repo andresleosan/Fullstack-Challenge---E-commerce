@@ -1,3 +1,4 @@
+import type { Product } from '@types'
 import { useCallback, useMemo } from 'react'
 import { useCartStore } from '@store/cartStore'
 
@@ -14,11 +15,11 @@ export const useCart = () => {
       shipping: store.getShipping(),
       total: store.getTotal(),
     }),
-    [store.items] // Only recalculate when items change
+    [store]
   )
 
   const addToCart = useCallback(
-    (product: any, quantity: number = 1) => {
+    (product: Product, quantity: number = 1) => {
       store.addItem(product, quantity)
     },
     [store]

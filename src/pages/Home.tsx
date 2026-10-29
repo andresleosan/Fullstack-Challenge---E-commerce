@@ -1,6 +1,7 @@
+import type { Product } from '@types'
 import React, { useEffect, useState } from 'react'
 import { ProductGallery } from '@components/organisms'
-import { FilterGroup, Pagination, SearchInput } from '@components/molecules'
+import { FilterGroup, Pagination } from '@components/molecules'
 import { useProducts, useCart } from '@hooks/index'
 import { fakeStoreService } from '@services'
 import './Home.css'
@@ -14,7 +15,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   onAddToCart,
   onProductClick,
 }) => {
-  const { products, filters, search, filterByCategory, sort, loadProducts } =
+  const { products, filters, filterByCategory, sort, loadProducts } =
     useProducts()
   const { addToCart } = useCart()
   const [currentPage, setCurrentPage] = React.useState(1)
@@ -71,7 +72,7 @@ export const HomePage: React.FC<HomePageProps> = ({
     return () => {
       isMounted = false
     }
-  }, [])
+  }, [loadProducts])
 
   // Mouse tracking para efecto de letras
   useEffect(() => {
@@ -83,16 +84,11 @@ export const HomePage: React.FC<HomePageProps> = ({
     return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
-  const handleAddToCart = (product: { id: string }, quantity: number) => {
+  const handleAddToCart = (product: Product, quantity: number) => {
     addToCart(product, quantity)
     if (onAddToCart) {
       onAddToCart(product.id, quantity)
     }
-  }
-
-  const handleSearch = (query: string) => {
-    search(query)
-    setCurrentPage(1)
   }
 
   const handleFilterCategory = (categories: string[]) => {
@@ -140,9 +136,9 @@ export const HomePage: React.FC<HomePageProps> = ({
           const scale = isNear ? Math.max(1, 1.2 - distance / 200) : 1
           
           // Color: blanco en reposo, cyan brillante cuando está cerca
-          let hue = 180 // Cyan
-          let saturation = isNear ? 100 : 0 // Saturación solo cuando está cerca
-          let lightness = isNear ? Math.max(45, 65 - distance / 50) : 100 // Blanco en reposo
+          const hue = 180 // Cyan
+          const saturation = isNear ? 100 : 0 // Saturación solo cuando está cerca
+          const lightness = isNear ? Math.max(45, 65 - distance / 50) : 100 // Blanco en reposo
           
           return (
             <span

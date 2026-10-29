@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { Card, Button, Badge, Icon } from '@components/atoms'
+import { Card, Button, Badge } from '@components/atoms'
 import { useUser } from '@hooks/useUser'
 import type { OrderSummary } from './Orders'
 import './OrderDetail.css'

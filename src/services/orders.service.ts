@@ -1,3 +1,4 @@
+import type { DocumentSnapshot } from 'firebase/firestore'
 /**
  * Orders Service
  * Firestore orders management
@@ -78,7 +79,7 @@ class OrdersService {
         createdAt: now.toISOString(),
         updatedAt: now.toISOString(),
       } as Order
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error creating order:', error)
       throw {
         code: 'CREATE_ORDER_ERROR',
@@ -103,7 +104,7 @@ class OrdersService {
       return querySnapshot.docs
         .map((doc) => this.docToOrder(doc))
         .filter((order): order is Order => order !== null)
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error getting user orders:', error)
       throw {
         code: 'GET_ORDERS_ERROR',
@@ -125,7 +126,7 @@ class OrdersService {
       }
 
       return null
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error getting order:', error)
       throw {
         code: 'GET_ORDER_ERROR',
@@ -147,7 +148,7 @@ class OrdersService {
         status,
         updatedAt: Timestamp.fromDate(new Date()),
       })
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error updating order status:', error)
       throw {
         code: 'UPDATE_ORDER_STATUS_ERROR',
@@ -169,7 +170,7 @@ class OrdersService {
         paymentStatus,
         updatedAt: Timestamp.fromDate(new Date()),
       })
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error updating payment status:', error)
       throw {
         code: 'UPDATE_PAYMENT_STATUS_ERROR',
@@ -193,7 +194,7 @@ class OrdersService {
       return querySnapshot.docs
         .map((doc) => this.docToOrder(doc))
         .filter((order): order is Order => order !== null)
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error getting all orders:', error)
       throw {
         code: 'GET_ALL_ORDERS_ERROR',
@@ -218,7 +219,7 @@ class OrdersService {
       return querySnapshot.docs
         .map((doc) => this.docToOrder(doc))
         .filter((order): order is Order => order !== null)
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error getting orders by status:', error)
       throw {
         code: 'GET_ORDERS_BY_STATUS_ERROR',
@@ -230,7 +231,7 @@ class OrdersService {
   /**
    * Convert Firestore document to Order
    */
-  private docToOrder(doc: any): Order | null {
+  private docToOrder(doc: DocumentSnapshot): Order | null {
     if (!doc.exists()) return null
 
     try {

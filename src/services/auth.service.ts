@@ -60,8 +60,8 @@ class AuthService {
 
       return appUser
     } catch (error: unknown) {
-      const firebaseError = error instanceof Error && 'code' in error 
-        ? { code: (error as any).code, message: (error as any).message }
+      const firebaseError = error instanceof Error && 'code' in error && typeof error.code === 'string'
+        ? { code: error.code, message: error.message }
         : { code: 'UNKNOWN_ERROR', message: 'Error desconocido' }
       console.error('Registration error:', error)
       throw {
@@ -100,13 +100,13 @@ class AuthService {
 
       return appUser
     } catch (error: unknown) {
-      const firebaseError = error instanceof Error && 'code' in error 
-        ? { code: (error as any).code }
+      const firebaseError = error instanceof Error && 'code' in error && typeof error.code === 'string'
+        ? { code: error.code }
         : { code: 'UNKNOWN_ERROR' }
       console.error('Login error:', error)
       throw {
-        code: error.code,
-        message: this.getErrorMessage(error.code),
+        code: firebaseError.code,
+        message: this.getErrorMessage(firebaseError.code),
       }
     }
   }

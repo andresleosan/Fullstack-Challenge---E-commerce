@@ -25,7 +25,6 @@ export const Header = React.forwardRef<HTMLDivElement, HeaderProps>(
     {
       onSearch,
       onMenuToggle,
-      onCartClick,
       cartItemCount = 0,
       isUserLoggedIn: externalIsLoggedIn,
       userName: externalUserName,

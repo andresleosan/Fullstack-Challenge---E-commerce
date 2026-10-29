@@ -32,9 +32,9 @@ export async function initializeTestUser(): Promise<void> {
       await authService.login(TEST_USER.email, TEST_USER.password)
       console.log('✅ Test user already exists')
       return
-    } catch (loginError: any) {
+    } catch (loginError: unknown) {
       // User doesn't exist, create it
-      if (loginError.code === 'auth/user-not-found' || loginError.code === 'auth/invalid-credential') {
+      if (typeof loginError === 'object' && loginError !== null && 'code' in loginError && (loginError.code === 'auth/user-not-found' || loginError.code === 'auth/invalid-credential')) {
         console.log('📝 Creating test user...')
         await authService.register(
           TEST_USER.email,
@@ -49,8 +49,8 @@ export async function initializeTestUser(): Promise<void> {
       // Other error
       throw loginError
     }
-  } catch (error: any) {
-    console.warn('⚠️ Could not initialize test user:', error.message)
+  } catch (error: unknown) {
+    console.warn('⚠️ Could not initialize test user:', error instanceof Error ? error.message : 'Unknown error')
     // Don't block app if test user creation fails
   }
 }

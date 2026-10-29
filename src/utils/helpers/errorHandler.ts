@@ -10,7 +10,7 @@ export class AppError extends Error {
     public code: string,
     message: string,
     public statusCode: number = 500,
-    public details?: any
+    public details?: unknown
   ) {
     super(message)
     this.name = 'AppError'
@@ -21,33 +21,40 @@ export const errorHandler = {
   /**
    * Parse any error into standardized AppError
    */
-  parse: (error: any): AppError => {
+  parse: (error: unknown): AppError => {
     if (error instanceof AppError) {
       return error
     }
 
+    const details = typeof error === 'object' && error !== null ? error as Record<string, unknown> : {}
+    const code = typeof details.code === 'string' ? details.code : undefined
+    const message = typeof details.message === 'string' ? details.message : ''
+
     // Firebase error
-    if (error?.code?.startsWith('auth/')) {
-      const message = getFirebaseAuthErrorMessage(error.code)
-      return new AppError(error.code, message, 401, error)
+    if (code?.startsWith('auth/')) {
+      const message = getFirebaseAuthErrorMessage(code)
+      return new AppError(code, message, 401, error)
     }
 
     // API/Network error
-    if (error?.response) {
+    if (typeof details.response === 'object' && details.response !== null) {
+      const response = details.response as Record<string, unknown>
+      const data = typeof response.data === 'object' && response.data !== null
+        ? response.data as Record<string, unknown> : {}
       return new AppError(
         'API_ERROR',
-        error.response.data?.message || error.message,
-        error.response.status,
-        error.response.data
+        typeof data.message === 'string' ? data.message : message,
+        typeof response.status === 'number' ? response.status : 500,
+        response.data
       )
     }
 
     // Network error
-    if (error?.message?.includes('timeout') || error?.message?.includes('timeout')) {
+    if (message.includes('timeout') || message.includes('timeout')) {
       return new AppError(ERROR_CODES.TIMEOUT_ERROR, ERROR_MESSAGES[ERROR_CODES.TIMEOUT_ERROR], 408)
     }
 
-    if (error?.message?.includes('Failed to fetch') || error?.message?.includes('ERR_NETWORK')) {
+    if (message.includes('Failed to fetch') || message.includes('ERR_NETWORK')) {
       return new AppError(ERROR_CODES.NETWORK_ERROR, ERROR_MESSAGES[ERROR_CODES.NETWORK_ERROR], 0)
     }
 
@@ -63,7 +70,7 @@ export const errorHandler = {
   /**
    * Format error for user display (production-safe)
    */
-  format: (error: any, isDevelopment = false): string => {
+  format: (error: unknown, isDevelopment = false): string => {
     const appError = errorHandler.parse(error)
 
     if (isDevelopment) {
@@ -77,7 +84,7 @@ export const errorHandler = {
   /**
    * Log error safely
    */
-  log: (error: any, context: string = 'Error'): void => {
+  log: (error: unknown, context: string = 'Error'): void => {
     const appError = errorHandler.parse(error)
 
     console.error(
